@@ -1,0 +1,3 @@
+Lo schema dei moduli, di cosa c'è e come sono costruiti rimane nel backend e nel frontend, non nel database
+
+schema db: https://app.chartdb.io/diagram/ea3e6c8677954f47bd4f5c
