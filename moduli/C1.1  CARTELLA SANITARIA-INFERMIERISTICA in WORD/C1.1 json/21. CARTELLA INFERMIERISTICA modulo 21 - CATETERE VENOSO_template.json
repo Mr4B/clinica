@@ -1,0 +1,28 @@
+{
+    "utente": {
+        "iniz_cogn": "stringa",
+        "iniz_nom": "stringa",
+        "cod_dossier_utente_n": "stringa"
+    },
+    "paziente": {
+        "anno": "stringa",
+        "n_prog": "stringa"
+    },
+    "catetere_venoso": [
+        {
+            "data": "AAAA-MM-GG",
+            "ora": "hh:mm",
+            "tipo_catetere": {
+                "tipo": "stringa",
+                "calibro": "stringa"
+            },
+            "sito_applicazione": "stringa",
+            "prestazione_eseguita": [
+                "posizionato",
+                "rimosso"
+            ],
+            "annotazioni": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

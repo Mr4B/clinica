@@ -1,0 +1,62 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero",
+        "mmg_del_paziente": "stringa"
+    },
+    "data_prescrizione": "AAAA-MM-GG",
+    "indicazione_alla_tao": [
+        "fibrillazione atriale",
+        "v. mitralica biologica",
+        "v. aortica biologica",
+        "trombosi venosa profonda",
+        "v. mitralica meccanica",
+        "v. aortica meccanica",
+        "embolia polmonare",
+        "infarto miocardico",
+        "altro"
+    ],
+    "inr_desiderato": "numero_decimale",
+    "data_inizio_terapia": "AAAA-MM-GG",
+    "durata": {
+        "dal": "AAAA-MM-GG",
+        "al": "AAAA-MM-GG"
+    },
+    "schema_posologico_coumadin": [
+        {
+            "giorno": "lunedì",
+            "settimana_1": {
+                "orario": "hh:mm",
+                "inr": "numero_decimale",
+                "dose": "stringa"
+            },
+            "settimana_2": {
+                "orario": "hh:mm",
+                "inr": "numero_decimale",
+                "dose": "stringa"
+            },
+            "settimana_3": {
+                "orario": "hh:mm",
+                "inr": "numero_decimale",
+                "dose": "stringa"
+            },
+            "settimana_4": {
+                "orario": "hh:mm",
+                "inr": "numero_decimale",
+                "dose": "stringa"
+            },
+            "settimana_5": {
+                "orario": "hh:mm",
+                "inr": "numero_decimale",
+                "dose": "stringa"
+            }
+        }
+    ],
+    "data_firma_infermiere": "AAAA-MM-GG",
+    "firma_infermiere": "stringa"
+}

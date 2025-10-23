@@ -1,0 +1,46 @@
+{
+    "utente": {
+        "iniz_cogn": "stringa",
+        "iniz_nom": "stringa",
+        "cod_dossier_utente_n": "stringa",
+        "anno": "numero"
+    },
+    "paziente": {
+        "anno": "numero",
+        "mese": "numero",
+        "n_progr": "numero"
+    },
+    "terapia": [
+        {
+            "farmaco": "stringa",
+            "lasa": [
+                "x"
+            ],
+            "dose": "stringa",
+            "via": "stringa",
+            "ore_somministrazione": [
+                {
+                    "ora": "hh:mm",
+                    "selezionato": [
+                        "1"
+                    ]
+                }
+            ],
+            "data_inizio": "AAAA-MM-GG",
+            "data_fine": "AAAA-MM-GG",
+            "prescrittore": "stringa"
+        }
+    ],
+    "somministrazione": [
+        {
+            "giorno": "numero",
+            "sigla_inf_ore": [
+                {
+                    "ora": "hh:mm",
+                    "sigla_inf": "stringa"
+                }
+            ],
+            "annotazioni": "stringa"
+        }
+    ]
+}

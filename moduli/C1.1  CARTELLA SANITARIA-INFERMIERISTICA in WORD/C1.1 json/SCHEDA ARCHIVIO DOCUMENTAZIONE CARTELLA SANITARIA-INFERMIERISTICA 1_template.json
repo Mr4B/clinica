@@ -1,0 +1,31 @@
+{
+    "utente": "stringa",
+    "cod_dossier_utente_n": "stringa",
+    "tipo_residenza": [
+        "r3",
+        "r3d"
+    ],
+    "n_progr": "numero",
+    "documentazione_cartella": [
+        {
+            "data": "AAAA-MM-GG",
+            "moduli": {
+                "nr_modulo": "numero",
+                "nr_prog": "numero"
+            },
+            "schede": {
+                "nr_scheda": "numero",
+                "nr_prog": "numero"
+            },
+            "scale": {
+                "nr_scala": "numero",
+                "nr_somm": "numero"
+            },
+            "documentazione_enti": {
+                "denominazione_ente": "stringa",
+                "tipologia_documento": "stringa"
+            },
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

@@ -1,0 +1,28 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_n": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "terapia_del_dolore": [
+        {
+            "data": "AAAA-MM-GG",
+            "ora": "hh:mm",
+            "dolore_scala_nrs": "numero",
+            "sede": "stringa",
+            "tipologia": [
+                "acuto",
+                "intermittente",
+                "cronico",
+                "ingravescente",
+                "colico"
+            ],
+            "terapia_somministrata": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

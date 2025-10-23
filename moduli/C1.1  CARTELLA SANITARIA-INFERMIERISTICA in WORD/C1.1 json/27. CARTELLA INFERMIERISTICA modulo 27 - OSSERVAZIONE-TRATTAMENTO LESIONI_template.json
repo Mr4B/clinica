@@ -1,0 +1,146 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "cartella_infermieristica": {
+        "modulo": "27",
+        "osservazione_trattamento_lesioni_da_decubito": {
+            "codice": "ROG26/1.27- Rev.02 del 30.06.2025"
+        }
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero",
+        "data": "AAAA-MM-GG",
+        "ora": "hh:mm"
+    },
+    "osservazione_numero": "numero",
+    "numero_sede_lesione": "numero",
+    "grado_lesione": [
+        "i°",
+        "ii°",
+        "iii°",
+        "iv°"
+    ],
+    "condizione_lesione": [
+        "detersa",
+        "escara",
+        "fibrina",
+        "necrosi",
+        "essudato",
+        "infetta"
+    ],
+    "bordi_lesione": [
+        "lineari",
+        "macerati",
+        "necrotici",
+        "infetti",
+        "frastagliati"
+    ],
+    "cute_perilesionale": [
+        "integra",
+        "arrossata",
+        "macerata"
+    ],
+    "data_precedente_osservazione": "AAAA-MM-GG",
+    "lesione_presente_all_ingresso": [
+        true,
+        false
+    ],
+    "lesione_principale": {
+        "descrizione": "stringa",
+        "dimensione_cm": "numero_decimale"
+    },
+    "lesioni_secondarie": {
+        "descrizione_1": "stringa",
+        "descrizione_2": "stringa"
+    },
+    "trattamento": [
+        {
+            "stadio": "i° e ii°",
+            "detersione": [
+                "soluzione fisiologica",
+                "ringer lattato"
+            ],
+            "medicazione": [
+                "pellicola semipermeabile trasparente (i°)",
+                "idrocolloidi extra sottili (i-ii°)",
+                "schiuma di poliuretano, se essudante (ii°)"
+            ],
+            "cadenza": "stringa",
+            "area_circostante": "crema ricca di sostanze nutrienti per la cute"
+        },
+        {
+            "stadio": "flittene",
+            "detersione": "idem",
+            "medicazione": [
+                "idrocolloide",
+                "schiuma di poliuretano"
+            ],
+            "cadenza": "stringa",
+            "area_circostante": "idem"
+        },
+        {
+            "stadio": "iii° e vi°",
+            "detersione": "idem",
+            "medicazione": "vedi specifiche schema successivo",
+            "cadenza": "stringa",
+            "area_circostante": "idem"
+        }
+    ],
+    "specifiche_trattamento": [
+        {
+            "variante_lesione": "escara",
+            "medicazione": "idrogel + schiuma di poliuretano",
+            "cadenza": "ogni 24/72 ore",
+            "rimozione_chirurgica": [
+                "graduale",
+                "totale"
+            ]
+        },
+        {
+            "variante_lesione": "cavitarie, sottominata, con abbondante essudato",
+            "medicazione": [
+                "schiuma di poliuretano cavitaria + schiuma di poliuretano",
+                "fibra in alginato+ schiuma in poliuretano"
+            ],
+            "cadenza": "da giorni alterni a 3/4 giorni"
+        },
+        {
+            "variante_lesione": "granuleggiante",
+            "medicazione": [
+                "schiuma di poliuretano",
+                "placca idrocolloidale"
+            ],
+            "cadenza": "stringa"
+        },
+        {
+            "variante_lesione": "emorragica",
+            "medicazione": "alginati + garze sterili",
+            "cadenza": "ogni 8/24 ore"
+        },
+        {
+            "variante_lesione": "infetta, colonizzata, contaminata",
+            "medicazione": "detersione con acqua distillata, posizionare nanocristallo d’argento, chiusura con schiuma di poliuretano.",
+            "cadenza": "stringa"
+        },
+        {
+            "variante_lesione": "essudativa, non cavitaria",
+            "medicazione": "schiuma di poliuretano",
+            "cadenza": "ogni 24/72 ore"
+        },
+        {
+            "variante_lesione": "necrotica o fibrinosa",
+            "medicazione": "idrogel+ schiuma poliuretano",
+            "cadenza": "stringa"
+        }
+    ],
+    "mmg": {
+        "firma": "stringa"
+    },
+    "infermiere": {
+        "firma": "stringa"
+    }
+}

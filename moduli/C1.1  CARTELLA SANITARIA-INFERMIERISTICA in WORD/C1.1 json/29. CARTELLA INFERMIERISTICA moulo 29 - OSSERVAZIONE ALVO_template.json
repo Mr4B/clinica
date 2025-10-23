@@ -1,0 +1,47 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "osservazione_alvo": [
+        {
+            "data": "AAAA-MM-GG",
+            "ora": "hh:mm",
+            "alvo": [
+                "regolare",
+                "incontinente",
+                "lassativi",
+                "clisteri",
+                "diarrea",
+                "stipsi",
+                "altro"
+            ],
+            "alvo_altro": "stringa",
+            "feci_ultima_evacuazione": {
+                "consistenza": [
+                    "normali",
+                    "grumose",
+                    "dure/palline",
+                    "morbide",
+                    "semiliquide",
+                    "liquide"
+                ],
+                "colore": [
+                    "marrone",
+                    "verdi",
+                    "scure/nere",
+                    "rosse",
+                    "bianche/grigio chiaro",
+                    "gialle",
+                    "bianche pallide"
+                ]
+            },
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

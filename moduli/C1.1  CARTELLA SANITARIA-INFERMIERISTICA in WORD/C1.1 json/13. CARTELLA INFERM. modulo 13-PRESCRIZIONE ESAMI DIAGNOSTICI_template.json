@@ -1,0 +1,21 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "prescrizioni_esami_diagnostici_accertamenti": [
+        {
+            "data": "AAAA-MM-GG",
+            "esame_diagnostico_visita_specialistica": "stringa",
+            "ipotesi_accertamento": "stringa",
+            "data_e_numero_prescrizione_nre": "stringa",
+            "medico_prescrittore": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

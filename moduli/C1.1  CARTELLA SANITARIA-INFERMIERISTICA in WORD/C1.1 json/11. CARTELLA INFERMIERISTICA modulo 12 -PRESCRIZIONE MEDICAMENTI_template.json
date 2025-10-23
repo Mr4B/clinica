@@ -1,0 +1,23 @@
+{
+    "utente": {
+        "iniz_cogn": "stringa",
+        "iniz_nom": "stringa",
+        "cod_dossier_utente_n": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "n_progr": "numero"
+    },
+    "prescrizione_medicamenti": [
+        {
+            "data": "AAAA-MM-GG",
+            "medicamenti": "stringa",
+            "sito": "stringa",
+            "giorni": "stringa",
+            "orari": "hh:mm",
+            "data_e_nr_ricetta_nre": "stringa",
+            "medico_prescrittore": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

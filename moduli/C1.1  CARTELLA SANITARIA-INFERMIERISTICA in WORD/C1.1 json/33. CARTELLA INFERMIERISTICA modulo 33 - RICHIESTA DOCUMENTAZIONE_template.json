@@ -1,0 +1,117 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "modulo_33": {
+        "richiesta_documentazione_sanitaria": {
+            "utente": {
+                "nome_completo": "stringa",
+                "anno": "numero",
+                "numero_progressivo": "numero"
+            },
+            "inoltro_richiesta_a": [
+                "ufficio amministrativo",
+                "email: mammamargherita@solidale-coop.it",
+                "pec: solidale.coopsociale@open.legalmail.it"
+            ],
+            "richiedente": {
+                "cognome": "stringa",
+                "nome": "stringa",
+                "data_di_nascita": "AAAA-MM-GG",
+                "luogo_di_nascita": "stringa",
+                "provincia_nascita": "stringa",
+                "residente_in": "stringa",
+                "provincia_residenza": "stringa",
+                "via": "stringa",
+                "numero_civico": "stringa",
+                "contatti_telefonici": "stringa",
+                "documento_identita": "stringa",
+                "dichiaro_di_essere": [
+                    "intestatario della documentazione sanitaria in qualità di paziente sopra identificato",
+                    "genitore",
+                    "tutore",
+                    "curatore",
+                    "amministratore di sostegno",
+                    "erede testamentario",
+                    "erede legittimo",
+                    "persona avente interesse ai sensi del decreto legislativo 30 giugno 2003, n. 196, art. 92 comma 2"
+                ],
+                "chiedo": [
+                    {
+                        "tipo": "copia conforme della cartella sanitaria",
+                        "relativa_al_ricovero_dal": "AAAA-MM-GG",
+                        "al": "AAAA-MM-GG"
+                    },
+                    {
+                        "tipo": "copia conforme della seguente documentazione",
+                        "specificare": "stringa",
+                        "periodi": [
+                            {
+                                "dal": "AAAA-MM-GG",
+                                "al": "AAAA-MM-GG"
+                            },
+                            {
+                                "dal": "AAAA-MM-GG",
+                                "al": "AAAA-MM-GG"
+                            },
+                            {
+                                "dal": "AAAA-MM-GG",
+                                "al": "AAAA-MM-GG"
+                            },
+                            {
+                                "dal": "AAAA-MM-GG",
+                                "al": "AAAA-MM-GG"
+                            }
+                        ]
+                    }
+                ],
+                "modalita_di_consegna": [
+                    "ritiro in formato cartaceo presso l'ufficio amministrativo della struttura",
+                    {
+                        "spedizione_in_formato_cartaceo_per_posta_raccomandata_al_seguente_indirizzo": "stringa"
+                    },
+                    {
+                        "invio_in_formato_elettronico": {
+                            "email": "stringa",
+                            "pec": "stringa"
+                        }
+                    }
+                ],
+                "allego": [
+                    "documentazione attestante il titolo giuridico di richiedente sopra dichiarato",
+                    "copia documento d'identità del richiedente"
+                ],
+                "firma_del_richiedente": {
+                    "luogo": "stringa",
+                    "data": "AAAA-MM-GG"
+                }
+            },
+            "a_cura_della_direzione": {
+                "documentazione_consegnata_a": {
+                    "richiedente": [
+                        true,
+                        false
+                    ],
+                    "delegato": "stringa"
+                },
+                "consegna_effettuata_da": {
+                    "responsabile_sanitario": [
+                        true,
+                        false
+                    ],
+                    "responsabile_di_struttura": [
+                        true,
+                        false
+                    ],
+                    "incaricato_delegato": "stringa"
+                },
+                "data": "AAAA-MM-GG",
+                "ora": "hh:mm",
+                "firma_consegnante": "stringa",
+                "firma_consegnatario": "stringa"
+            }
+        }
+    }
+}

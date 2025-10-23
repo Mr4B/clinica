@@ -1,0 +1,261 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "patogenesi_della_immobilizzazione": {
+        "malattia": [
+            {
+                "nome": "artrosi",
+                "impairment": "dolore articolare",
+                "riduzione_escursione_articolare": [
+                    true,
+                    false
+                ]
+            },
+            {
+                "nome": "artrite reumatoide",
+                "impairment": "dolore articolare",
+                "riduzione_escursione_articolare": [
+                    true,
+                    false
+                ]
+            },
+            {
+                "nome": "scompenso cardiaco",
+                "impairment": "dispnea"
+            },
+            {
+                "nome": "bpco",
+                "impairment": "dispnea"
+            },
+            {
+                "nome": "enfisema",
+                "impairment": "dispnea"
+            },
+            {
+                "nome": "m_di_parkinson",
+                "impairment": "rigidità muscolare",
+                "alterazione_della_marcia": [
+                    true,
+                    false
+                ]
+            },
+            {
+                "nome": "demenza",
+                "impairment": "perdita facoltà cognitive",
+                "disturbi_della_marcia": [
+                    true,
+                    false
+                ]
+            },
+            {
+                "nome": "arteriopatia periferica",
+                "impairment": "dolore muscolare"
+            },
+            {
+                "nome": "anemia",
+                "impairment": "astenia",
+                "dispnea": [
+                    true,
+                    false
+                ]
+            },
+            {
+                "nome": "retinopatie",
+                "impairment": "cecità"
+            },
+            {
+                "nome": "diabete complicato",
+                "impairment": "dolore muscolare e astenia agli aa ii",
+                "piede_diabetico": [
+                    true,
+                    false
+                ],
+                "riduzione_visus": [
+                    true,
+                    false
+                ]
+            }
+        ]
+    },
+    "sindrome_da_allettamento": {
+        "apparato": [
+            {
+                "nome": "cardiovascolare",
+                "effetti_complicazioni": [
+                    "intolleranza all’ortostatismo",
+                    "intolleranza allo sforzo",
+                    "tromboflebiti",
+                    "embolia polmonare"
+                ]
+            },
+            {
+                "nome": "respiratorio",
+                "effetti_complicazioni": [
+                    "intolleranza allo sforzo",
+                    "desaturazione",
+                    "ristagno secrezioni bronchiali",
+                    "broncopolmonite"
+                ]
+            },
+            {
+                "nome": "muscolare",
+                "effetti_complicazioni": [
+                    "intolleranza allo sforzo",
+                    "atrofia muscolare"
+                ]
+            },
+            {
+                "nome": "osteoarticolare",
+                "effetti_complicazioni": [
+                    "contratture",
+                    "anchilosi",
+                    "osteoporosi"
+                ]
+            },
+            {
+                "nome": "urinario",
+                "effetti_complicazioni": [
+                    "incontinenza",
+                    "ritenzione acuta",
+                    "infezioni"
+                ]
+            },
+            {
+                "nome": "digerente",
+                "effetti_complicazioni": [
+                    "anoressia",
+                    "stipsi",
+                    "fecalomi con sub-occlusione"
+                ]
+            },
+            {
+                "nome": "cutaneo",
+                "effetti_complicazioni": [
+                    "ulcere da pressione",
+                    "cellulite",
+                    "osteomielite",
+                    "sepsi"
+                ]
+            },
+            {
+                "nome": "neuro_sensoriale",
+                "effetti_complicazioni": [
+                    "declino cognitivo",
+                    "delirium",
+                    "depressione",
+                    "retropulsione"
+                ]
+            }
+        ]
+    },
+    "piano_mobilizzazione_da_allettato": {
+        "mobilizzazione": [
+            "attiva",
+            "passiva"
+        ],
+        "dettagli": [
+            {
+                "postura_letto": "supina",
+                "cambio_postura": "1/2 ora",
+                "numero_operatori": "1",
+                "ausili": "cinture di sollevamento",
+                "note": "piaghe da pressione"
+            },
+            {
+                "postura_letto": "semiseduta",
+                "cambio_postura": "1 ora",
+                "numero_operatori": "2",
+                "ausili": "sollevatori meccanici",
+                "note": "stringa"
+            },
+            {
+                "postura_letto": "seduta",
+                "cambio_postura": "2 ore",
+                "numero_operatori": "stringa",
+                "ausili": "cuscini",
+                "note": "stringa"
+            },
+            {
+                "postura_letto": "laterale",
+                "cambio_postura": "3 ore",
+                "numero_operatori": "stringa",
+                "ausili": "presidi anti-decubito a",
+                "note": "stringa"
+            },
+            {
+                "postura_letto": "prona",
+                "cambio_postura": "4 ore",
+                "numero_operatori": "stringa",
+                "ausili": "presidi anti-trauma",
+                "note": "stringa"
+            },
+            {
+                "postura_letto": "semiprona",
+                "cambio_postura": "stringa",
+                "numero_operatori": "stringa",
+                "ausili": "stringa",
+                "note": "stringa"
+            }
+        ]
+    },
+    "piano_mobilizzazione_da_seduto": {
+        "dettagli": [
+            {
+                "problemi": "semi autosufficiente",
+                "cambio_postura": "1/2 ora",
+                "numero_operatori": "1",
+                "ausili": "mezzi di contenzione",
+                "note": "piaghe da pressione"
+            },
+            {
+                "problemi": "non autosufficiente",
+                "cambio_postura": "1 ora",
+                "numero_operatori": "2",
+                "ausili": "cuscini antidecubito",
+                "note": "stringa"
+            },
+            {
+                "problemi": "piaghe da decubito",
+                "cambio_postura": "2 ore",
+                "numero_operatori": "stringa",
+                "ausili": "stringa",
+                "note": "stringa"
+            }
+        ]
+    },
+    "piano_deambulazione_assistita": {
+        "dettagli": [
+            {
+                "problemi": "semi autosufficiente",
+                "numero_volte_al_giorno": "1",
+                "numero_operatori": "1",
+                "durata": "15 min.",
+                "ausili": "stampelle"
+            },
+            {
+                "problemi": "non autosufficiente",
+                "numero_volte_al_giorno": "2",
+                "numero_operatori": "2",
+                "durata": "20 min.",
+                "ausili": "bastone - treppiede"
+            },
+            {
+                "problemi": "piaghe da decubito",
+                "numero_volte_al_giorno": "3",
+                "numero_operatori": "stringa",
+                "durata": "30 min.",
+                "ausili": "girello"
+            }
+        ]
+    },
+    "data": "AAAA-MM-GG",
+    "infermiere_compilatore": "stringa",
+    "firma": "stringa"
+}

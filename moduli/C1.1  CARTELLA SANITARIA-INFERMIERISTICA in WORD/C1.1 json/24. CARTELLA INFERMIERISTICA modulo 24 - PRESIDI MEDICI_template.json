@@ -1,0 +1,24 @@
+{
+    "utente": {
+        "iniz_cogn": "stringa",
+        "iniz_nom": "stringa",
+        "cod_dossier_utente_n": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "n_prog": "numero"
+    },
+    "dispositivi_presidi_medici": [
+        {
+            "data": "AAAA-MM-GG",
+            "ora": "hh:mm",
+            "tipo_dispositivo": "stringa",
+            "prestazione_eseguita": [
+                "posizionato",
+                "rimosso"
+            ],
+            "altra_prestazione": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

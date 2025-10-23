@@ -1,0 +1,20 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "controlli_inr_coumadin": [
+        {
+            "data": "AAAA-MM-GG",
+            "inr_percentuale": "numero_decimale",
+            "dose": "stringa",
+            "sigla": "stringa",
+            "infermiere": "stringa"
+        }
+    ]
+}

@@ -1,0 +1,39 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_n": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "n_progressivo": "numero",
+        "mese": "stringa",
+        "somministrazione_coumadin_5_mg": [
+            {
+                "gg": "numero",
+                "orario": "hh:mm",
+                "dosaggio": [
+                    "1/4 cp",
+                    "1/2 cp",
+                    "3/4 cp",
+                    "1 cp"
+                ],
+                "sigla_infermiere": "stringa"
+            }
+        ]
+    },
+    "mese_2": "stringa",
+    "somministrazione_coumadin_5_mg_2": [
+        {
+            "gg": "numero",
+            "orario": "hh:mm",
+            "dosaggio": [
+                "1/4 cp",
+                "1/2 cp",
+                "3/4 cp",
+                "1 cp"
+            ],
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

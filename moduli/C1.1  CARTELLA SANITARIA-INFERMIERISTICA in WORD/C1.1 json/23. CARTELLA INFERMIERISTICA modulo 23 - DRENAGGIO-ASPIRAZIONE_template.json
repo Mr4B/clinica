@@ -1,0 +1,24 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "stringa",
+        "numero_progressivo": "stringa"
+    },
+    "drenaggio_aspirazione": [
+        {
+            "data": "AAAA-MM-GG",
+            "ora": "hh:mm",
+            "drenaggio_tipo_dispositivo": "stringa",
+            "prestazione_eseguita": [
+                "posizionato",
+                "rimosso"
+            ],
+            "aspirazione_prestazione": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

@@ -1,0 +1,35 @@
+{
+    "utente": {
+        "iniz_cogn": "stringa",
+        "iniz_nom": "stringa",
+        "cod_dossier_utente_n": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "n_progr": "numero"
+    },
+    "prescrizione_farmaci": [
+        {
+            "data": "AAAA-MM-GG",
+            "farmaci": "stringa",
+            "via": "stringa",
+            "dose": "stringa",
+            "orari": "stringa",
+            "data_e_nr_ricetta_nre": "stringa",
+            "medico_prescrittore": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ],
+    "alla_bisogna": [
+        {
+            "data": "AAAA-MM-GG",
+            "farmaci": "stringa",
+            "via": "stringa",
+            "dose": "stringa",
+            "orari": "stringa",
+            "data_e_nr_ricetta_nre": "stringa",
+            "medico_prescrittore": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

@@ -1,0 +1,334 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "r3": "stringa",
+    "r3d": "stringa",
+    "cartella_infermieristica": {
+        "modulo": "stringa",
+        "misure_isolamento_malattie_infettive": "stringa",
+        "codice_rog": "stringa",
+        "revisione": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "infezioni_condizioni": [
+        {
+            "infezione_condizione": "actinomicosi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "amebiasi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "antrace (carbonchio)",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "artropodi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "ascaridiosi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "ascesso",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "aspergillosi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "botulismo",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "bronchite",
+            "precauzioni_tipo": "D",
+            "precauzioni_durata": "U-24h"
+        },
+        {
+            "infezione_condizione": "brucellosi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "candidosi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "colera",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "congiuntivite gonococcica",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "congiuntivite acuta virale",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "diarrea sospetta infettiva",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "difterite cutanea",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "CN"
+        },
+        {
+            "infezione_condizione": "difterite faringea",
+            "precauzioni_tipo": "D",
+            "precauzioni_durata": "CN"
+        },
+        {
+            "infezione_condizione": "encefaliti o encefalomieliti",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "enterecoccus species",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "enterovirus",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "epatite virale tipo a",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "epatite virale tipo a pazienti con il pannolino",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "epatite virale tipo b",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "F-1"
+        },
+        {
+            "infezione_condizione": "epatite virale tipo c",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "epatite virale tipo e",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "epiglottide da haemophilus influenzale",
+            "precauzioni_tipo": "D",
+            "precauzioni_durata": "U-24h"
+        },
+        {
+            "infezione_condizione": "febbri emorragiche",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "gangrena",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "gastroenteriti",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "gonorrea",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "granuloma inguinale",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "herpes simplex",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "herpes zoster",
+            "precauzioni_tipo": "A/C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "impetigine",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "U-24h"
+        },
+        {
+            "infezione_condizione": "influenza",
+            "precauzioni_tipo": "D",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "intossicazione alimentare",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "legionellosi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "leptospirosi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "listeriosi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "malaria",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "meningiti",
+            "precauzioni_tipo": "D",
+            "precauzioni_durata": "U-24h"
+        },
+        {
+            "infezione_condizione": "morbillo",
+            "precauzioni_tipo": "A",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "pediculosi",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "U-24h"
+        },
+        {
+            "infezione_condizione": "pertosse",
+            "precauzioni_tipo": "D",
+            "precauzioni_durata": "F-2"
+        },
+        {
+            "infezione_condizione": "polmonite",
+            "precauzioni_tipo": "D",
+            "precauzioni_durata": "U-24h"
+        },
+        {
+            "infezione_condizione": "rosolia",
+            "precauzioni_tipo": "D",
+            "precauzioni_durata": "F-3"
+        },
+        {
+            "infezione_condizione": "scabbia",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "U-24h"
+        },
+        {
+            "infezione_condizione": "stafilococco ferita estesa 2",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "streptococco - a ferita estesa 2",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "U-24h"
+        },
+        {
+            "infezione_condizione": "tetano",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "tifo (febbre tifoide)",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "tubercolosi",
+            "precauzioni_tipo": "A",
+            "precauzioni_durata": "F-4"
+        },
+        {
+            "infezione_condizione": "ulcera da decubito infetta",
+            "precauzioni_tipo": "C",
+            "precauzioni_durata": "DI"
+        },
+        {
+            "infezione_condizione": "varicella",
+            "precauzioni_tipo": "A/C",
+            "precauzioni_durata": "F-5"
+        },
+        {
+            "infezione_condizione": "zigomicosi",
+            "precauzioni_tipo": "S",
+            "precauzioni_durata": "stringa"
+        },
+        {
+            "infezione_condizione": "altro",
+            "precauzioni_tipo": "stringa",
+            "precauzioni_durata": "stringa"
+        }
+    ],
+    "tipo_di_precauzioni": {
+        "a": "precauzioni per via aerea",
+        "c": "precauzioni da contatto",
+        "d": "precauzione da droplet",
+        "s": "precauzioni standards (sempre)"
+    },
+    "durata_delle_precauzioni": {
+        "cn": "fino alla fine della terapia antibiotica e coltura negativa a distanza di 24 ore",
+        "di": "per tutta durata della malattia infettiva",
+        "u": "fino al tempo specificato in ore (h) dopo l'inizio effettivo della terapia",
+        "f_1": "fino a 1 settimana dopo l'inizio della sintomatologia",
+        "f_2": "fino a 5 giorni dopo l'inizio della terapia",
+        "f_3": "fino a 7 giorni dopo l'insorgenza dell'eruzione cutanea",
+        "f_4": "fino a 3 esami colturali dell'escreato, raccolti in giorni diversi, negativi.",
+        "f_5": "fino alla cicatrizzazione della lesione"
+    },
+    "misure_da_adottare": [
+        "disinfezione delle mani, uso dei guanti",
+        "camice di protezione o altri vestiti protettivi",
+        "alloggio dei pazienti in camere individuali",
+        "uso mirato di materiale medico",
+        "trasporto dei pazienti infettivi",
+        "decontaminazione e disinfezione degli strumenti",
+        "maschera. occhiali di protezione",
+        "evacuazione e trattamento della biancheria e dei rifiuti",
+        "disinfezione dell'ambiente"
+    ],
+    "data": "AAAA-MM-GG",
+    "ruolo_firma": [
+        "m.m.g.",
+        "infermiere"
+    ],
+    "firma": "stringa"
+}

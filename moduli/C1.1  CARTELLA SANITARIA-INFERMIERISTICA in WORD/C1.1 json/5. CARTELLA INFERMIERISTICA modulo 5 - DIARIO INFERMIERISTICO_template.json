@@ -1,0 +1,31 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "cartella_infermieristica": {
+        "modulo_numero": "numero",
+        "diario_infermieristico": {
+            "codice": "stringa",
+            "revisione": "stringa"
+        }
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "decorso_assistenza_infermieristica": {
+        "tabella_diario": [
+            {
+                "data": "AAAA-MM-GG",
+                "ora": "hh:mm",
+                "rilievi_osservazioni_dati_oggettivi_soggettivi": "stringa",
+                "annotazione_accadimenti_patologici_cadute_eventi_avversi": "stringa",
+                "interventi_assistenziali_messi_in_atto": "stringa",
+                "somministrazione_stupefacenti_farmaci_al_bisogno": "stringa",
+                "firma": "stringa"
+            }
+        ]
+    }
+}

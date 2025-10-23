@@ -1,0 +1,47 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "stringa",
+        "numero_progressivo": "stringa"
+    },
+    "monitoraggio_instabilita_clinica_scala_news": [
+        {
+            "data": "AAAA-MM-GG",
+            "ora": "hh:mm",
+            "frequenza_del_respiro_valore": "numero",
+            "frequenza_del_respiro_punteggio": "numero",
+            "saturazione_ossigeno_valore": "numero",
+            "saturazione_ossigeno_punteggio": "numero",
+            "temperatura_corporea_valore": "numero_decimale",
+            "temperatura_corporea_punteggio": "numero",
+            "pressione_sistolica_valore": "numero",
+            "pressione_sistolica_punteggio": "numero",
+            "frequenza_cardiaca_valore": "numero",
+            "frequenza_cardiaca_punteggio": "numero",
+            "stato_di_coscienza": [
+                "vigile",
+                "richiamo dolore-coma"
+            ],
+            "stato_di_coscienza_punteggio": "numero",
+            "punteggio_totale": "numero",
+            "sigla_infermiere": "stringa"
+        }
+    ],
+    "rischio_clinico_monitoraggio": {
+        "rischio": [
+            "assente",
+            "basso",
+            "medio",
+            "alto"
+        ],
+        "dettaglio_rischio": {
+            "basso": "minimo ogni 4-6 ore",
+            "medio": "almeno ogni ora",
+            "alto": "intervento urgente 118"
+        }
+    }
+}

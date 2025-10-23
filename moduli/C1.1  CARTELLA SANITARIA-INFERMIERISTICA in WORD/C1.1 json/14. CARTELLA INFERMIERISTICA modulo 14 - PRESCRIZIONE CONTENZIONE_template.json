@@ -1,0 +1,104 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "prescrizione_medica": {
+        "problema_episodi_specifici": [
+            "caduta/scivolamento per alzarsi o camminare",
+            "autolesionismo",
+            "aggressività",
+            "rimozione presidi medicali",
+            "eterolesionismo",
+            "altro"
+        ],
+        "motivazione": [
+            "prevenzione cadute",
+            "posturale/riabilitativo",
+            "auto-eterolesionismo",
+            "controllo dei disturbi comportamentali",
+            "salvaguardia personale",
+            "altro"
+        ],
+        "mezzi_di_contenzione": [
+            "fasce e cinture applicate all’utente a letto",
+            "bracciali polsi e caviglie",
+            "tavolino per carrozzina",
+            "lenzuolo contentivo",
+            "corpetto con bretelle",
+            "divaricatore inguinale",
+            "sponde per il letto per la contenzione fisica",
+            "cintura addominale",
+            "corpetti con bretelle e cintura",
+            "cintura pelvica",
+            "altro"
+        ],
+        "modalita_di_applicazione": {
+            "durata": [
+                "tempo indeterminato",
+                "dal",
+                "al"
+            ],
+            "fascia_oraria": {
+                "giorno": {
+                    "dalle_ore": "hh:mm",
+                    "alle_ore": "hh:mm"
+                },
+                "notte": {
+                    "dalle_ore": "hh:mm",
+                    "alle_ore": "hh:mm"
+                }
+            },
+            "sospensione": [
+                "10 minuti di movimento ogni 2/3",
+                "altro"
+            ]
+        },
+        "contenzione_farmacologica": {
+            "farmaco": "stringa",
+            "durata": [
+                "tempo indeterminato",
+                "dal",
+                "al"
+            ],
+            "fascia_oraria": {
+                "giorno": {
+                    "dalle_ore": "hh:mm",
+                    "alle_ore": "hh:mm"
+                },
+                "notte": {
+                    "dalle_ore": "hh:mm",
+                    "alle_ore": "hh:mm"
+                }
+            }
+        },
+        "data": "AAAA-MM-GG",
+        "timbro_e_firma_del_medico": "stringa"
+    },
+    "disposta_dall_infermiere": {
+        "data": "AAAA-MM-GG",
+        "infermiere_nominativo": "stringa",
+        "firma": "stringa"
+    },
+    "consenso_informato_all_uso_dello_strumento_di_contenzione": {
+        "familiare_ads": {
+            "cognome": "stringa",
+            "nome": "stringa",
+            "nato_a": "stringa",
+            "il": "AAAA-MM-GG",
+            "residente_in": "stringa",
+            "via": "stringa"
+        },
+        "acconsente": [
+            true,
+            false
+        ],
+        "data": "AAAA-MM-GG",
+        "firma_dell_utente_o_familiare_ads": "stringa"
+    }
+}

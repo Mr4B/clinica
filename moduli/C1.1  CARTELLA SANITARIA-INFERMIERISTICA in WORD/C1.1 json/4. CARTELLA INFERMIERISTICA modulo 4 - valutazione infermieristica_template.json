@@ -1,0 +1,548 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero",
+        "peso_kg": "numero_decimale",
+        "altezza_mt": "numero_decimale",
+        "imc_kg_m2": "numero_decimale"
+    },
+    "rilievo_parametri_vitali": {
+        "frequenza_cardiaca_b_min": "numero",
+        "temperatura_corporea_c": "numero_decimale",
+        "pressione_arteriosa_mmhg": "stringa",
+        "ecg": [
+            true,
+            false
+        ],
+        "frequenza_respiratoria_atti_min": "numero",
+        "sato2": "numero",
+        "altro_parametri_vitali": "stringa"
+    },
+    "modello_di_percezione_e_di_gestione_della_salute": {
+        "consumo_tabacco": [
+            "no",
+            "si"
+        ],
+        "quantita_tabacco_die_numero_sigarette": "numero",
+        "interrotto_consumo_tabacco": [
+            "no",
+            "si"
+        ],
+        "data_interruzione_tabacco": "AAAA-MM-GG",
+        "consumo_alcolici": [
+            "no",
+            "si"
+        ],
+        "quantita_alcolici_die_cl": "numero",
+        "interrotto_consumo_alcolici": [
+            "no",
+            "si"
+        ],
+        "data_interruzione_alcolici": "AAAA-MM-GG"
+    },
+    "allergie_riferite": {
+        "farmaci": "stringa",
+        "alimenti": "stringa",
+        "altro_allergie": "stringa"
+    },
+    "attivita_fisiche_sportive": [
+        "no",
+        "si"
+    ],
+    "patologie_croniche": [
+        "no",
+        "si"
+    ],
+    "quali_patologie_croniche": "stringa",
+    "anamnesi_ed_esame_obiettivo": {
+        "comunicazione": {
+            "stato_di_coscienza": [
+                "vigile-collaborante",
+                "soporoso",
+                "comatoso"
+            ],
+            "comunicazione": [
+                "orientato",
+                "disorientato",
+                "regolare",
+                "disfonia",
+                "disartria",
+                "afasia",
+                "tracheostomia"
+            ],
+            "udito": [
+                "normoudente",
+                "ipoacusia",
+                "sordità"
+            ],
+            "sordita_lato": [
+                "dx",
+                "sn"
+            ],
+            "protesi_udito": [
+                true,
+                false
+            ],
+            "protesi_udito_lato": [
+                "dx",
+                "sn"
+            ],
+            "vista": [
+                "normovedente",
+                "riduzione visus",
+                "non vedente"
+            ],
+            "protesi_vista": [
+                "occhiali",
+                "lenti a contatto"
+            ],
+            "condizioni_psichiche": [
+                "tranquillo",
+                "irrequieto/ansioso",
+                "agitazione psicomotoria",
+                "apatia/disinteresse",
+                "deficit cognitivo"
+            ]
+        },
+        "respirazione": {
+            "tipologia": [
+                "eupnea",
+                "dispnea"
+            ],
+            "dispnea_tipo": [
+                "da sforzo",
+                "a riposo"
+            ],
+            "presenza_di_tosse": [
+                "no",
+                "si"
+            ],
+            "trattamento_o2": [
+                "no",
+                "si"
+            ],
+            "ossigenoterapia_l_min": "numero",
+            "aspirazioni_secrezioni": [
+                true,
+                false
+            ],
+            "allergie_respirazione": [
+                "bpco",
+                "asma",
+                "pollini",
+                "epiteli animali",
+                "acari"
+            ],
+            "presidi_respirazione": [
+                "cpap",
+                "respiratore",
+                "ventilatore",
+                "cannula guedel"
+            ]
+        },
+        "circolazione_e_tessuti_cutanei": {
+            "presidi_protesi": [
+                "pace maker",
+                "protesi valvolari",
+                "sistema port",
+                "c.v.c.",
+                "altro"
+            ],
+            "altro_presidi_protesi": "stringa",
+            "cute_mucose": [
+                "normocromica",
+                "pallida",
+                "cianotica",
+                "itterica",
+                "disidratata"
+            ],
+            "integrita_cutanea": [
+                "ferite chirurgiche",
+                "ulcere distrofiche",
+                "lividi",
+                "edemi"
+            ],
+            "presenza_lesioni_da_decubito_sede": "stringa",
+            "stadio_lesioni_da_decubito": [
+                "1°",
+                "2°",
+                "3°",
+                "4°"
+            ],
+            "rischio_lesioni_scala_braden": [
+                "basso",
+                "medio",
+                "elevato",
+                "molto elevato"
+            ]
+        },
+        "stato": {
+            "muscolo_scheletrico": {
+                "escursione_articolare": [
+                    "completa",
+                    "altro"
+                ],
+                "altro_escursione_articolare": "stringa",
+                "presa_delle_mani": [
+                    "normale",
+                    "debolezza",
+                    "paralisi"
+                ],
+                "debolezza_mani_lato": [
+                    "dx",
+                    "sn"
+                ],
+                "paralisi_mani_lato": [
+                    "dx",
+                    "sn"
+                ],
+                "presa_arti_inferiori": [
+                    "normale",
+                    "debolezza",
+                    "paralisi"
+                ],
+                "debolezza_arti_inferiori_lato": [
+                    "dx",
+                    "sn"
+                ],
+                "paralisi_arti_inferiori_lato": [
+                    "dx",
+                    "sn"
+                ]
+            },
+            "psico_comportamentale": {
+                "depressione": [
+                    true,
+                    false
+                ],
+                "ansia": [
+                    "lieve",
+                    "moderata",
+                    "grave"
+                ],
+                "agitazione": [
+                    true,
+                    false
+                ]
+            },
+            "riposo_sonno": [
+                "regolare",
+                "irregolare",
+                "insonnia"
+            ]
+        },
+        "dolore": {
+            "scala_nrs": "numero",
+            "tipo_dolore": [
+                "acuto",
+                "cronico"
+            ],
+            "sede_dolore_acuto": "stringa",
+            "sede_dolore_cronico": "stringa",
+            "caratteristiche_dolore": [
+                "intermittente",
+                "ingravescente",
+                "colico"
+            ],
+            "terapia_antidolorifica": [
+                "analgesici",
+                "antipiretici",
+                "antinfiammatori",
+                "oppioidi"
+            ]
+        },
+        "movimento_igiene": {
+            "movimento": {
+                "autonomia": [
+                    "autonomo",
+                    "con assistenza",
+                    "non autonomo"
+                ],
+                "rischio_cadute_conley": [
+                    "rischio minimo",
+                    "aumento del rischio",
+                    "rischio alto"
+                ],
+                "ausili_presidi_movimento": [
+                    "deambulatore/carrozzina"
+                ]
+            },
+            "postura": {
+                "autonomia": [
+                    "autonomo",
+                    "postura obbligata"
+                ],
+                "postura_obbligata_causa": [
+                    "paralisi",
+                    "paresi",
+                    "allettato"
+                ],
+                "ausili_presidi_postura": [
+                    "sponde per letto",
+                    "materasso antidecubito",
+                    "altro"
+                ],
+                "altro_ausili_presidi_postura": "stringa"
+            },
+            "igiene": {
+                "lavarsi": [
+                    "si lava da solo",
+                    "si lava con aiuto",
+                    "totale dipendenza"
+                ],
+                "vestirsi": [
+                    "si veste da solo",
+                    "si veste con aiuto",
+                    "totale dipendenza"
+                ]
+            },
+            "uso_wc": {
+                "autonomia": [
+                    "autonomo",
+                    "con uso di ausili",
+                    "con assistenza",
+                    "totale dipendenza"
+                ],
+                "altro_uso_wc": "stringa"
+            },
+            "bagno_doccia": {
+                "autonomia": [
+                    "autonomo",
+                    "con uso di ausili",
+                    "con assistenza",
+                    "totale dipendenza"
+                ]
+            }
+        },
+        "eliminazione_intestinale": {
+            "grado_autonomia": [
+                "alvo regolare",
+                "incontinente",
+                "diarrea",
+                "stipsi",
+                "utilizzo lassativi",
+                "clisteri evacuativi"
+            ],
+            "frequenza_consistenza": {
+                "frequenza_evacuazioni_numero_die": "numero",
+                "data_ultima_evacuazione": "AAAA-MM-GG",
+                "consistenza": [
+                    "asciutte - disidratate",
+                    "soffici",
+                    "semi liquide",
+                    "liquide"
+                ]
+            },
+            "colore": [
+                "normocromiche",
+                "con tracce di sangue",
+                "con tracce di muco",
+                "melena"
+            ],
+            "presidi_intestinale": [
+                "sedia comoda",
+                "padella",
+                "pannolone",
+                "colostomia /ileostomia",
+                "enterostomia",
+                "drenaggio"
+            ]
+        },
+        "eliminazione_vescicale_urinaria": {
+            "grado_autonomia": [
+                "autonomo",
+                "regolare",
+                "incontinente"
+            ],
+            "incontinente_tipo": [
+                "totale",
+                "parziale"
+            ],
+            "frequenza_quantita": {
+                "minzione": [
+                    "normale",
+                    "disuria",
+                    "nicturia",
+                    "impellente"
+                ],
+                "frequenza_minzione_die": "numero",
+                "diuresi_ml_24ore": "numero",
+                "diuresi_regolarita": [
+                    "regolare",
+                    "anuria",
+                    "oliguria",
+                    "poliuria"
+                ]
+            },
+            "caratteristiche": [
+                "limpide",
+                "ematuria",
+                "piuria",
+                "con sedimento",
+                "ipercromiche",
+                "torride"
+            ],
+            "presidi_urinaria": [
+                "sedia comoda",
+                "pappagallo",
+                "pannolone",
+                "catetere",
+                "condom",
+                "stomia",
+                "drenaggio"
+            ],
+            "stomia_tipo": "stringa",
+            "infezioni_urinarie": [
+                "no",
+                "si"
+            ],
+            "se_si_specificare_segni_e_sintomi": "stringa"
+        },
+        "alimentazione_e_idratazione": {
+            "autonomia": [
+                "totale",
+                "difficoltà masticazione",
+                "parziale con aiuto",
+                "totale dipendente"
+            ],
+            "deglutizione": [
+                "normale",
+                "disfagia a solidi",
+                "disfagia a liquidi"
+            ],
+            "dieta": [
+                "dieta comune",
+                "celiachia",
+                "dieta speciale"
+            ],
+            "dieta_speciale_specifica": "stringa",
+            "restrizioni_dietetiche": "stringa",
+            "intolleranze": "stringa",
+            "allergie_alimentari": "stringa",
+            "stato_nutrizionale_scala_mna": [
+                "buono - normale",
+                "rischio malnutrizione",
+                "malnutrito"
+            ],
+            "variazioni_peso_ultimi_mesi": "numero",
+            "variazione_peso_kg": "numero_decimale",
+            "tipo_variazione_peso": [
+                "aumento",
+                "perdita"
+            ],
+            "obesita": {
+                "peso_kg": "numero_decimale",
+                "altezza_mt": "numero_decimale",
+                "imc": "numero_decimale",
+                "grado_obesita": [
+                    "normale (18,5-25)",
+                    "1° grado (25-30)",
+                    "2° grado (30-40)",
+                    "3° grado (>40)"
+                ]
+            },
+            "presenza_di": [
+                "inappetenza",
+                "polifagia",
+                "disfagia",
+                "nausea",
+                "conato",
+                "vomito",
+                "stomatite",
+                "cachessia"
+            ],
+            "idratazione_stato": [
+                "idratato",
+                "disidratato",
+                "gravemente disidratato"
+            ],
+            "protesi_alimentazione": {
+                "superiore": [
+                    true,
+                    false
+                ],
+                "inferiore": [
+                    true,
+                    false
+                ],
+                "fissa": [
+                    true,
+                    false
+                ],
+                "mobile": [
+                    true,
+                    false
+                ]
+            },
+            "presidi_alimentazione": [
+                "sng",
+                "peg/peg-j",
+                "npt",
+                "altro"
+            ],
+            "altro_presidi_alimentazione": "stringa",
+            "cavo_orale": [
+                "normale",
+                "arrossamenti",
+                "lesioni",
+                "altro"
+            ],
+            "altro_cavo_orale": "stringa",
+            "addome": [
+                "peristalsi",
+                "timpanico",
+                "trattabile",
+                "dolente"
+            ],
+            "idratazione_autonomia": [
+                "spontanea",
+                "con aiuto",
+                "dipendente"
+            ]
+        }
+    },
+    "tao": [
+        true,
+        false
+    ],
+    "ossigenoterapia": [
+        true,
+        false
+    ],
+    "farmaci_h": [
+        true,
+        false
+    ],
+    "diagnosi_infermieristica": {
+        "patologia_prevalente": "stringa",
+        "patologia_secondaria_1": "stringa",
+        "patologia_secondaria_2": "stringa"
+    },
+    "valutazione_bisogni_infermieristici": {
+        "cadenza_monitoraggio_clinico_parametri_vitali": "stringa",
+        "patologie_da_monitorare": "stringa"
+    },
+    "valutazione_del_rischio": {
+        "rischio_cadute_scala_di_conley": [
+            "assente",
+            "basso",
+            "medio",
+            "alto"
+        ],
+        "rischio_infezioni_ica": [
+            "assente",
+            "basso",
+            "medio",
+            "alto"
+        ]
+    },
+    "scale_utilizzate": "stringa",
+    "data": "AAAA-MM-GG",
+    "infermiere_compilatore": "stringa",
+    "firma": "stringa"
+}

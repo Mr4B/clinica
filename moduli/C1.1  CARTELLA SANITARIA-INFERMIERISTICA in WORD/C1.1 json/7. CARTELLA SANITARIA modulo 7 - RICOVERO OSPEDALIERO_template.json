@@ -1,0 +1,231 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "modulo_7": {
+        "titolo": "invio_ps_ricovero_ospedaliero_altri_presidi"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero",
+        "data_invio": "AAAA-MM-GG",
+        "ora_invio": "hh:mm",
+        "motivo_invio": "stringa",
+        "presidio_di_destinazione": "stringa",
+        "modalita_di_trasporto": "stringa",
+        "accompagnato_da": "stringa"
+    },
+    "parametri_invio": {
+        "frequenza_cardiaca": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "valore": "numero"
+        },
+        "temperatura_corporea": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "valore": "numero_decimale"
+        },
+        "pressione_arteriosa": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "sistolica": "numero",
+            "diastolica": "numero"
+        },
+        "frequenza_respiratoria": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "valore": "numero"
+        },
+        "saturazione_ossigeno": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "valore": "numero"
+        },
+        "altro_parametri_invio": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "descrizione": "stringa"
+        }
+    },
+    "patologia_prevalente": "stringa",
+    "patologia_secondaria_1": "stringa",
+    "patologia_secondaria_2": "stringa",
+    "tao": [
+        true,
+        false
+    ],
+    "ossigenoterapia": [
+        true,
+        false
+    ],
+    "farmaci_h": [
+        true,
+        false
+    ],
+    "positivita_sierologica": {
+        "epatite": [
+            "a",
+            "b",
+            "c",
+            "d",
+            "e"
+        ],
+        "hiv": [
+            true,
+            false
+        ],
+        "altro": "stringa"
+    },
+    "allergia_farmaci": {
+        "selezionato": [
+            true,
+            false
+        ],
+        "quali": "stringa"
+    },
+    "intolleranze_alimentari": "stringa",
+    "diete_speciali": "stringa",
+    "allergie": "stringa",
+    "presidi": [
+        "sng",
+        "peg",
+        "npt",
+        "catetere",
+        "stomia",
+        "drenaggio",
+        "altro"
+    ],
+    "protesi": [
+        "dentaria",
+        "acustica",
+        "arti",
+        "altro"
+    ],
+    "altro_generico": "stringa",
+    "terapia_farmacologica_in_atto": [
+        {
+            "farmaco_principio_attivo": "stringa",
+            "dosaggio": "stringa",
+            "orari_somministrazione": "stringa"
+        }
+    ],
+    "allegata_terapia_farmacologica": [
+        true,
+        false
+    ],
+    "contatti": {
+        "infermiere_della_struttura": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "nominativo": "stringa",
+            "telefono": "stringa"
+        },
+        "familiare_di_riferimento_ads": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "nominativo": "stringa",
+            "telefono": "stringa"
+        },
+        "mmg_dell_utente": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "nominativo": "stringa",
+            "telefono": "stringa"
+        }
+    },
+    "documentazione_paziente_consegnata_in_copia": {
+        "carta_identita_codice_fiscale": [
+            true,
+            false
+        ],
+        "tessera_sanitaria": [
+            true,
+            false
+        ],
+        "altro_documento_1": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "descrizione": "stringa"
+        },
+        "altro_documento_2": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "descrizione": "stringa"
+        },
+        "accertamenti_diagnostici": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "descrizione": "stringa"
+        },
+        "altro_documento_3": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "descrizione": "stringa"
+        },
+        "altro_documento_4": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "descrizione": "stringa"
+        }
+    },
+    "corredo_personale_paziente": {
+        "cambio_biancheria": [
+            true,
+            false
+        ],
+        "altro_corredo_1": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "descrizione": "stringa"
+        },
+        "altro_corredo_2": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "descrizione": "stringa"
+        },
+        "altro_corredo_3": {
+            "selezionato": [
+                true,
+                false
+            ],
+            "descrizione": "stringa"
+        }
+    },
+    "infermiere_compilatore_nominativo": "stringa",
+    "firma": "stringa"
+}

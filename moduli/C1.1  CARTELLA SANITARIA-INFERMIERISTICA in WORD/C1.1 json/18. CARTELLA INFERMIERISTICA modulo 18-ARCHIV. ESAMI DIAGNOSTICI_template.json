@@ -1,0 +1,20 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "archivio_esami_diagnostici_accertamenti": [
+        {
+            "data_ricezione": "AAAA-MM-GG",
+            "esame_diagnostico_accertamento": "stringa",
+            "numero_e_data_esame": "stringa",
+            "tipologia_referto": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

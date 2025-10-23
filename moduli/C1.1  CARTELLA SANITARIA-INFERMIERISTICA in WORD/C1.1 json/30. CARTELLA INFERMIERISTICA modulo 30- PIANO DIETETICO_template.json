@@ -1,0 +1,72 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "stringa",
+        "numero_progressivo": "stringa",
+        "patologia": "stringa",
+        "problema": "stringa",
+        "intolleranze_alimentari": "stringa",
+        "altro": "stringa"
+    },
+    "piano_dietetico": {
+        "piatto_unico_frullato": {
+            "dal": "AAAA-MM-GG",
+            "al": "AAAA-MM-GG",
+            "altro": "stringa"
+        },
+        "dieta_semiliquida": {
+            "dal": "AAAA-MM-GG",
+            "al": "AAAA-MM-GG",
+            "altro": "stringa"
+        },
+        "dieta_leggera": {
+            "dal": "AAAA-MM-GG",
+            "al": "AAAA-MM-GG",
+            "altro": "stringa"
+        },
+        "dieta_ricca_di_scorie_diarrea": {
+            "dal": "AAAA-MM-GG",
+            "al": "AAAA-MM-GG",
+            "altro": "stringa"
+        },
+        "dieta_ricca_di_scorie_stipsi": {
+            "dal": "AAAA-MM-GG",
+            "al": "AAAA-MM-GG",
+            "altro": "stringa"
+        },
+        "dieta_cuomadin": {
+            "dal": "AAAA-MM-GG",
+            "al": "AAAA-MM-GG",
+            "altro": "stringa"
+        },
+        "disfagia": "stringa",
+        "diabete": "stringa",
+        "iperuricemia_e_gotta": "stringa",
+        "ipertensione": "stringa",
+        "patologie_renali": "stringa",
+        "dislipidemie": "stringa",
+        "epatopatie": "stringa",
+        "pancreatite_cronica": "stringa",
+        "ernia_iatale": "stringa",
+        "gastrite": "stringa",
+        "ulcera_peptica": "stringa",
+        "malattie_intestinali": "stringa",
+        "osteoporosi": "stringa",
+        "morbo_di_parkinson": "stringa",
+        "obesita": "stringa",
+        "celiachia": "stringa"
+    },
+    "restrizioni_dietetiche": "stringa",
+    "note": "stringa",
+    "data": "AAAA-MM-GG",
+    "compilato_da": [
+        "medico m.g.",
+        "dietista",
+        "infermiere"
+    ],
+    "firma": "stringa"
+}

@@ -1,0 +1,276 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "capacita_di_movimento": {
+        "punteggio_massimo": 40,
+        "opzioni": [
+            {
+                "descrizione": "si sposta dentro e fuori dal letto e in poltrona senza assistenza (eventualmente con canadesi o deambulatore) (ADL D-1)",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "compie questi movimenti se aiutato (ADL D-0)",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "allettato non esce dal letto – necessita di mobilizzazione (ADL D-0)",
+                "punteggio": 40
+            }
+        ]
+    },
+    "igiene_personale": {
+        "punteggio_massimo": 40,
+        "opzioni": [
+            {
+                "descrizione": "autonomo nella cura di sé e nell’igiene personale (ADL A-1; B-1; C-1)",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "difficoltà per raggiungere i servizi igienici, per effettuare autonomamente l’igiene personale e per l’abbigliamento (ADL A-1; B-1; C-0)",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "dipendenza completa nella cura di sé, nell’igiene personale, abbigliamento quotidiano (ADL A-0; B-0; C-0)",
+                "punteggio": 40
+            }
+        ]
+    },
+    "integrita_cutanea": {
+        "punteggio_massimo": 40,
+        "opzioni": [
+            {
+                "descrizione": "cute integra",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "rischio di compromissione dell’integrità cutanea",
+                "punteggio": 10,
+                "braden_punteggio": "numero"
+            },
+            {
+                "descrizione": "lesione da pressione 1°/2° stadio; ferita chirurgica; ferita vascolare",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "compromissione dell’integrità cutanea: lesione da pressione 3°/4° stadio; deiscenza della ferita chirurgica",
+                "punteggio": 40
+            }
+        ]
+    },
+    "alimentazione": {
+        "punteggio_massimo": 80,
+        "opzioni": [
+            {
+                "descrizione": "si alimenta da solo senza assistenza (ADL F-1)",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "difficoltà lieve nella deglutizione/aiuto e supervisione",
+                "punteggio": 10
+            },
+            {
+                "descrizione": "difficoltà grave nella deglutizione (disfagia)",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "deve essere imboccato (ADL F-0)",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "enterale totale",
+                "punteggio": 30
+            },
+            {
+                "descrizione": "parentale totale (NPT)",
+                "punteggio": 80
+            }
+        ]
+    },
+    "stato_cognitivo_comunicazione": {
+        "punteggio_massimo": 60,
+        "opzioni": [
+            {
+                "descrizione": "comprende e risponde correttamente",
+                "punteggio": 0,
+                "spmsq_punteggio": "numero",
+                "spmsq_range": "stringa"
+            },
+            {
+                "descrizione": "comprende ma non può comunicare correttamente",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "non comprende e non risponde correttamente",
+                "punteggio": 40,
+                "spmsq_punteggio": "numero",
+                "spmsq_range": "stringa"
+            },
+            {
+                "descrizione": "b.p.s.d. (behavioral psychological symptoms dementia)",
+                "punteggio": 60,
+                "sintomi_bpsd": [
+                    "sintomi affettivi, depressione, ansia, irritabilità",
+                    "sintomi psicotici, deliri, allucinazioni",
+                    "disturbi della condotta, sonno, alimentazione, sessualità"
+                ]
+            }
+        ]
+    },
+    "eliminazione_urinaria": {
+        "punteggio_massimo": 40,
+        "opzioni": [
+            {
+                "descrizione": "controllo completo (ADL E-1)",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "portatore di catetere",
+                "punteggio": 30
+            },
+            {
+                "descrizione": "incontinenza urinaria occasionale (ADL E-0)",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "stomia urinaria",
+                "punteggio": 30
+            },
+            {
+                "descrizione": "incontinenza completa (ADL E-0); cateterismo estemporaneo",
+                "punteggio": 40
+            }
+        ]
+    },
+    "stato_di_coscienza": {
+        "punteggio_massimo": 40,
+        "opzioni": [
+            {
+                "descrizione": "cosciente",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "stato vegetativo",
+                "punteggio": 30
+            },
+            {
+                "descrizione": "stato di minima coscienza",
+                "punteggio": 40
+            }
+        ]
+    },
+    "eliminazione_intestinale": {
+        "punteggio_massimo": 40,
+        "opzioni": [
+            {
+                "descrizione": "controlla autonomamente l’eliminazione fecale (ADL E-1)",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "evacuazione indotta farmologicamente",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "stomia intestinale",
+                "punteggio": 30
+            },
+            {
+                "descrizione": "incontinenza completa (ADL E-0)",
+                "punteggio": 40
+            }
+        ]
+    },
+    "funzioni_sensoriali": {
+        "punteggio_massimo": 40,
+        "opzioni": [
+            {
+                "descrizione": "normali (non valutare stato di coma o stato vegetativo)",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "deficit uditivo grave permanente (non correggibile)",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "deficit visivo grave permanente (non correggibile)",
+                "punteggio": 40
+            }
+        ]
+    },
+    "ritmo_sonno_veglia": {
+        "punteggio_massimo": 40,
+        "opzioni": [
+            {
+                "descrizione": "dorme tutta la notte",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "insonnia (supporto emotivo)",
+                "punteggio": 20
+            },
+            {
+                "descrizione": "alterazione del ritmo sonno/veglia; stato confusionale notturno (farmaco-resistenza)",
+                "punteggio": 40
+            }
+        ]
+    },
+    "funzioni_respiratorie": {
+        "punteggio_massimo": 100,
+        "opzioni": [
+            {
+                "descrizione": "autonoma",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "necessità di aspirazione",
+                "punteggio": 40
+            },
+            {
+                "descrizione": "tracheostomia",
+                "punteggio": 60
+            },
+            {
+                "descrizione": "ventilazione assistita",
+                "punteggio": 100
+            }
+        ]
+    },
+    "problematiche_terapeutiche": {
+        "punteggio_massimo": 40,
+        "opzioni": [
+            {
+                "descrizione": "nessuna problematica",
+                "punteggio": 0
+            },
+            {
+                "descrizione": "ossigeno terapia",
+                "punteggio": 40
+            },
+            {
+                "descrizione": "terapia del dolore scala *NSR > 1",
+                "punteggio": 40
+            },
+            {
+                "descrizione": "dialisi peritoneale",
+                "punteggio": 40
+            }
+        ]
+    },
+    "punteggio_totale": "numero",
+    "compatibilita_livelli_assistenziali_tipologia_struttura": {
+        "punteggio_0_150": "casa di riposo",
+        "punteggio_151_300": "residenza protetta (r3)"
+    },
+    "data": "AAAA-MM-GG",
+    "compilatore": [
+        "m. m.g.",
+        "infermiere"
+    ],
+    "firma": "stringa"
+}

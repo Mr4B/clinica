@@ -1,0 +1,129 @@
+{
+    "utente": {
+        "iniz_cogn": "stringa",
+        "iniz_nom": "stringa",
+        "cod_dossier_utente_n": "stringa"
+    },
+    "paziente": {
+        "cogn": "stringa",
+        "nome": "stringa",
+        "data_di_nascita": "AAAA-MM-GG",
+        "sesso": [
+            "m",
+            "f"
+        ]
+    },
+    "data_ricovero": "AAAA-MM-GG",
+    "data_dimissione": "AAAA-MM-GG",
+    "ore": "hh:mm",
+    "motivo_dimissione": "stringa",
+    "destinazione_post_dimissione": {
+        "proprio_domicilio": [
+            true,
+            false
+        ],
+        "presso_altra_struttura": "stringa"
+    },
+    "modalita_di_trasporto": "stringa",
+    "accompagnato_da": "stringa",
+    "dimissione_protetta": {
+        "si_no": [
+            true,
+            false
+        ],
+        "se_si_attivazione": [
+            "servizi ast",
+            "servizi sociali",
+            "altro"
+        ]
+    },
+    "diagnosi_dimissione": {
+        "patologia_prevalente": "stringa",
+        "patologia_secondaria_1": "stringa",
+        "patologia_secondaria_2": "stringa"
+    },
+    "parametri_dimissione": {
+        "fc": "numero",
+        "tc": "numero_decimale",
+        "pa": "stringa",
+        "fr": "numero",
+        "sato2": "numero",
+        "altro": "stringa"
+    },
+    "tao": [
+        true,
+        false
+    ],
+    "ossigenoterapia": [
+        true,
+        false
+    ],
+    "farmaci_h": [
+        true,
+        false
+    ],
+    "positivita_sierologica": [
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "hiv",
+        "altro"
+    ],
+    "allergia_farmaci": {
+        "si_no": [
+            true,
+            false
+        ],
+        "se_si_quali": "stringa"
+    },
+    "intolleranze_alimentari": "stringa",
+    "diete_speciali": "stringa",
+    "allergie": "stringa",
+    "presidi": [
+        "sng",
+        "peg",
+        "npt",
+        "catetere",
+        "stomia",
+        "drenaggio",
+        "altro"
+    ],
+    "protesi": [
+        "dentaria",
+        "acustica",
+        "arti",
+        "altro"
+    ],
+    "altro": "stringa",
+    "terapia_farmacologica_in_atto": [
+        {
+            "farmaco_principio_attivo": "stringa",
+            "dosaggio": "stringa",
+            "orari_somministrazione": "stringa"
+        }
+    ],
+    "allegata_terapia_farmacologica": [
+        true,
+        false
+    ],
+    "documentazione_paziente_consegnata_in_copia": [
+        "carta_d_identita_codice_fiscale",
+        "tessera_sanitaria",
+        "altro",
+        "accertamenti_diagnostici",
+        "altro_1",
+        "altro_2",
+        "altro_3"
+    ],
+    "corredo_personale_paziente": [
+        "corredo_biancheria",
+        "altro",
+        "altro_1",
+        "altro_2"
+    ],
+    "note": "stringa",
+    "infermiere_compilatore_nominativo": "stringa",
+    "firma": "stringa"
+}

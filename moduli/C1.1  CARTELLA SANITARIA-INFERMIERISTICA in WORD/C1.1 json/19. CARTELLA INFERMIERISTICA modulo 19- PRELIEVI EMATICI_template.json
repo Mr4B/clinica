@@ -1,0 +1,22 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "prelievi_ematici": [
+        {
+            "data": "AAAA-MM-GG",
+            "ora": "hh:mm",
+            "esame_prescritto": "stringa",
+            "sito_prelievo": "stringa",
+            "quantita_campione": "stringa",
+            "invio_presso": "stringa",
+            "sigla_infermiere": "stringa"
+        }
+    ]
+}

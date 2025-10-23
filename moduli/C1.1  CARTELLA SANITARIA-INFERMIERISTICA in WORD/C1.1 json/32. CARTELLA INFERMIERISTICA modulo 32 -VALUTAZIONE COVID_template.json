@@ -1,0 +1,356 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "paziente": {
+        "anno": "numero",
+        "numero_progressivo": "numero"
+    },
+    "valutazione_epidemiologica_per_affezione_vie_respiratorie": {
+        "esposizione_a_casi_accertati": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data_di_esposizione": "AAAA-MM-GG"
+        },
+        "esposizione_a_casi_sospetti_o_ad_alto_rischio": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data_di_esposizione": "AAAA-MM-GG"
+        },
+        "contatti_con_persone_a_rischio": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data_di_contatto": "AAAA-MM-GG"
+        }
+    },
+    "valutazione_clinica_del_paziente": {
+        "data_di_comparsa_dei_sintomi": "AAAA-MM-GG",
+        "periodo_comparsa_sintomi": [
+            "mattino",
+            "pomeriggio",
+            "sera",
+            "notte",
+            "non definito"
+        ],
+        "temperatura_corporea_maggiore_o_uguale_a_37_5_gradi_c": [
+            true,
+            false
+        ],
+        "temperatura_corporea_gradi_c": "numero_decimale",
+        "tosse": [
+            true,
+            false
+        ],
+        "mal_di_gola": [
+            true,
+            false
+        ],
+        "cefalea": [
+            true,
+            false
+        ],
+        "anosmia": [
+            true,
+            false
+        ],
+        "diarrea": [
+            true,
+            false
+        ],
+        "vomito": [
+            true,
+            false
+        ],
+        "dispnea": [
+            true,
+            false
+        ],
+        "anoressia": [
+            true,
+            false
+        ],
+        "malessere_generale": [
+            true,
+            false
+        ],
+        "congiuntivite": [
+            true,
+            false
+        ],
+        "astenia": [
+            true,
+            false
+        ],
+        "augeusia_disgeusia": [
+            true,
+            false
+        ],
+        "emottisi": [
+            true,
+            false
+        ],
+        "episodi_lipotimici_sincopali": [
+            true,
+            false
+        ],
+        "dolori_muscolari_artro_mialgie": [
+            true,
+            false
+        ],
+        "altri_sintomi": "stringa",
+        "coscienza_alterata": {
+            "risposta": [
+                true,
+                false
+            ],
+            "stato_coscienza": [
+                "vigile",
+                "risponde alla voce",
+                "risponde al dolore",
+                "non risponde"
+            ]
+        },
+        "ha_difficolta_a_respirare_a_riposo": [
+            true,
+            false
+        ],
+        "segni_di_cianosi_periferica": [
+            true,
+            false
+        ],
+        "e_in_grado_di_rimanere_in_piedi": [
+            true,
+            false
+        ],
+        "e_in_grado_di_svolgere_normali_attivita": [
+            true,
+            false
+        ]
+    },
+    "condizioni_di_rischio_stato_vaccinale": {
+        "malattie_polmonari": [
+            true,
+            false
+        ],
+        "malattie_oncologiche": [
+            true,
+            false
+        ],
+        "malattie_cardiache": [
+            true,
+            false
+        ],
+        "malattie_metaboliche": [
+            true,
+            false
+        ],
+        "malattie_renali": [
+            true,
+            false
+        ],
+        "non_autosufficiente": [
+            true,
+            false
+        ],
+        "malattie_del_sistema_immunitario": [
+            true,
+            false
+        ],
+        "vaccinazioni": [
+            "vaccinato per l’antiinfluenzale",
+            "vaccinato per l’antipneumococco",
+            "nessuna delle precedenti vaccinazioni"
+        ]
+    },
+    "monitoraggio_dei_parametri_scala_news": {
+        "parametri_fisiologici": [
+            {
+                "parametro": "frequenza respiratoria",
+                "valore_3_meno": "stringa",
+                "valore_2": "stringa",
+                "valore_1": "stringa",
+                "valore_0": "stringa",
+                "valore_1_piu": "stringa",
+                "valore_2_piu": "stringa",
+                "valore_3_piu": "stringa",
+                "valore_rilevato": "stringa"
+            },
+            {
+                "parametro": "saturazione ossigeno spo2",
+                "valore_3_meno": "stringa",
+                "valore_2": "stringa",
+                "valore_1": "stringa",
+                "valore_0": "stringa",
+                "valore_1_piu": "stringa",
+                "valore_2_piu": "stringa",
+                "valore_3_piu": "stringa",
+                "valore_rilevato": "stringa"
+            },
+            {
+                "parametro": "temperatura corporea",
+                "valore_3_meno": "stringa",
+                "valore_2": "stringa",
+                "valore_1": "stringa",
+                "valore_0": "stringa",
+                "valore_1_piu": "stringa",
+                "valore_2_piu": "stringa",
+                "valore_3_piu": "stringa",
+                "valore_rilevato": "stringa"
+            },
+            {
+                "parametro": "press_arteriosa_sistolica",
+                "valore_3_meno": "stringa",
+                "valore_2": "stringa",
+                "valore_1": "stringa",
+                "valore_0": "stringa",
+                "valore_1_piu": "stringa",
+                "valore_2_piu": "stringa",
+                "valore_3_piu": "stringa",
+                "valore_rilevato": "stringa"
+            },
+            {
+                "parametro": "frequenza cardiaca",
+                "valore_3_meno": "stringa",
+                "valore_2": "stringa",
+                "valore_1": "stringa",
+                "valore_0": "stringa",
+                "valore_1_piu": "stringa",
+                "valore_2_piu": "stringa",
+                "valore_3_piu": "stringa",
+                "valore_rilevato": "stringa"
+            },
+            {
+                "parametro": "stato di coscienza",
+                "valore_3_meno": "stringa",
+                "valore_2": "stringa",
+                "valore_1": "stringa",
+                "valore_0": "stringa",
+                "valore_1_piu": "stringa",
+                "valore_2_piu": "stringa",
+                "valore_3_piu": "stringa",
+                "valore_rilevato": "stringa"
+            }
+        ],
+        "rischio_clinico": [
+            "basso/stabile: 1-4",
+            "medio/instabile: 5-6 o un solo parametro 3",
+            "alto/critico: 7"
+        ],
+        "totale": "numero"
+    },
+    "piano_assistenziale": {
+        "tampone_covid_19": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data": "AAAA-MM-GG",
+            "risultato": [
+                "in attesa",
+                "positivo",
+                "negativo",
+                "dubbio"
+            ]
+        }
+    },
+    "stato_finale_del_paziente_della_valutazione_clinica": {
+        "positivo_al_covid_19_in_isolamento": [
+            true,
+            false
+        ],
+        "positivo_al_covid_19_ricoverato": [
+            true,
+            false
+        ],
+        "negativo_al_controllo_per_covid_19": [
+            true,
+            false
+        ],
+        "altro_stato_influenzale": [
+            true,
+            false
+        ]
+    },
+    "azioni_al_termine_della_valutazione_clinica": {
+        "sorveglianza_clinica_covid_19": [
+            true,
+            false
+        ],
+        "rivalutazione_personale_del_mmg_pls_o_continuita_assistenziale": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data": "AAAA-MM-GG"
+        },
+        "attivazione_dell_unita_speciale_di_continuita_assistenziale_usca": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data": "AAAA-MM-GG"
+        },
+        "attivazione_del_servizio_di_emergenza_territoriale_118": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data": "AAAA-MM-GG"
+        },
+        "segnalazione_al_servizio_di_igiene_e_sanita_pubblica": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data": "AAAA-MM-GG"
+        },
+        "chiusura_della_sorveglianza_clinica_covid_19": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data": "AAAA-MM-GG"
+        }
+    },
+    "valutazione_clinica_firma": {
+        "data": "AAAA-MM-GG",
+        "ruolo": [
+            "infermiere",
+            "m.m.g."
+        ],
+        "firma": "stringa"
+    },
+    "decorso_infezione_covid_19": {
+        "tampone_negativo": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data": "AAAA-MM-GG"
+        },
+        "termine_isolamento": {
+            "risposta": [
+                true,
+                false
+            ],
+            "data": "AAAA-MM-GG"
+        },
+        "altro_specificare": "stringa"
+    },
+    "decorso_infezione_firma": {
+        "data": "AAAA-MM-GG",
+        "ruolo": [
+            "infermiere",
+            "m.m.g."
+        ],
+        "firma": "stringa"
+    }
+}

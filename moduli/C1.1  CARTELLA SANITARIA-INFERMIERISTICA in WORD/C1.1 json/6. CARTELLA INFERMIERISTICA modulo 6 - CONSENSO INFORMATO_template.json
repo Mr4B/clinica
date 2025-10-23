@@ -1,0 +1,75 @@
+{
+    "utente": {
+        "iniziali_cognome": "stringa",
+        "iniziali_nome": "stringa",
+        "codice_dossier_utente_numero": "stringa"
+    },
+    "cartella_infermieristica": {
+        "residenza_protetta_anziani": "stringa",
+        "codice": "stringa",
+        "revisione": "stringa"
+    },
+    "modulo_6": {
+        "consenso_informato_trattamenti_sanitari": {
+            "paziente": {
+                "anno": "numero",
+                "numero_progressivo": "numero",
+                "io_sottoscritto": {
+                    "cognome": "stringa",
+                    "nome": "stringa",
+                    "data_di_nascita": "AAAA-MM-GG",
+                    "luogo_di_nascita": "stringa",
+                    "provincia_nascita": "stringa",
+                    "residente_in": "stringa",
+                    "provincia_residenza": "stringa",
+                    "via": "stringa",
+                    "numero_civico": "stringa"
+                },
+                "dichiaro": {
+                    "qualita_di": [
+                        "paziente sopra identificato",
+                        "rappresentante legale",
+                        "amministratore di sostegno del paziente sopra identificato"
+                    ],
+                    "di_essere_stato_informato_da": {
+                        "tipo_informatore": [
+                            "m.m.g.",
+                            "infermiere"
+                        ],
+                        "informazioni_ricevute": [
+                            "situazione clinica obiettiva riscontrata",
+                            "descrizione dell'intervento ritenuto necessario e rischi derivanti dal rifiuto dell'atto sanitario",
+                            "eventuali alternative diagnostiche e/o terapeutiche",
+                            "tecniche e materiali impiegati",
+                            "benefici attesi",
+                            "rischi presunti",
+                            "eventuali complicanze",
+                            "comportamenti che dovrà seguire per evitare complicazioni successive",
+                            "uso di farmaci prescritti secondo indicazioni cliniche previste dalla letteratura medica o linee guida, al di fuori delle indicazioni previste in scheda tecnica e che tali farmaci restano a carico del paziente in quanto non forniti dal ssn. se ne autorizza specificamente la prescrizione",
+                            "possibilità di una propria revoca del consenso"
+                        ]
+                    },
+                    "di_avere_compreso_linformazione_ricevuta_relativa_ai_seguenti_trattamenti_proposti": {
+                        "tipologia": "stringa",
+                        "finalita": "stringa",
+                        "modalita_terapeutiche": "stringa"
+                    },
+                    "decisione_trattamento_sanitario": [
+                        "accetto di sottopormi al trattamento sanitario proposto",
+                        "rifiuto il trattamento sanitario proposto"
+                    ],
+                    "data_dichiarazione": "AAAA-MM-GG",
+                    "firma_del_dichiarante": "stringa"
+                }
+            },
+            "spazio_riservato_alla_verifica_del_consenso": {
+                "data_verifica": "AAAA-MM-GG",
+                "tipo_verificatore": [
+                    "m.m.g.",
+                    "infermiere"
+                ],
+                "firma_verificatore": "stringa"
+            }
+        }
+    }
+}
