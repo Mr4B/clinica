@@ -62,7 +62,7 @@ class User(SQLModel, table=True):
     username: str = Field(unique=True, index=True, max_length=100)
     hashed_password: str  # conserva l'hash, non la password in chiaro
     # se non hai ancora la tabella 'structure', non mettere foreign_key per ora
-    structure_id: uuid.UUID | None = Field(default=None, index=True)
+    structure_id: uuid.UUID | None = Field(default=None, foreign_key="structure.id")
     role_id: uuid.UUID | None = Field(default=None, foreign_key="role.id")
     is_superuser: bool = False
 

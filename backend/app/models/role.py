@@ -30,6 +30,9 @@ class RolePublic(SQLModel):
     name: str
     modules: list[str]
     created_by: uuid.UUID | None
+    
+class RolesPublic(SQLModel):
+    data: list[RolePublic]
 
 class AssignRoleIn(SQLModel):
     role_id: uuid.UUID

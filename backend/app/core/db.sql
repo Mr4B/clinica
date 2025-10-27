@@ -1,3 +1,4 @@
+-- rotta di gestione creata
 CREATE TABLE "structures" (
     "id" SERIAL,
     "name" varchar(100) NOT NULL UNIQUE,
@@ -5,6 +6,7 @@ CREATE TABLE "structures" (
     CONSTRAINT "pk_table_6_id" PRIMARY KEY ("id")
 );
 
+-- rotta di gestione creata
 CREATE TABLE "users" (
     "id" uuid NOT NULL,
     "first_name" varchar(100),
@@ -19,7 +21,6 @@ CREATE TABLE "users" (
 );
 
 -- La tabella che contiene il catalogo di tutti i moduli disponibili
--- 
 CREATE TABLE "module_catalog" (
     "module_id" SERIAL,
     "code" varchar(10) NOT NULL UNIQUE,
@@ -35,6 +36,7 @@ COMMENT ON COLUMN "module_catalog"."current_schema_version" IS 'Praticamente des
 -- Indexes
 CREATE UNIQUE INDEX "module_catalog_module_code" ON "module_catalog" ("code");
 
+-- rotta di gestione creata
 CREATE TABLE "roles" (
     "id" SERIAL,
     "name" varchar(100) NOT NULL,

@@ -6,7 +6,11 @@ from starlette.middleware.cors import CORSMiddleware
 from app.api.main import api_router
 from app.core.config import settings
 
-import app.models  # noqa: F401
+from app.services.audit import setup_audit_listeners
+
+from app.middleware.audit_middleware import AuditMiddleware
+
+import app.models as models  # noqa: F401
 
 
 
@@ -33,4 +37,12 @@ if settings.all_cors_origins:
         allow_headers=["*"],
     )
 
+app.add_middleware(AuditMiddleware)
+setup_audit_listeners([models.ModuleEntry, models.Dossier])
+
 app.include_router(api_router, prefix=settings.API_V1_STR)
+
+
+@app.get("/")
+async def root():
+    return {"message": "API Running"}
