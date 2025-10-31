@@ -3,9 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Callable, Dict, Tuple, Type, Optional
 from pydantic import BaseModel
-from app.models import (
-    PresaInCaricoV1, PresaInCaricoV2
-)
+from app.models.moduli import ValutazioneInfermieristicaV1
 
 class SchemaInfo:
     model: Type[BaseModel]
@@ -18,8 +16,9 @@ def migrate_presa_in_carico_v1_to_v2(old_data: dict) -> dict:
     return new_data
 
 REGISTRY: Dict[tuple[str,int], SchemaInfo] = {
-    ("ROG26/1.1", 1): SchemaInfo(model=PresaInCaricoV1),
-    ("ROG26/1.1", 2): SchemaInfo(model=PresaInCaricoV2, migrate_from_previous=migrate_presa_in_carico_v1_to_v2),
+    # ("ROG26/1.1", 1): SchemaInfo(model=PresaInCaricoV1),
+    # ("ROG26/1.1", 2): SchemaInfo(model=PresaInCaricoV2, migrate_from_previous=migrate_presa_in_carico_v1_to_v2),
+    ("ROG26/1.4", 1): SchemaInfo(model=ValutazioneInfermieristicaV1),
 }
 
 """ 

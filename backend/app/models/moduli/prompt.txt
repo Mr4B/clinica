@@ -1,0 +1,54 @@
+Ciao, sono Kevin.
+ho bisogno che mi aiuti a creare delle classi pydantic per dei moduli.
+La mia applicazione è costruita in fastAPI e praticamente è per delle case di riposo dove devo gestire dei moduli di pazienti.
+Allora siccome questi sono più di 70 avevo pensato un'unica tabella database con un campo data che è un json crittato.
+Per validare l'inserimento di questo json avevo pensato di fare una classe per ogni modulo in modo da poter poi gestire al meglio il tutto.
+per ogni modulo poi salvo in un registro la versione, il codice del modulo e la classe ad esso associata in modo da poterla riprendere correttamente.
+Quel che ti chiedo è di aiutarmi a generare queste classi modulo per modulo.
+ho generato un json di quel che dovrebbe essere all'incirca il contenuto di ciascun modulo; ti fornisco questo e anche il file word del modulo o pdf dimmi cosa preferisci, così te lo studi e fai la relativa classe.
+Visto che alcuni moduli hanno cose in comune ho pensato di fare anche un file common con le classi comuni dove poi ripescare da li.
+mano a mano che ti passo file dimmi cosa potrei inserire nella classe common e poi andrò a modificare le classi già create.
+siccome ci sono 3 tipi di moduli (macrogruppi) avevo pensato ad una struttura così:
+moduli/ 
+    common.py
+    assistenzialePAI/
+    infermieristicaAssistenziale/
+    sanitariaInfermieristica/
+e in ogni cartella inserirci le classi in ogni file differente e un init dove poi posso importare tutti i file così da ripescarli lì.
+
+
+per ora il file common ha questo contenuto:
+
+"""
+Componenti comuni riusabili tra moduli.
+Solo per concetti che appaiono in MOLTI moduli.
+"""
+from pydantic import BaseModel, Field
+from typing import Optional, Literal
+from datetime import date
+
+class DatiAnagraficiModulo(BaseModel):
+    """Dati anagrafici ripetuti in ogni modulo"""
+    paziente_nominativo: str = Field(max_length=200)
+    anno: int = Field(ge=2000, le=2100)
+    numero_progressivo: int = Field(ge=1)
+    
+
+class MetadatiModulo(BaseModel):
+    """Metadati comuni: intestazione del modulo con inziali e dossier"""
+    inizNome: str = Field(max_length=200)
+    inizCognome: str = Field(max_length=200)
+    dossier: int
+    struttura: Literal["R3", "R3D"] = Field(
+        description="Tipo struttura: R3 o R3D"
+    )
+
+
+class MetadatiCompilazione(BaseModel):
+    """Metadati comuni: chi/quando ha compilato"""
+    data_compilazione: date
+    compilatore: Literal["mmg", "infermiere"]
+    firma: str = Field(max_length=200)
+
+
+quando sei pronto che hai capito il tuo compito dimmelo che ti inizio a passare il primo modulo.

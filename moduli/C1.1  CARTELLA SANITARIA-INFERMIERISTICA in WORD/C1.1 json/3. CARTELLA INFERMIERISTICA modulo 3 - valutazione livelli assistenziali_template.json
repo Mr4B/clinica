@@ -4,7 +4,12 @@
         "iniziali_nome": "stringa",
         "codice_dossier_utente_numero": "stringa"
     },
+    "strutt": [
+        "R3",
+        "R3D"
+    ],
     "paziente": {
+        "nominativo": "stringa",
         "anno": "numero",
         "numero_progressivo": "numero"
     },
