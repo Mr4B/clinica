@@ -2,7 +2,7 @@
 from sqlalchemy import event, inspect
 from sqlalchemy.orm import Session
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.models.audit import AuditLog
+from app.models import AuditLog
 from app.models import User
 from contextvars import ContextVar
 from datetime import datetime, timezone

@@ -1,6 +1,7 @@
 import sentry_sdk
 from fastapi import FastAPI
 from fastapi.routing import APIRoute
+from fastapi.staticfiles import StaticFiles
 from starlette.middleware.cors import CORSMiddleware
 
 from app.api.main import api_router
@@ -12,7 +13,9 @@ from app.middleware.audit_middleware import AuditMiddleware
 
 import app.models as models  # noqa: F401
 
-
+#? per DEMO
+if settings.ENVIRONMENT == "local":
+    from app.api.routes.frontend import router
 
 def custom_generate_unique_id(route: APIRoute) -> str:
     return f"{route.tags[0]}-{route.name}"
@@ -27,6 +30,9 @@ app = FastAPI(
     generate_unique_id_function=custom_generate_unique_id,
 )
 
+if settings.ENVIRONMENT == "local":
+    app.mount("/static", StaticFiles(directory="app/static"), name="static")
+
 # Set all CORS enabled origins
 if settings.all_cors_origins:
     app.add_middleware(
@@ -38,11 +44,15 @@ if settings.all_cors_origins:
     )
 
 app.add_middleware(AuditMiddleware)
-setup_audit_listeners([models.ModuleEntry, models.Dossier])
+setup_audit_listeners([models.ModuleEntry, models.Dossier, models.Patient])
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
+#? per DEMO
+if settings.ENVIRONMENT == "local":
+    app.include_router(router, tags=["frontend"])
 
-@app.get("/")
-async def root():
-    return {"message": "API Running"}
+
+# @app.get("/", tags=["root"])
+# async def root():
+#     return {"message": "API Running"}

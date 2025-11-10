@@ -16,4 +16,5 @@ uv run alembic revision --autogenerate -m "add appointment table"
 uv run alembic upgrade head
 
 per far partire il backend:
+avviare il venvironment virtuale in backend/venv/Scripts/activate 
 uv run uvicorn app.main:app --reload --port 8000

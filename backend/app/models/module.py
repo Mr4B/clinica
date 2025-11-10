@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Optional
 from sqlmodel import SQLModel, Field, Relationship, Column, JSON, Index, Integer, UUID, ForeignKey, String, DateTime, Text
 from datetime import datetime, timezone, date
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.dialects.postgresql import UUID as PGUUID
 from app.services.encryption import field_encryption
 from pydantic import BaseModel, field_validator
 
@@ -12,20 +13,20 @@ from pydantic import BaseModel, field_validator
 # Gestione del catalogo dei moduli
 # ################################
 
-class ModuleCatalog(SQLModel, table=True):
-    __tablename__ = "module_catalog"
+# class ModuleCatalog(SQLModel, table=True):
+    # __tablename__ = "module_catalog"
 
-    module_id: int = Field(primary_key=True)  # SERIAL
-    code: str = Field(max_length=10, unique=True, index=True)
-    name: Optional[str] = Field(default=None, max_length=100)
+    # module_id: int = Field(primary_key=True)  # SERIAL
+    # code: str = Field(max_length=10, unique=True, index=True)
+    # name: Optional[str] = Field(default=None, max_length=100)
 
-    current_schema_version: int = Field(gt=0)  # NOT NULL, >0
-    active: bool = Field(default=True)         # NOT NULL DEFAULT true
-    updated_at: Optional[date] = Field(default=None)
+    # current_schema_version: int = Field(gt=0)  # NOT NULL, >0
+    # active: bool = Field(default=True)         # NOT NULL DEFAULT true
+    # updated_at: Optional[date] = Field(default=None)
 
-    __table_args__ = (
-        Index("module_catalog_module_code", "code", unique=True),
-    )
+    # __table_args__ = (
+    #     Index("module_catalog_module_code", "code", unique=True),
+    # )
     
 
 class ModuleCatalogBase(BaseModel):
@@ -85,59 +86,80 @@ class ModuleCatalogListResponse(BaseModel):
 # Gestione dei singoli moduli
 # ############################
 
-class ModuleEntry(SQLModel, table=True):
-    id = Column(UUID, primary_key=True, default=uuid.uuid4)
-    dossier_id = Column(UUID, ForeignKey("dossiers.id"), nullable=False)
-    module_code = Column(String(50), nullable=False, index=True)
-    schema_version = Column(Integer, nullable=False)
+# class ModuleEntry(SQLModel, table=True):
+    # __tablename__ = "module_entry"
     
-    # Dati del modulo
-    _data_encrypted = Column("data", Text, nullable=False)
+    # model_config = {
+    #     "arbitrary_types_allowed": True,
+    #     "ignored_types": (hybrid_property,)
+    # }
     
-    # Audit trail
-    occurred_at = Column(DateTime(timezone=True), nullable=False) # dovrebbe esserci nei data
-    created_at = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
-    created_by_user_id = Column(UUID, ForeignKey("users.id"))
+    # # ✅ Aggiungi type annotations a TUTTI i campi
+    # id: uuid.UUID = Field( default_factory=uuid.uuid4, sa_column=Column(PGUUID(as_uuid=True), primary_key=True))
+    # dossier_id: uuid.UUID = Field( sa_column=Column(PGUUID(as_uuid=True), ForeignKey("dossiers.id"), nullable=False))
+    # module_code: str = Field(sa_column=Column(String(50), nullable=False, index=True))
+    # schema_version: int = Field(sa_column=Column(Integer, nullable=False))
     
-    # Soft delete
-    deleted_at = Column(DateTime(timezone=True), nullable=True)
-    deleted_by_user_id = Column(UUID, ForeignKey("users.id"), nullable=True)
-    deletion_reason = Column(Text, nullable=True)
+    # # Dati del modulo
+    # data_encrypted: str = Field(sa_column=Column("data", Text, nullable=False))
     
-    # Firma digitale/hash per immutabilità (importante per cartelle cliniche)
-    signature_hash = Column(String(64))  # SHA-256 del contenuto
+    # # Audit trail
+    # occurred_at: datetime = Field(sa_column=Column(DateTime(timezone=True), nullable=False))
+    # created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc), sa_column=Column(DateTime(timezone=True)))
+    # created_by_user_id: Optional[uuid.UUID] = Field(
+    #     default=None,
+    #     sa_column=Column(PGUUID(as_uuid=True), ForeignKey("user.id"))
+    # )
     
-    __table_args__ = (
-        Index('idx_module_dossier', 'dossier_id', 'module_code', 'occurred_at'),
-    )
+    # # Soft delete
+    # deleted_at: Optional[datetime] = Field(
+    #     default=None,
+    #     sa_column=Column(DateTime(timezone=True), nullable=True)
+    # )
+    # deleted_by_user_id: Optional[uuid.UUID] = Field(
+    #     default=None,
+    #     sa_column=Column(PGUUID(as_uuid=True), ForeignKey("user.id"), nullable=True)
+    # )
+    # deletion_reason: Optional[str] = Field(
+    #     default=None,
+    #     sa_column=Column(Text, nullable=True)
+    # )
     
-    @hybrid_property
-    def data(self) -> dict:
-        """Getter: decritta automaticamente"""
-        if self._data_encrypted:
-            try:
-                return field_encryption.decrypt_dict(self._data_encrypted)
-            except Exception as e:
-                # Log errore di decrittazione
-                print(f"Decryption error for entry {self.id}: {e}")
-                return {}
-        return {}
+    # # Firma digitale/hash per immutabilità
+    # signature_hash: Optional[str] = Field(
+    #     default=None,
+    #     sa_column=Column(String(64))
+    # )
     
-    @data.setter
-    def data(self, value: dict):
-        """Setter: critta automaticamente"""
-        if value is not None:
-            self._data_encrypted = field_encryption.encrypt_dict(value)
-        else:
-            self._data_encrypted = None
+    # __table_args__ = (
+    #     Index('idx_module_dossier', 'dossier_id', 'module_code', 'occurred_at'),
+    # )
     
-    def __repr__(self):
-        return f"<ModuleEntry {self.module_code} v{self.schema_version}>"
+    # @hybrid_property
+    # def data(self) -> dict:
+    #     """Getter: decritta automaticamente"""
+    #     if self.data_encrypted:
+    #         try:
+    #             return field_encryption.decrypt_dict(self.data_encrypted)
+    #         except Exception as e:
+    #             print(f"Decryption error for entry {self.id}: {e}")
+    #             return {}
+    #     return {}
     
+    # @data.setter
+    # def data(self, value: dict):
+    #     """Setter: critta automaticamente"""
+    #     if value is not None:
+    #         self.data_encrypted = field_encryption.encrypt_dict(value)
+    #     else:
+    #         self.data_encrypted = None
+    
+    # def __repr__(self):
+    #     return f"<ModuleEntry {self.module_code} v{self.schema_version}>"
     
 class EntryCreate(BaseModel):
     """Schema per creare una nuova entry"""
-    dossier_id: UUID
+    dossier_id: uuid.UUID
     module_code: str = Field(..., description="Codice modulo es. ROG26/1.1")
     schema_version: Optional[int] = Field(None, description="Versione schema (default: ultima)")
     occurred_at: Optional[datetime] = Field(None, description="Timestamp evento clinico")
@@ -152,20 +174,19 @@ class EntryUpdate(BaseModel):
 
 class EntryResponse(BaseModel):
     """Schema risposta entry"""
-    id: UUID
-    dossier_id: UUID
+    id: uuid.UUID
+    dossier_id: uuid.UUID
     module_code: str
     schema_version: int
     occurred_at: datetime
     data: dict
     created_at: datetime
-    created_by_user_id: Optional[UUID]
+    created_by_user_id: Optional[uuid.UUID]
     updated_at: Optional[datetime]
-    updated_by_user_id: Optional[UUID]
+    updated_by_user_id: Optional[uuid.UUID]
     deleted_at: Optional[datetime]
     
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True} 
 
 
 class EntryListResponse(BaseModel):

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il mio profilo - RSA Manager</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        .profile-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 24px;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .profile-avatar-large {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 32px;
+        }
+        
+        .profile-info h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .profile-info p {
+            color: var(--gray-600);
+            font-size: 14px;
+        }
+        
+        .info-grid {
+            display: grid;
+            gap: 24px;
+        }
+        
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .info-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .info-value {
+            font-size: 16px;
+            color: var(--gray-900);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .badge-admin {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .badge-user {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+        
+        .back-button:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="dashboard">
+    <div class="profile-container">
+        <a href="/dashboard" class="back-button">
+            ← Torna alla dashboard
+        </a>
+        
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-avatar-large" id="profileAvatar">--</div>
+                <div class="profile-info">
+                    <h2 id="profileName">Caricamento...</h2>
+                    <p id="profileUsername">@username</p>
+                </div>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Nome</span>
+                    <span class="info-value" id="firstName">-</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Cognome</span>
+                    <span class="info-value" id="lastName">-</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Username</span>
+                    <span class="info-value" id="username">-</span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">Ruolo</span>
+                    <span class="info-value" id="role">
+                        <span class="badge badge-user">Operatore</span>
+                    </span>
+                </div>
+                
+                <div class="info-item">
+                    <span class="info-label">ID Utente</span>
+                    <span class="info-value" id="userId" style="font-family: monospace; font-size: 14px;">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/auth.js"></script>
+    <script>
+        requireAuth();
+        
+        async function loadProfile() {
+            try {
+                const user = await apiCall(`${API_BASE}/users/me`);
+                
+                // Avatar
+                const initials = (user.first_name?.[0] || '') + (user.last_name?.[0] || '');
+                document.getElementById('profileAvatar').textContent = initials.toUpperCase();
+                
+                // Nome completo
+                const fullName = `${user.first_name || ''} ${user.last_name || ''}`.trim();
+                document.getElementById('profileName').textContent = fullName || user.username;
+                document.getElementById('profileUsername').textContent = `@${user.username}`;
+                
+                // Dettagli
+                document.getElementById('firstName').textContent = user.first_name || '-';
+                document.getElementById('lastName').textContent = user.last_name || '-';
+                document.getElementById('username').textContent = user.username;
+                document.getElementById('userId').textContent = user.id;
+                
+                // Badge ruolo
+                const roleElement = document.getElementById('role');
+                if (user.is_superuser) {
+                    roleElement.innerHTML = '<span class="badge badge-admin">Amministratore</span>';
+                } else {
+                    roleElement.innerHTML = '<span class="badge badge-user">Operatore</span>';
+                }
+                
+            } catch (error) {
+                console.error('Errore nel caricamento profilo:', error);
+                alert('Errore nel caricamento del profilo');
+            }
+        }
+        
+        loadProfile();
+    </script>
+</body>
+</html>

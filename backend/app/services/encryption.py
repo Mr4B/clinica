@@ -1,7 +1,7 @@
 # app/utils/encryption.py
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import base64
 import json
 import os
@@ -22,7 +22,7 @@ class FieldEncryption:
         password = os.getenv("MASTER_PASSWORD", "change-me-in-production").encode()
         salt = os.getenv("ENCRYPTION_SALT", "fixed-salt-change-me").encode()
         
-        kdf = PBKDF2(
+        kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
             salt=salt,
@@ -42,6 +42,17 @@ class FieldEncryption:
         encrypted = base64.b64decode(encrypted_str.encode('utf-8'))
         decrypted = self._fernet.decrypt(encrypted)
         return json.loads(decrypted.decode('utf-8'))
+    
+    def encrypt_str(self, data: str) -> str:
+        """Critta una stringa e ritorna base64 string"""
+        encrypted = self._fernet.encrypt(data.encode('utf-8'))
+        return base64.b64encode(encrypted).decode('utf-8')
+    
+    def decrypt_str(self, encrypted_str: str) -> str:
+        """Decritta una stringa base64 e ritorna dizionario"""
+        encrypted = base64.b64decode(encrypted_str.encode('utf-8'))
+        decrypted = self._fernet.decrypt(encrypted)
+        return decrypted.decode('utf-8')
 
 # Singleton
 field_encryption = FieldEncryption()

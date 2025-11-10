@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - RSA Manager</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="dashboard">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="/dashboard" class="header-logo">
+                    <span>🏥</span>
+                    <h2>RSA Manager</h2>
+                </a>
+                
+                <div class="structure-select">
+                    <span>Struttura:</span>
+                    <select id="structureSelect">
+                        <option value="1">Casa di Riposo San Giuseppe</option>
+                        <option value="2">RSA Villa Serena</option>
+                        <option value="3">Centro Alzheimer Giovanni XXIII</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <div class="user-menu">
+                    <button class="user-button" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">--</div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">Caricamento...</span>
+                            <span class="user-role" id="userRole">...</span>
+                        </div>
+                    </button>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile">
+                            <span>👤</span>
+                            <span>Il mio profilo</span>
+                        </a>
+                        <hr>
+                        <button onclick="handleLogout()" class="danger">
+                            <span>🚪</span>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <section class="welcome-section">
+            <h1>Benvenuto, <span id="welcomeName">...</span>!</h1>
+            <p>Scegli una sezione per iniziare a gestire la struttura</p>
+        </section>
+        
+        <div class="cards-grid">
+            <!-- Card Dossiers -->
+            <a href="/dossiers" class="feature-card">
+                <div class="card-icon blue">
+                    📋
+                </div>
+                <h3>Dossiers</h3>
+                <p>Gestisci i dossier clinici dei pazienti e visualizza lo storico delle cartelle</p>
+            </a>
+            
+            <!-- Card Pazienti -->
+            <a href="/pazienti" class="feature-card">
+                <div class="card-icon green">
+                    👥
+                </div>
+                <h3>Pazienti</h3>
+                <p>Anagrafica completa dei pazienti ospiti nella struttura</p>
+            </a>
+            
+            <!-- Card Utenti e Ruoli -->
+            <a href="/utenti" class="feature-card">
+                <div class="card-icon purple">
+                    🔐
+                </div>
+                <h3>Utenti & Ruoli</h3>
+                <p>Gestione degli operatori, medici, infermieri e relativi permessi</p>
+            </a>
+            
+            <!-- Card Moduli -->
+            <a href="/moduli" class="feature-card">
+                <div class="card-icon orange">
+                    📄
+                </div>
+                <h3>Moduli Clinici</h3>
+                <p>Visualizza e compila i moduli per la documentazione sanitaria</p>
+            </a>
+        </div>
+    </main>
+    
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

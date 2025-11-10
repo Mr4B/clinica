@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dossiers - RSA Manager</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="dashboard">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="/dashboard" class="header-logo">
+                    <span>🏥</span>
+                    <h2>RSA Manager</h2>
+                </a>
+            </div>
+            
+            <div class="header-right">
+                <div class="user-menu">
+                    <button class="user-button" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">--</div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">...</span>
+                            <span class="user-role" id="userRole">...</span>
+                        </div>
+                    </button>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile">
+                            <span>👤</span>
+                            <span>Il mio profilo</span>
+                        </a>
+                        <hr>
+                        <button onclick="handleLogout()" class="danger">
+                            <span>🚪</span>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="/dashboard">Dashboard</a> / Dossiers
+        </div>
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">📋 Gestione Dossiers</h1>
+            <button class="btn btn-primary" onclick="showCreateModal()">
+                + Nuovo Dossier
+            </button>
+        </div>
+        
+        <!-- Alert -->
+        <div id="alert" class="alert alert-error" style="display: none; margin-bottom: 20px;"></div>
+        
+        <!-- Filtri -->
+        <div class="filters-bar">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label>Paziente ID</label>
+                    <input type="text" id="filterPatient" placeholder="UUID paziente">
+                </div>
+                
+                <div class="filter-group">
+                    <label>Status</label>
+                    <select id="filterStatus">
+                        <option value="">Tutti</option>
+                        <option value="active">Attivo</option>
+                        <option value="discharged">Dimesso</option>
+                        <option value="transferred">Trasferito</option>
+                    </select>
+                </div>
+                
+                <div class="filter-group">
+                    <label>Data ammissione (da)</label>
+                    <input type="date" id="filterFromDate">
+                </div>
+                
+                <div class="filter-group">
+                    <label>Data ammissione (a)</label>
+                    <input type="date" id="filterToDate">
+                </div>
+            </div>
+            
+            <div class="filter-actions">
+                <button class="btn btn-sm btn-secondary" onclick="resetFilters()">
+                    Reset
+                </button>
+                <button class="btn btn-sm btn-primary" onclick="applyFilters()">
+                    Applica Filtri
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tabella -->
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Paziente</th>
+                            <th>Data Ammissione</th>
+                            <th>Data Dimissione</th>
+                            <th>Care Level</th>
+                            <th>Status</th>
+                            <th>Struttura</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dossiersTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px;">
+                                <div class="loading">Caricamento...</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Paginazione -->
+            <div class="pagination">
+                <span class="pagination-info" id="paginationInfo">-</span>
+                <div class="pagination-buttons">
+                    <button class="btn btn-sm btn-secondary" id="prevPage" onclick="previousPage()">
+                        ← Precedente
+                    </button>
+                    <button class="btn btn-sm btn-secondary" id="nextPage" onclick="nextPage()">
+                        Successiva →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal Creazione -->
+    <div class="modal" id="createModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Nuovo Dossier</h3>
+                <button class="modal-close" onclick="closeCreateModal()">×</button>
+            </div>
+            
+            <form id="createForm" onsubmit="createDossier(event)">
+                <div class="modal-body">
+                    <!-- Selezione Paziente -->
+                    <div class="form-group">
+                        <label>Paziente *</label>
+                        <input type="hidden" id="selectedPatientId">
+                        <div style="padding: 12px; background: #f3f4f6; border-radius: 8px; margin-bottom: 12px;">
+                            <strong id="selectedPatientName">Nessun paziente selezionato</strong>
+                        </div>
+                        
+                        <div class="search-input">
+                            <input 
+                                type="text" 
+                                id="patientSearch" 
+                                placeholder="Cerca paziente per nome o CF..."
+                                oninput="searchPatients()"
+                            >
+                        </div>
+                        
+                        <div class="select-list" id="patientsList">
+                            <div style="padding: 20px; text-align: center; color: #6b7280;">
+                                Caricamento pazienti...
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Ammissione -->
+                    <div class="form-group">
+                        <label for="admissionDate">Data Ammissione *</label>
+                        <input 
+                            type="date" 
+                            id="admissionDate" 
+                            name="admissionDate" 
+                            required
+                        >
+                    </div>
+                    
+                    <!-- ✅ NUOVO: Care Level -->
+                    <div class="form-group">
+                        <label for="careLevel">Livello Assistenziale (Care Level) *</label>
+                        <select id="careLevel" name="careLevel" required>
+                            <option value="">Seleziona livello...</option>
+                            <option value="R3">R3 - Riabilitazione Intensiva</option>
+                            <option value="R3D">R3D - Riabilitazione Intensiva Demenze</option>
+                        </select>
+                        <small style="color: #6b7280; font-size: 12px; display: block; margin-top: 4px;">
+                            Il livello assistenziale determina l'intensità delle cure necessarie
+                        </small>
+                    </div>
+                    
+                    <!-- Motivo Ammissione -->
+                    <div class="form-group">
+                        <label for="admissionReason">Motivo Ammissione</label>
+                        <input 
+                            type="text" 
+                            id="admissionReason" 
+                            name="admissionReason"
+                            placeholder="Es. Post-operatorio, Riabilitazione..."
+                        >
+                    </div>
+                    
+                    <!-- Diagnosi Principale -->
+                    <div class="form-group">
+                        <label for="primaryDiagnosis">Diagnosi Principale</label>
+                        <input 
+                            type="text" 
+                            id="primaryDiagnosis" 
+                            name="primaryDiagnosis"
+                            placeholder="Es. Frattura femore, Alzheimer..."
+                        >
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateModal()">
+                        Annulla
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="createSubmitBtn">
+                        <span>Crea Dossier</span>
+                        <span class="spinner" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Dettaglio -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Dettaglio Dossier</h3>
+                <button class="modal-close" onclick="closeDetailModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Paziente</span>
+                        <span class="detail-value" id="detailPatientName">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Data Ammissione</span>
+                        <span class="detail-value" id="detailAdmissionDate">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Data Dimissione</span>
+                        <span class="detail-value" id="detailDischargeDate">-</span>
+                    </div>
+                    
+                    <!-- ✅ NUOVO: Care Level -->
+                    <div class="detail-item">
+                        <span class="detail-label">Livello Assistenziale</span>
+                        <span class="detail-value" id="detailCareLevel">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Diagnosi Principale</span>
+                        <span class="detail-value" id="detailDiagnosis">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Motivo Ammissione</span>
+                        <span class="detail-value" id="detailReason">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Numero Moduli</span>
+                        <span class="detail-value" id="detailEntriesCount">-</span>
+                    </div>
+                </div>
+                
+                <!-- Lista Moduli -->
+                <div class="modules-list">
+                    <h4>📄 Moduli Clinici</h4>
+                    <div id="modulesList">
+                        <p style="color: #6b7280; text-align: center; padding: 20px;">
+                            Caricamento moduli...
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeDetailModal()">
+                    Chiudi
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+    <script src="/static/js/dossiers.js"></script>
+</body>
+</html>

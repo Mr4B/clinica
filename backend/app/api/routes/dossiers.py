@@ -127,20 +127,50 @@ def get_dossier(
     # ✅ Log accesso
     log_read_access(
         session=session,
-        table_name="dossier",
+        table_name="dossiers",
         record_id=str(dossier_id),
         user=current_user,
         request_info=request_info
     )
     session.commit()
     
-    response_data = dossier.model_dump()
-    response_data["entries_count"] = entries_count
-    response_data["last_entry_date"] = last_entry_date
-    if include_patient:
-        response_data["patient"] = patient_data
+    # response_data = dossier.model_dump()
+    # response_data["entries_count"] = entries_count
+    # response_data["last_entry_date"] = last_entry_date
+    # if include_patient:
+    #     response_data["patient"] = patient_data
     
-    return DossierDetailResponse(**response_data)
+    # return DossierDetailResponse(**response_data)
+    return DossierDetailResponse(
+        # Tutti i campi del dossier
+        id=dossier.id,
+        patient_id=dossier.patient_id,
+        structure_id=dossier.structure_id,
+        care_level=dossier.care_level,
+        admission_date=dossier.admission_date,
+        discharge_date=dossier.discharge_date,
+        utente=dossier.utente,
+        cod_nome=dossier.cod_nome,
+        cod_cognome=dossier.cod_cognome,
+        cod_dossier_n=dossier.cod_dossier_n,
+        data_nascita=dossier.data_nascita,
+        sesso=dossier.sesso,
+        notes=dossier.notes,
+        created_at=dossier.created_at,
+        created_by_user_id=dossier.created_by_user_id,
+        updated_at=dossier.updated_at,
+        deleted_at=dossier.deleted_at,
+        # Campi aggiuntivi
+        entries_count=entries_count,
+        last_entry_date=last_entry_date,
+        patient=patient_data
+    )
+    # return DossierDetailResponse(
+    #     **dossier.model_dump(),
+    #     entries_count=entries_count,
+    #     last_entry_date=last_entry_date,
+    #     patient=patient_data if include_patient else None
+    # )
 
 
 # ============================================================================

@@ -1,61 +1,64 @@
 import uuid
 from datetime import datetime, timezone
-from typing import Optional
-from app.models import Patient, Structure, ModuleEntry
+from typing import Optional, TYPE_CHECKING, List
+from app.models.patient import PatientResponse
 from pydantic import field_validator
 from uuid import UUID
-from sqlalchemy import Enum
+from enum import Enum
 from sqlmodel import Field, Relationship, SQLModel
 
-class CareLevel(str, Enum.Enum):
+if TYPE_CHECKING:
+    from app.models import Patient, Structure, ModuleEntry
+
+class CareLevel(str, Enum):
     R3 = "R3"
     R3D = "R3D"
 
-class Dossier(SQLModel, table=True):
-    """
-    Modello dossier sanitario.
-    Contiene tutti i moduli clinici di un paziente in una struttura.
-    """
-    __tablename__ = "dossier"
+# class Dossier(SQLModel, table=True):
+#     """
+#     Modello dossier sanitario.
+#     Contiene tutti i moduli clinici di un paziente in una struttura.
+#     """
+#     __tablename__ = "dossiers"
     
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+#     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     
-    # Riferimenti
-    patient_id: uuid.UUID = Field(foreign_key="patient.id", index=True)
-    structure_id: uuid.UUID = Field(foreign_key="structure.id", index=True)
+#     # Riferimenti
+#     patient_id: uuid.UUID = Field(foreign_key="patient.id", index=True)
+#     structure_id: uuid.UUID = Field(foreign_key="structure.id", index=True)
     
-    # Date ricovero/dimissione
-    admission_date: datetime = Field(index=True)
-    discharge_date: Optional[datetime] = Field(default=None, index=True)
+#     # Date ricovero/dimissione
+#     admission_date: datetime = Field(index=True)
+#     discharge_date: Optional[datetime] = Field(default=None, index=True)
     
-    # livello assistenziale con vincolo R3 o R3D
-    care_level: CareLevel = Field(index=True, sa_column_kwargs={"nullable": False})
+#     # livello assistenziale con vincolo R3 o R3D
+#     care_level: CareLevel = Field(index=True, sa_column_kwargs={"nullable": False})
     
-    # Dati del paziente (se non si vuol fare la registrazione del paziente)
-    utente: Optional[str] = Field(default=None)
-    cod_nome: Optional[str] = Field(default=None)
-    cod_cognome: Optional[str] = Field(default=None)
-    cod_dossier_n: Optional[str] = Field(default=None)
-    data_nascita: Optional[datetime] = Field(default=None)
-    sesso: Optional[str] = Field(default=None)
+#     # Dati del paziente (se non si vuol fare la registrazione del paziente)
+#     utente: Optional[str] = Field(default=None)
+#     cod_nome: Optional[str] = Field(default=None)
+#     cod_cognome: Optional[str] = Field(default=None)
+#     cod_dossier_n: Optional[str] = Field(default=None)
+#     data_nascita: Optional[datetime] = Field(default=None)
+#     sesso: Optional[str] = Field(default=None)
     
-    # Note generali
-    notes: Optional[str] = Field(default=None)
+#     # Note generali
+#     notes: Optional[str] = Field(default=None)
     
-    # Audit
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    created_by_user_id: uuid.UUID = Field(foreign_key="user.id")
-    updated_at: Optional[datetime] = Field(default=None)
-    updated_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
+#     # Audit
+#     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+#     created_by_user_id: uuid.UUID = Field(foreign_key="user.id")
+#     updated_at: Optional[datetime] = Field(default=None)
+#     updated_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
     
-    # Soft delete
-    deleted_at: Optional[datetime] = Field(default=None, index=True)
-    deleted_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
+#     # Soft delete
+#     deleted_at: Optional[datetime] = Field(default=None, index=True)
+#     deleted_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
     
-    # Relationships
-    patient: Patient = Relationship(back_populates="dossiers")
-    structure: Structure = Relationship(back_populates="dossiers")
-    entries: list["ModuleEntry"] = Relationship(back_populates="dossier")
+#     # Relationships
+#     patient:   Optional["Patient"]   = Relationship(back_populates="dossiers")
+#     structure: Optional["Structure"] = Relationship(back_populates="dossiers")
+#     entries:   list["ModuleEntry"]   = Relationship(back_populates="dossier")
 
 
 class DossierBase(SQLModel):
@@ -112,6 +115,7 @@ class DossierDetailResponse(DossierResponse):
     """Response con dati completi inclusi entry count"""
     entries_count: int = 0
     last_entry_date: Optional[datetime] = None
+    patient: Optional[PatientResponse] = None  
 
 
 class DossierListResponse(SQLModel):

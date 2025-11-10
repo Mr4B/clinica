@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSA Manager - Home</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <script src="/static/js/auth.js"></script>
+    <script>
+        // Redirect automatico
+        if (TokenManager.isAuthenticated()) {
+            window.location.href = '/dashboard';
+        } else {
+            window.location.href = '/login';
+        }
+    </script>
+</body>
+</html>

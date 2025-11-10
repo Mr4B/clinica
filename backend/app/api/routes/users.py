@@ -23,7 +23,7 @@ def read_users(session: SessionDep, skip: int = 0, limit: int = 100) -> Any:
     return UsersPublic(data=users, count=count)
 
 
-@router.post("/", dependencies=[Depends(get_current_active_superuser)], response_model=UserPublic, status_code=201)
+@router.post("/", dependencies=[Depends(get_current_active_superuser)], response_model=UserPublic, status_code=201) # rotta per creare utenti da parte di superuser
 def create_user(*, session: SessionDep, user_in: UserCreate) -> Any:
     # username univoco
     exists = session.exec(select(User).where(User.username == user_in.username)).first()

@@ -1,78 +1,85 @@
 from pydantic import field_validator
 from datetime import datetime, date, timezone
-from typing import Optional
+from typing import Optional, TYPE_CHECKING, List
 from sqlmodel import SQLModel, Field, Relationship, Column, JSON, Text
 from sqlalchemy.ext.hybrid import hybrid_property
 from app.services.encryption import field_encryption
 import uuid
-from app.models import Dossier
 
-class Patient(SQLModel, table=True):
-    """
-    Modello paziente (anagrafica).
-    Contiene dati anagrafici e clinici di base.
-    """
-    __tablename__ = "patient"
+if TYPE_CHECKING:
+    from app.models import Dossier
+
+# class Patient(SQLModel, table=True):
+#     """
+#     Modello paziente (anagrafica).
+#     Contiene dati anagrafici e clinici di base.
+#     """
+#     __tablename__ = "patient"
     
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+#     model_config = {
+#         "arbitrary_types_allowed": True,
+#         "ignored_types": (hybrid_property,)
+#     }
     
-    # Dati anagrafici
-    first_name: str = Field(max_length=100, index=True)
-    last_name: str = Field(max_length=100, index=True)
-    fiscal_code: str = Field(max_length=16, unique=True, index=True)  # Codice fiscale
-    date_of_birth: date
-    place_of_birth: str = Field(max_length=200)
-    gender: str = Field(max_length=1)  # M/F/X
+#     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     
-    # Contatti
-    phone: Optional[str] = Field(default=None, max_length=20)
-    email: Optional[str] = Field(default=None, max_length=255)
-    address: Optional[str] = Field(default=None, max_length=500)
-    city: Optional[str] = Field(default=None, max_length=100)
-    postal_code: Optional[str] = Field(default=None, max_length=10)
-    province: Optional[str] = Field(default=None, max_length=2)  # PU, RM, MI...
+#     # Dati anagrafici
+#     first_name: str = Field(max_length=100, index=True)
+#     last_name: str = Field(max_length=100, index=True)
+#     fiscal_code: str = Field(max_length=16, unique=True, index=True)  # Codice fiscale
+#     date_of_birth: date
+#     place_of_birth: str = Field(max_length=200)
+#     gender: str = Field(max_length=1)  # M/F/X
     
-    # Dati sanitari base
-    # health_card_number: Optional[str] = Field(default=None, max_length=50)  # Tessera sanitaria
-    health_card_number_encrypted =  Column("health_card_number", Text, default=None)  # Tessera sanitaria cifrata
-    @hybrid_property
-    def health_card_number(self) -> str:
-        """Getter: decritta automaticamente"""
-        if self.health_card_number_encrypted:
-            try:
-                return field_encryption.decrypt_dict(self.health_card_number_encrypted)
-            except Exception as e:
-                print(f"Decryption error for entry {self.id}: {e}")
-                return {}
-        return {}
+#     # Contatti
+#     phone: Optional[str] = Field(default=None, max_length=20)
+#     email: Optional[str] = Field(default=None, max_length=255)
+#     address: Optional[str] = Field(default=None, max_length=500)
+#     city: Optional[str] = Field(default=None, max_length=100)
+#     postal_code: Optional[str] = Field(default=None, max_length=10)
+#     province: Optional[str] = Field(default=None, max_length=2)  # PU, RM, MI...
     
-    @health_card_number.setter
-    def health_card_number(self, value: str | None):
-        """Setter: critta automaticamente"""            
-        self.health_card_number_encrypted = field_encryption.encrypt_dict(value) if value else None
+#     # Dati sanitari base
+#     # health_card_number: Optional[str] = Field(default=None, max_length=50)  # Tessera sanitaria
+#     health_card_number_encrypted: Optional[str] = Field(default=None, sa_column=Column("health_card_number", Text))
+#     @hybrid_property
+#     def health_card_number(self) -> str:
+#         """Getter: decritta automaticamente"""
+#         if self.health_card_number_encrypted:
+#             try:
+#                 return field_encryption.decrypt_dict(self.health_card_number_encrypted)
+#             except Exception as e:
+#                 print(f"Decryption error for entry {self.id}: {e}")
+#                 return {}
+#         return {}
+    
+#     @health_card_number.setter
+#     def health_card_number(self, value: str | None):
+#         """Setter: critta automaticamente"""            
+#         self.health_card_number_encrypted = field_encryption.encrypt_dict(value) if value else None
             
-    # Contatti emergenza
-    emergency_contact_name: Optional[str] = Field(default=None, max_length=200)
-    emergency_contact_phone: Optional[str] = Field(default=None, max_length=20)
-    emergency_contact_relationship: Optional[str] = Field(default=None, max_length=100)
+#     # Contatti emergenza
+#     emergency_contact_name: Optional[str] = Field(default=None, max_length=200)
+#     emergency_contact_phone: Optional[str] = Field(default=None, max_length=20)
+#     emergency_contact_relationship: Optional[str] = Field(default=None, max_length=100)
     
-    # Allergie e note importanti (JSON per flessibilità)
-    allergies: Optional[list[str]] = Field(default=None, sa_column=Column(JSON))
-    chronic_conditions: Optional[list[str]] = Field(default=None, sa_column=Column(JSON))
-    notes: Optional[str] = Field(default=None)
+#     # Allergie e note importanti (JSON per flessibilità)
+#     allergies: Optional[list[str]] = Field(default=None, sa_column=Column(JSON))
+#     chronic_conditions: Optional[list[str]] = Field(default=None, sa_column=Column(JSON))
+#     notes: Optional[str] = Field(default=None)
     
-    # Audit
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
-    created_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
-    updated_at: Optional[datetime] = Field(default=None)
-    updated_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
+#     # Audit
+#     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+#     created_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
+#     updated_at: Optional[datetime] = Field(default=None)
+#     updated_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
     
-    # Soft delete
-    deleted_at: Optional[datetime] = Field(default=None, index=True)
-    deleted_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
+#     # Soft delete
+#     deleted_at: Optional[datetime] = Field(default=None, index=True)
+#     deleted_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
     
-    # Relationships
-    dossiers: list["Dossier"] = Relationship(back_populates="patient")
+#     # Relationships
+#     dossiers: list["Dossier"] = Relationship(back_populates="patient")
     
 
 
@@ -84,7 +91,7 @@ class PatientBase(SQLModel):
     fiscal_code: str = Field(min_length=16, max_length=16)
     date_of_birth: date
     place_of_birth: str
-    gender: str = Field(pattern="^[MFX]$")
+    gender: str
     phone: Optional[str] = None
     email: Optional[str] = None
     address: Optional[str] = None
@@ -105,6 +112,13 @@ class PatientBase(SQLModel):
         if not v.isalnum():
             raise ValueError("Fiscal code must be alphanumeric")
         return v.upper()
+    
+    @field_validator('gender')
+    @classmethod
+    def validate_gender(cls, v):
+        if v not in ['M', 'F', 'X']:
+            raise ValueError("Gender must be M, F, or X")
+        return v
 
 
 class PatientCreate(PatientBase):
@@ -135,8 +149,7 @@ class PatientResponse(PatientBase):
     updated_at: Optional[datetime]
     deleted_at: Optional[datetime]
     
-    class Config:
-        from_attributes = True
+    model_config = {"from_attributes": True}
 
 
 class PatientListResponse(SQLModel):

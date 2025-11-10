@@ -1,7 +1,7 @@
 # app/services/module_service.py
+from __future__ import annotations
 from datetime import datetime
 from pydantic import BaseModel
-from __future__ import annotations
 
 from app.models import ModuleEntry
 from app.module_registry import REGISTRY

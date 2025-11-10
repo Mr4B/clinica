@@ -1,21 +1,33 @@
 from __future__ import annotations
 import uuid
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Optional
 from sqlmodel import SQLModel, Field, Relationship, Column, JSON
+from sqlalchemy.orm import Mapped
 
-if TYPE_CHECKING:   # import solo per mypy/IDE, non a runtime
-    from .user import User
+# if TYPE_CHECKING:
+#     from .user import User
 
-class Role(SQLModel, table=True):
-    __tablename__ = "role"
+# class Role(SQLModel, table=True):
+#     __tablename__ = "role"
 
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-    name: str = Field(unique=True, index=True, max_length=100)
-    # semplice lista di moduli in JSON per iniziare; potrai normalizzare in seguito
-    modules: list[str] = Field(default_factory=list, sa_column=Column(JSON))
-    created_by: uuid.UUID | None = Field(default=None, foreign_key="user.id")
+#     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+#     name: str = Field(unique=True, index=True, max_length=100)
+#     modules: List[str] = Field(default_factory=list, sa_column=Column(JSON))
+#     created_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
 
-    # users: list["User"] = Relationship(back_populates="role")
+#     # Relazione principale: tutti gli utenti con questo ruolo
+#     users: Mapped[List["User"]] = Relationship(
+#         back_populates="role",
+#         sa_relationship_kwargs={"foreign_keys": "[User.role_id]"}
+#     )
+    
+#     # Relazione per tracciare chi ha creato il ruolo
+#     created_by: Mapped[Optional["User"]] = Relationship(
+#         sa_relationship_kwargs={
+#             "foreign_keys": "[Role.created_by_user_id]",
+#             "post_update": True
+#         }
+#     )
 
 class RoleCreate(SQLModel):
     name: str

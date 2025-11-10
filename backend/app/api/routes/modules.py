@@ -182,7 +182,6 @@ def create_entry(
             detail=f"Data validation failed: {str(e)}"
         )
     
-    # ✅ Crea entry
     entry = ModuleEntry(
         dossier_id=entry_data.dossier_id,
         module_code=entry_data.module_code,

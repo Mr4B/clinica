@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pazienti - RSA Manager</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="dashboard">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="/dashboard" class="header-logo">
+                    <span>🏥</span>
+                    <h2>RSA Manager</h2>
+                </a>
+            </div>
+            
+            <div class="header-right">
+                <div class="user-menu">
+                    <button class="user-button" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">--</div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">...</span>
+                            <span class="user-role" id="userRole">...</span>
+                        </div>
+                    </button>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile">
+                            <span>👤</span>
+                            <span>Il mio profilo</span>
+                        </a>
+                        <hr>
+                        <button onclick="handleLogout()" class="danger">
+                            <span>🚪</span>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="/dashboard">Dashboard</a> / Pazienti
+        </div>
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">👥 Gestione Pazienti</h1>
+            <button class="btn btn-primary" onclick="showCreateModal()">
+                + Nuovo Paziente
+            </button>
+        </div>
+        
+        <!-- Alert -->
+        <div id="alert" class="alert alert-error" style="display: none; margin-bottom: 20px;"></div>
+        
+        <!-- Barra Ricerca -->
+        <div class="filters-bar">
+            <div class="filters-grid">
+                <div class="filter-group" style="grid-column: 1 / -1;">
+                    <label>Cerca paziente</label>
+                    <input 
+                        type="text" 
+                        id="searchQuery" 
+                        placeholder="Cerca per nome, cognome o codice fiscale..."
+                        onkeypress="if(event.key === 'Enter') applySearch()"
+                    >
+                </div>
+            </div>
+            
+            <div class="filter-actions">
+                <button class="btn btn-sm btn-secondary" onclick="resetSearch()">
+                    Reset
+                </button>
+                <button class="btn btn-sm btn-primary" onclick="applySearch()">
+                    🔍 Cerca
+                </button>
+            </div>
+        </div>
+        
+        <!-- Tabella -->
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Paziente</th>
+                            <th>Data Nascita</th>
+                            <th>Età</th>
+                            <th>Sesso</th>
+                            <th>Dossier Attivo</th>
+                            <th>Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="patientsTableBody">
+                        <tr>
+                            <td colspan="6" style="text-align: center; padding: 40px;">
+                                <div class="loading">Caricamento...</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Paginazione -->
+            <div class="pagination">
+                <span class="pagination-info" id="paginationInfo">-</span>
+                <div class="pagination-buttons">
+                    <button class="btn btn-sm btn-secondary" id="prevPage" onclick="previousPage()">
+                        ← Precedente
+                    </button>
+                    <button class="btn btn-sm btn-secondary" id="nextPage" onclick="nextPage()">
+                        Successiva →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal Creazione -->
+    <div class="modal" id="createModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Nuovo Paziente</h3>
+                <button class="modal-close" onclick="closeCreateModal()">×</button>
+            </div>
+            
+            <form id="createForm" onsubmit="createPatient(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="firstName">Nome *</label>
+                        <input 
+                            type="text" 
+                            id="firstName" 
+                            name="firstName" 
+                            required
+                            placeholder="Es. Mario"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName">Cognome *</label>
+                        <input 
+                            type="text" 
+                            id="lastName" 
+                            name="lastName" 
+                            required
+                            placeholder="Es. Rossi"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fiscalCode">Codice Fiscale *</label>
+                        <input 
+                            type="text" 
+                            id="fiscalCode" 
+                            name="fiscalCode" 
+                            required
+                            maxlength="16"
+                            minlength="16"
+                            placeholder="RSSMRA80A01H501U"
+                            style="text-transform: uppercase;"
+                        >
+                        <small style="color: #6b7280; font-size: 12px;">16 caratteri</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dateOfBirth">Data di Nascita *</label>
+                        <input 
+                            type="date" 
+                            id="dateOfBirth" 
+                            name="dateOfBirth" 
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gender">Sesso</label>
+                        <select id="gender" name="gender">
+                            <option value="">Non specificato</option>
+                            <option value="M">Maschio</option>
+                            <option value="F">Femmina</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="placeOfBirth">Luogo di Nascita</label>
+                        <input 
+                            type="text" 
+                            id="placeOfBirth" 
+                            name="placeOfBirth"
+                            placeholder="Es. Milano (MI)"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Indirizzo</label>
+                        <input 
+                            type="text" 
+                            id="address" 
+                            name="address"
+                            placeholder="Es. Via Roma 123, Milano"
+                        >
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateModal()">
+                        Annulla
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="createSubmitBtn">
+                        <span>Crea Paziente</span>
+                        <span class="spinner" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Dettaglio -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Dettaglio Paziente</h3>
+                <button class="modal-close" onclick="closeDetailModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="detail-grid">
+                    <div class="detail-item" style="grid-column: 1 / -1;">
+                        <span class="detail-label">Nome Completo</span>
+                        <span class="detail-value" id="detailName" style="font-size: 18px; font-weight: 600;">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Codice Fiscale</span>
+                        <span class="detail-value" id="detailFiscalCode" style="font-family: monospace;">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Data di Nascita</span>
+                        <span class="detail-value" id="detailDateOfBirth">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Età</span>
+                        <span class="detail-value" id="detailAge">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Sesso</span>
+                        <span class="detail-value" id="detailGender">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Luogo di Nascita</span>
+                        <span class="detail-value" id="detailPlaceOfBirth">-</span>
+                    </div>
+                    
+                    <div class="detail-item" style="grid-column: 1 / -1;">
+                        <span class="detail-label">Indirizzo</span>
+                        <span class="detail-value" id="detailAddress">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Data Creazione</span>
+                        <span class="detail-value" id="detailCreatedAt">-</span>
+                    </div>
+                </div>
+                
+                <!-- Lista Dossiers -->
+                <div class="modules-list">
+                    <h4>📋 Dossiers del Paziente</h4>
+                    <div id="patientDossiersList">
+                        <p style="color: #6b7280; text-align: center; padding: 20px;">
+                            Caricamento dossiers...
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeDetailModal()">
+                    Chiudi
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+    <script src="/static/js/patients.js"></script>
+</body>
+</html>
