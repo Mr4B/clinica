@@ -25,7 +25,7 @@ router = APIRouter(prefix="/modules", tags=["modules"])
 # CREATE MODULE
 # =========================================================
 
-# @router.post("/cataglogs", response_model=ModuleCatalogResponse, status_code=status.HTTP_201_CREATED) #Per ora il post non lo mettiamo
+@router.post("/catalogs", response_model=ModuleCatalogResponse, status_code=status.HTTP_201_CREATED) #Per ora il post non lo mettiamo
 def create_module(
     data: ModuleCatalogCreate,
     session: SessionDep,
@@ -78,7 +78,7 @@ def list_modules(
         )
 
     count_stmt = select(func.count()).select_from(stmt.subquery())
-    total = session.exec(count_stmt).scalar_one()
+    total = session.exec(count_stmt).one()
 
     stmt = stmt.order_by(ModuleCatalog.code.asc()).offset((page - 1) * page_size).limit(page_size)
     items = session.exec(stmt).all()
@@ -95,7 +95,7 @@ def list_modules(
 # =========================================================
 # UPDATE MODULE
 # =========================================================
-@router.patch("/cataglogs/{module_id}", response_model=ModuleCatalogResponse)
+@router.patch("/catalogs/{module_id}", response_model=ModuleCatalogResponse)
 def update_module(
     module_id: int,
     data: ModuleCatalogUpdate,
@@ -121,7 +121,7 @@ def update_module(
 # =========================================================
 # DELETE MODULE
 # =========================================================
-@router.delete("/cataglogs/{module_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/catalogs/{module_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_module(module_id: int, session: SessionDep, current_user: CurrentUser):
     obj = session.get(ModuleCatalog, module_id)
     if not obj:

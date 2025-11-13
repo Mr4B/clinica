@@ -41,7 +41,6 @@ class RolePublic(SQLModel):
     id: uuid.UUID
     name: str
     modules: list[str]
-    created_by: uuid.UUID | None
     
 class RolesPublic(SQLModel):
     data: list[RolePublic]

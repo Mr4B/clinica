@@ -3,6 +3,7 @@ import uuid
 from typing import Any
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import select
+from sqlalchemy.exc import IntegrityError
 from app.api.deps import SessionDep, get_current_active_superuser, get_current_user
 from app.models import Role, RoleCreate, RoleUpdate, RolePublic, RolesPublic
 
@@ -25,12 +26,40 @@ def read_role(role_id: uuid.UUID, session: SessionDep) -> Any:
 
 
 @router.post("/", response_model=RolePublic)
-def create_role(role_in: RoleCreate, session: SessionDep, current_user=Depends(get_current_user)) -> Any:
-    role = Role(name=role_in.name, modules=role_in.modules, created_by=current_user.id)
+def create_role(
+    role_in: RoleCreate, 
+    session: SessionDep, 
+    current_user=Depends(get_current_user)
+) -> Any:
+    # Opzione 1: Controllo preventivo (consigliato)
+    existing = session.exec(
+        select(Role).where(Role.name == role_in.name)
+    ).first()
+    
+    if existing:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail=f"Un ruolo con il nome '{role_in.name}' esiste già"
+        )
+    
+    role = Role(
+        name=role_in.name, 
+        modules=role_in.modules, 
+        created_by=current_user.id
+    )
     session.add(role)
-    session.commit()
-    session.refresh(role)
-    return role
+    
+    try:
+        session.commit()
+        session.refresh(role)
+        return role
+    except IntegrityError as e:
+        session.rollback()
+        # Fallback per altri vincoli di unicità
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Violazione del vincolo di unicità"
+        )
 
 
 @router.put("/{role_id}", response_model=RolePublic)

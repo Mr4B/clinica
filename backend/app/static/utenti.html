@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utenti e Ruoli - RSA Manager</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="dashboard">
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="/dashboard" class="header-logo">
+                    <span>🏥</span>
+                    <h2>RSA Manager</h2>
+                </a>
+            </div>
+            
+            <div class="header-right">
+                <div class="user-menu">
+                    <button class="user-button" onclick="toggleUserMenu()">
+                        <div class="user-avatar" id="userAvatar">--</div>
+                        <div class="user-info">
+                            <span class="user-name" id="userName">...</span>
+                            <span class="user-role" id="userRole">...</span>
+                        </div>
+                    </button>
+                    
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="/profile">
+                            <span>👤</span>
+                            <span>Il mio profilo</span>
+                        </a>
+                        <hr>
+                        <button onclick="handleLogout()" class="danger">
+                            <span>🚪</span>
+                            <span>Logout</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Breadcrumb -->
+        <div class="breadcrumb">
+            <a href="/dashboard">Dashboard</a> / Utenti e Ruoli
+        </div>
+        
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">🔐 Gestione Utenti e Ruoli</h1>
+        </div>
+        
+        <!-- Alert -->
+        <div id="alert" class="alert alert-error" style="display: none; margin-bottom: 20px;"></div>
+        
+        <!-- Tabs -->
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-button active" id="tab-users" onclick="switchTab('users')">
+                    👥 Utenti
+                </button>
+                <button class="tab-button" id="tab-roles" onclick="switchTab('roles')">
+                    🔑 Ruoli
+                </button>
+            </div>
+        </div>
+        
+        <!-- Sezione Utenti -->
+        <div id="usersSection" class="tab-content">
+            <div style="padding: 24px 0;">
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+                    <button class="btn btn-primary" onclick="showCreateUserModal()">
+                        + Nuovo Utente
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Utente</th>
+                                    <th>Tipo</th>
+                                    <th>Struttura</th>
+                                    <th>Ruolo ID</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <tr>
+                                    <td colspan="5" style="text-align: center; padding: 40px;">
+                                        <div class="loading">Caricamento...</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sezione Ruoli -->
+        <div id="rolesSection" class="tab-content" style="display: none;">
+            <div style="padding: 24px 0;">
+                <div style="display: flex; justify-content: flex-end; margin-bottom: 16px;">
+                    <button class="btn btn-primary" onclick="showCreateRoleModal()">
+                        + Nuovo Ruolo
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <div class="table-wrapper">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nome Ruolo</th>
+                                    <th>Moduli</th>
+                                    <th>Dettagli</th>
+                                    <th>Azioni</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rolesTableBody">
+                                <tr>
+                                    <td colspan="4" style="text-align: center; padding: 40px;">
+                                        <div class="loading">Caricamento...</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Modal Creazione Utente -->
+    <div class="modal" id="createUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Nuovo Utente</h3>
+                <button class="modal-close" onclick="closeCreateUserModal()">×</button>
+            </div>
+            
+            <form id="createUserForm" onsubmit="createUser(event)">
+                <div class="modal-body">
+                    <div class="info-box">
+                        <strong>ℹ️ Nota:</strong>
+                        Solo i superuser possono creare nuovi utenti. La struttura viene assegnata automaticamente.
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userFirstName">Nome *</label>
+                        <input type="text" id="userFirstName" required placeholder="Es. Mario">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userLastName">Cognome *</label>
+                        <input type="text" id="userLastName" required placeholder="Es. Rossi">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userUsername">Username *</label>
+                        <input type="text" id="userUsername" required placeholder="mario.rossi">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userPassword">Password *</label>
+                        <input 
+                            type="password" 
+                            id="userPassword" 
+                            required 
+                            minlength="8"
+                            placeholder="Minimo 8 caratteri"
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userRoleId">Ruolo</label>
+                        <select id="userRoleId">
+                            <option value="">Nessun ruolo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" id="userIsSuperuser">
+                            <span>Superuser (amministratore completo)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateUserModal()">
+                        Annulla
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="createUserSubmitBtn">
+                        <span>Crea Utente</span>
+                        <span class="spinner" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Assegna Ruolo -->
+    <div class="modal" id="assignRoleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Assegna Ruolo</h3>
+                <button class="modal-close" onclick="closeAssignRoleModal()">×</button>
+            </div>
+            
+            <form id="assignRoleForm" onsubmit="assignRole(event)">
+                <div class="modal-body">
+                    <input type="hidden" id="assignRoleUserId">
+                    
+                    <div style="padding: 12px; background: #f3f4f6; border-radius: 8px; margin-bottom: 16px;">
+                        <strong>Utente:</strong> <span id="assignRoleUserName"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="assignRoleSelect">Seleziona Ruolo *</label>
+                        <select id="assignRoleSelect" required>
+                            <option value="">Seleziona...</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeAssignRoleModal()">
+                        Annulla
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Assegna Ruolo
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Creazione Ruolo -->
+    <div class="modal" id="createRoleModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Nuovo Ruolo</h3>
+                <button class="modal-close" onclick="closeCreateRoleModal()">×</button>
+            </div>
+            
+            <form id="createRoleForm" onsubmit="createRole(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="roleName">Nome Ruolo *</label>
+                        <input 
+                            type="text" 
+                            id="roleName" 
+                            required 
+                            placeholder="Es. Infermiere, Medico, OSS..."
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Moduli Accessibili</label>
+                        <small style="color: #6b7280; display: block; margin-bottom: 12px;">
+                            Seleziona i moduli clinici che questo ruolo può visualizzare e compilare
+                        </small>
+                        <div class="modules-grid" id="modulesCheckboxes">
+                            <p style="color: #6b7280; text-align: center;">Caricamento moduli...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeCreateRoleModal()">
+                        Annulla
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="createRoleSubmitBtn">
+                        <span>Crea Ruolo</span>
+                        <span class="spinner" style="display: none;"></span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal Visualizza Ruolo -->
+    <div class="modal" id="viewRoleModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Dettaglio Ruolo</h3>
+                <button class="modal-close" onclick="closeViewRoleModal()">×</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="detail-item" style="margin-bottom: 24px;">
+                    <span class="detail-label">Nome Ruolo</span>
+                    <span class="detail-value" id="viewRoleName" style="font-size: 18px; font-weight: 600;">-</span>
+                </div>
+                
+                <div class="detail-item">
+                    <span class="detail-label">Moduli Accessibili</span>
+                    <div id="viewRoleModules" style="margin-top: 12px; display: flex; flex-wrap: gap; gap: 8px;">
+                        <p style="color: #6b7280;">Caricamento...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeViewRoleModal()">
+                    Chiudi
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Modifica Ruolo -->
+    <div class="modal" id="editRoleModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 class="modal-title">Modifica Ruolo</h3>
+                <button class="modal-close" onclick="closeEditRoleModal()">×</button>
+            </div>
+            
+            <form id="editRoleForm" onsubmit="editRole(event)">
+                <div class="modal-body">
+                    <input type="hidden" id="editRoleId">
+                    
+                    <div class="form-group">
+                        <label for="editRoleName">Nome Ruolo *</label>
+                        <input type="text" id="editRoleName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Moduli Accessibili</label>
+                        <div class="modules-grid" id="editModulesCheckboxes">
+                            <p style="color: #6b7280; text-align: center;">Caricamento moduli...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeEditRoleModal()">
+                        Annulla
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Salva Modifiche
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script src="/static/js/auth.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+    <script src="/static/js/utenti.js"></script>
+</body>
+</html>
