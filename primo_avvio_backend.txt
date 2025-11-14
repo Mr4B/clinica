@@ -1,0 +1,52 @@
+Perfetto! Ti guido passo passo per avviare il tuo progetto uv su un PC nuovo.
+
+## Procedura completa:
+
+**1. Installa uv (se non ce l'hai già)**
+```bash
+# Su Windows (PowerShell)
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+# Su Linux/macOS
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+**2. Vai nella cartella del progetto**
+```bash
+cd /percorso/al/tuo/progetto
+```
+
+**3. Sincronizza l'ambiente**
+```bash
+uv sync
+```
+Questo comando:
+- Legge il `pyproject.toml` e `uv.lock`
+- Crea automaticamente il virtual environment
+- Installa tutte le dipendenze esatte specificate nel lock file
+
+**4. Attiva l'ambiente virtuale**
+```bash
+# Su Windows
+.venv\Scripts\activate
+
+# Su Linux/macOS
+source .venv/bin/activate
+```
+
+**5. Verifica che tutto funzioni**
+```bash
+# Controlla le dipendenze installate
+uv pip list
+
+# Oppure avvia direttamente la tua applicazione
+uv run python main.py  # o il tuo script di avvio
+```
+
+## Note importanti:
+
+- **Non serve `uv init`** perché hai già il pyproject.toml
+- `uv sync` è tutto ciò che ti serve per ricreare l'ambiente identico
+- Puoi anche usare `uv run <comando>` senza attivare manualmente l'ambiente
+
+Hai già il pyproject.toml e uv.lock nel progetto, giusto?
