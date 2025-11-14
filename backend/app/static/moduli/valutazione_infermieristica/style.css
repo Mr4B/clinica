@@ -1,0 +1,796 @@
+/* Reset e base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #000;
+    background-color: #f5f5f5;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
+.modal-body {
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.info-box {
+    background: #e0f2fe;
+    border-left: 4px solid #0284c7;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.search-input input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    margin-bottom: 16px;
+}
+
+.select-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.select-item {
+    padding: 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.select-item:hover {
+    background: #f3f4f6;
+    border-color: #3b82f6;
+}
+
+.patient-name {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.patient-cf {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+/* Container principale */
+.module-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.module-header {
+    background: #1e40af;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.module-header h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-size: 12px;
+    opacity: 0.9;
+}
+
+/* Toolbar */
+.module-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.toolbar-left, .toolbar-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* Buttons */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.btn-secondary {
+    background: #6b7280;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #4b5563;
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #059669;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Form content */
+.module-content {
+    padding: 20px;
+}
+
+/* Alert */
+.alert {
+    padding: 12px 16px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.alert-error {
+    background: #fee2e2;
+    border: 1px solid #ef4444;
+    color: #991b1b;
+}
+
+.alert-success {
+    background: #d1fae5;
+    border: 1px solid #10b981;
+    color: #065f46;
+}
+
+/* Header Section (UTENTE) */
+.header-section {
+    background: #fef3c7;
+    border: 2px solid #000;
+    padding: 8px;
+    margin-bottom: 4px;
+}
+
+.header-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.header-field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.header-field label {
+    font-weight: bold;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.header-field input {
+    width: 40px;
+    padding: 2px 4px;
+    border: 1px solid #000;
+    text-align: center;
+}
+
+.header-checkboxes {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+/* Patient Section */
+.patient-section {
+    background: #fef3c7;
+    border: 2px solid #000;
+    border-top: none;
+    padding: 8px;
+    margin-bottom: 8px;
+}
+
+.patient-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.patient-row:last-child {
+    margin-bottom: 0;
+}
+
+.patient-field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.patient-field.wide {
+    flex: 1;
+}
+
+.patient-field label {
+    font-weight: bold;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.patient-field input {
+    padding: 2px 4px;
+    border: 1px solid #000;
+    font-size: 11px;
+}
+
+.patient-field.wide input {
+    flex: 1;
+}
+
+/* Form Section */
+.form-section {
+    border: 2px solid #000;
+    margin-bottom: 8px;
+}
+
+.section-title {
+    background: #fef3c7;
+    padding: 6px 8px;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 2px solid #000;
+}
+
+/* Vitals Row */
+.vitals-row {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.vitals-row:last-child {
+    border-bottom: none;
+}
+
+.vital-field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.vital-field label {
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.vital-field input {
+    width: 60px;
+    padding: 2px 4px;
+    border: 1px solid #000;
+}
+
+.vital-field.wide {
+    flex: 1;
+}
+
+.vital-field.wide input {
+    width: 100%;
+}
+
+.unit {
+    font-size: 11px;
+}
+
+.vital-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.vital-checkbox label {
+    font-weight: bold;
+    font-size: 11px;
+}
+
+/* Checkbox inline */
+.checkbox-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-right: 12px;
+    cursor: pointer;
+}
+
+.checkbox-inline input[type="radio"],
+.checkbox-inline input[type="checkbox"] {
+    margin: 0;
+}
+
+/* Health Row */
+.health-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.health-row:last-child {
+    border-bottom: none;
+}
+
+.health-label {
+    font-weight: bold;
+    min-width: 140px;
+}
+
+.health-field {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.health-field label {
+    font-size: 11px;
+}
+
+.health-field input[type="number"],
+.health-field input[type="date"] {
+    padding: 2px 4px;
+    border: 1px solid #000;
+    font-size: 11px;
+}
+
+/* Allergie Row */
+.allergie-row {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+}
+
+.allergie-field {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.allergie-field label {
+    font-weight: bold;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.allergie-field input {
+    flex: 1;
+    padding: 2px 4px;
+    border: 1px solid #000;
+}
+
+/* Activity Row */
+.activity-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px;
+}
+
+.activity-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.activity-field.wide {
+    flex: 1;
+}
+
+.activity-field label {
+    font-weight: bold;
+    font-size: 11px;
+}
+
+.activity-field input[type="text"] {
+    flex: 1;
+    padding: 2px 4px;
+    border: 1px solid #000;
+}
+
+/* Tables */
+.comunicazione-table,
+.respirazione-table,
+.circolazione-table,
+.stato-table,
+.movimento-table,
+.eliminazione-table,
+.alimentazione-table {
+    border-top: 2px solid #000;
+}
+
+.table-header {
+    background: #cbd5e1;
+    padding: 6px 8px;
+    font-weight: bold;
+    font-size: 12px;
+    text-align: center;
+    border-bottom: 2px solid #000;
+}
+
+.table-row {
+    display: flex;
+}
+
+.table-col {
+    flex: 1;
+    padding: 8px;
+    border-right: 1px solid #000;
+}
+
+.table-col:last-child {
+    border-right: none;
+}
+
+.col-title {
+    font-weight: bold;
+    font-size: 11px;
+    text-align: center;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table-col label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 11px;
+}
+
+.table-col input[type="checkbox"],
+.table-col input[type="radio"] {
+    margin-right: 4px;
+}
+
+.inline-field {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.inline-field label {
+    display: inline;
+    margin-right: 4px;
+}
+
+.inline-field input[type="text"],
+.inline-field input[type="number"] {
+    width: 80px;
+    padding: 2px 4px;
+    border: 1px solid #000;
+    margin: 0 4px;
+}
+
+.protesi-field {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* Pain scale */
+.pain-scale {
+    font-size: 10px;
+    text-align: center;
+    padding: 4px;
+    background: #f3f4f6;
+    margin: 8px 0;
+}
+
+/* Hydration column */
+.hydration-col {
+    min-width: 120px;
+}
+
+.hydration-scale {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 8px;
+}
+
+.scale-item {
+    padding: 4px 8px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: bold;
+    border: 1px solid #000;
+}
+
+.level-1 { background: #fef3c7; }
+.level-2 { background: #bfdbfe; }
+.level-3 { background: #fef3c7; }
+.level-4 { background: #fed7aa; }
+.level-5 { background: #fecaca; }
+.level-6 { background: #fca5a5; }
+
+/* Terapie Row */
+.terapie-row {
+    display: flex;
+    justify-content: space-around;
+    padding: 8px;
+    background: #fef3c7;
+}
+
+.terapie-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terapie-field label {
+    font-weight: bold;
+}
+
+/* Diagnosi */
+.diagnosi-field {
+    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.diagnosi-field:last-child {
+    border-bottom: none;
+}
+
+.diagnosi-field label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.diagnosi-field textarea {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #000;
+    resize: vertical;
+}
+
+/* Valutazione */
+.valutazione-field {
+    padding: 8px;
+}
+
+.valutazione-field textarea {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #000;
+    resize: vertical;
+}
+
+.cadenza-field {
+    padding: 8px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.cadenza-field label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.cadenza-field textarea {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #000;
+    resize: vertical;
+}
+
+/* Rischio Table */
+.rischio-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rischio-table thead th {
+    background: #cbd5e1;
+    padding: 8px;
+    border: 1px solid #000;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.rischio-table tbody td {
+    padding: 8px;
+    border: 1px solid #000;
+    font-size: 11px;
+}
+
+.rischio-table label {
+    display: block;
+    margin: 0;
+}
+
+/* Scale field */
+.scale-field {
+    padding: 8px;
+}
+
+.scale-field textarea {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #000;
+    resize: vertical;
+}
+
+/* Firma Row */
+.firma-row {
+    display: flex;
+    gap: 16px;
+    padding: 8px;
+}
+
+.firma-field {
+    flex: 1;
+}
+
+.firma-field label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 11px;
+}
+
+.firma-field input {
+    width: 100%;
+    padding: 4px;
+    border: 1px solid #000;
+}
+
+/* Note Section */
+.note-section {
+    border: none;
+    margin-top: 16px;
+}
+
+.note-text {
+    padding: 8px;
+    font-size: 10px;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Page break for printing */
+.page-break {
+    page-break-before: always;
+}
+
+@media print {
+    body {
+        background: white;
+    }
+    
+    .module-container {
+        max-width: 100%;
+        margin: 0;
+        box-shadow: none;
+    }
+    
+    .module-toolbar {
+        display: none;
+    }
+    
+    button {
+        display: none;
+    }
+    
+    .page-break {
+        page-break-before: always;
+    }
+}
+
+/* Spinner */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .module-container {
+        margin: 0;
+    }
+    
+    .table-row {
+        flex-direction: column;
+    }
+    
+    .table-col {
+        border-right: none;
+        border-bottom: 1px solid #000;
+    }
+    
+    .table-col:last-child {
+        border-bottom: none;
+    }
+    
+    .header-row,
+    .patient-row,
+    .vitals-row,
+    .health-row,
+    .allergie-row,
+    .activity-row,
+    .terapie-row,
+    .firma-row {
+        flex-wrap: wrap;
+    }
+}

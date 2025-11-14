@@ -9,8 +9,8 @@ from uuid import UUID
 
 ActionType = Literal["READ", "CREATE", "UPDATE", "DELETE"]
 
-async def check_module_access(
-    session: AsyncSession,
+def check_module_access(
+    session: Session,
     user: User,
     module_code: str,
     action: ActionType = "READ"
@@ -41,7 +41,7 @@ async def check_module_access(
             detail="User has no role assigned"
         )
     
-    role = await session.get(Role, user.role_id)
+    role = session.get(Role, user.role_id)
     if not role:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

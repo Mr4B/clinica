@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valutazione Infermieristica - ROG26/1.4</title>
+    <link rel="stylesheet" href="/static/moduli/valutazione_infermieristica/style.css">
+    <style>
+        /* Stili specifici per modalità visualizzazione */
+        .view-mode input,
+        .view-mode select,
+        .view-mode textarea {
+            background-color: #f9fafb !important;
+            cursor: not-allowed;
+            pointer-events: none;
+            color: #374151;
+        }
+        
+        .view-mode input[type="checkbox"],
+        .view-mode input[type="radio"] {
+            pointer-events: none;
+        }
+        
+        /* Nascondi elementi in modalità view */
+        .view-mode .hide-in-view {
+            display: none !important;
+        }
+        
+        /* Mostra elementi solo in modalità view */
+        .show-in-view {
+            display: none;
+        }
+        
+        .view-mode .show-in-view {
+            display: block;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .badge-warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        
+        .loading-overlay.show {
+            display: flex;
+        }
+        
+        .loading-spinner {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Info aggiuntive in modalità view */
+        .audit-info {
+            background: #f0f9ff;
+            border: 1px solid #bae6fd;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .audit-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #0369a1;
+        }
+        
+        .audit-row {
+            display: flex;
+            gap: 24px;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        
+        .audit-label {
+            font-weight: 600;
+            color: #0c4a6e;
+            min-width: 120px;
+        }
+        
+        .audit-value {
+            color: #374151;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div id="loadingText">Caricamento...</div>
+        </div>
+    </div>
+
+    <!-- Modal Selezione Dossier (solo in modalità creazione) -->
+    <div class="modal hide-in-view" id="dossierSelectionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Seleziona Dossier Paziente</h3>
+            </div>
+
+            <div class="modal-body">
+                <div class="info-box">
+                    <strong>ℹ️ Seleziona un dossier</strong>
+                    Scegli il dossier del paziente per cui vuoi compilare la valutazione infermieristica.
+                </div>
+
+                <div class="search-input">
+                    <input type="text" id="dossierSearch" placeholder="Cerca per nome paziente o CF..."
+                        oninput="searchDossiers()">
+                </div>
+
+                <div class="select-list" id="dossiersList">
+                    <div style="padding: 20px; text-align: center; color: #6b7280;">
+                        Caricamento dossiers...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenitore Modulo -->
+    <div class="module-container" id="moduleContainer">
+
+        <!-- Header -->
+        <div class="module-header">
+            <h1 id="pageTitle">📋 VALUTAZIONE INFERMIERISTICA</h1>
+            <div class="subtitle">
+                ROG26/1.4 - Modulo 4 - Cartella Infermieristica
+                <span id="modeBadge"></span>
+            </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="module-toolbar">
+            <div class="toolbar-left">
+                <button type="button" class="btn btn-secondary" onclick="goBack()">
+                    ← Indietro
+                </button>
+                <div id="selectedDossierInfo" style="font-size: 14px; color: #4b5563; margin-left: 16px;"></div>
+            </div>
+            <div class="toolbar-right">
+                <!-- Bottoni modalità creazione -->
+                <button type="button" class="btn btn-secondary hide-in-view" onclick="showDossierSelectionModal()">
+                    🔄 Cambia Dossier
+                </button>
+                
+                <!-- Bottoni modalità visualizzazione -->
+                <button type="button" class="btn btn-secondary show-in-view" onclick="printModule()">
+                    🖨️ Stampa
+                </button>
+                <button type="button" class="btn btn-secondary show-in-view" onclick="downloadPDF()">
+                    📄 Esporta PDF
+                </button>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <form id="moduleForm" onsubmit="saveModule(event)">
+            <div class="module-content">
+
+                <!-- Alert -->
+                <div id="alert" class="alert alert-error" style="display: none; margin-bottom: 20px;"></div>
+
+                <!-- INTESTAZIONE DATI UTENTE -->
+                <div class="header-section">
+                    <div class="header-row">
+                        <div class="header-field">
+                            <label>UTENTE: Iniz. COGN.</label>
+                            <input type="text" id="inizCognome" name="inizCognome" required maxlength="1" readonly>
+                        </div>
+                        <div class="header-field">
+                            <label>Iniz. NOM.</label>
+                            <input type="text" id="inizNome" name="inizNome" required maxlength="1" readonly>
+                        </div>
+                        <div class="header-field">
+                            <label>Cod. DOSSIER UTENTE N°</label>
+                            <input type="text" id="dossier" name="dossier" readonly>
+                        </div>
+                        <div class="header-checkboxes">
+                            <label class="checkbox-inline">
+                                <input type="radio" name="struttura" value="R3" checked>
+                                <span>R3</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="struttura" value="R3D">
+                                <span>R3D</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DATI PAZIENTE -->
+                <div class="patient-section">
+                    <div class="patient-row">
+                        <div class="patient-field wide">
+                            <label>PAZIENTE:</label>
+                            <input type="text" id="paziente_nominativo" name="paziente_nominativo" required readonly>
+                        </div>
+                        <div class="patient-field">
+                            <label>ANNO</label>
+                            <input type="number" id="anno" name="anno" required min="2000" max="2100">
+                        </div>
+                        <div class="patient-field">
+                            <label>N°prog.</label>
+                            <input type="number" id="numero_progressivo" name="numero_progressivo" required min="1">
+                        </div>
+                    </div>
+                    <div class="patient-row">
+                        <div class="patient-field">
+                            <label>Peso (Kg)</label>
+                            <input type="number" id="peso_kg" name="peso_kg" step="0.1" min="0">
+                        </div>
+                        <div class="patient-field">
+                            <label>Altezza (mt)</label>
+                            <input type="number" id="altezza_mt" name="altezza_mt" step="0.01" min="0">
+                        </div>
+                        <div class="patient-field">
+                            <label>IMC (kg/m²)</label>
+                            <input type="number" id="imc_kg_m2" name="imc_kg_m2" step="0.1" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RILIEVO PARAMETRI VITALI -->
+                <div class="form-section">
+                    <div class="section-title">RILIEVO PARAMETRI VITALI</div>
+                    <div class="vitals-row">
+                        <div class="vital-field">
+                            <label>F.C.</label>
+                            <input type="number" id="frequenza_cardiaca_b_min" name="frequenza_cardiaca_b_min" min="0">
+                            <span class="unit">b/min.</span>
+                        </div>
+                        <div class="vital-field">
+                            <label>T.C.</label>
+                            <input type="number" id="temperatura_corporea_c" name="temperatura_corporea_c" step="0.1" min="30" max="45">
+                            <span class="unit">°C</span>
+                        </div>
+                        <div class="vital-field">
+                            <label>P.A.</label>
+                            <input type="text" id="pressione_arteriosa_mmhg" name="pressione_arteriosa_mmhg" placeholder="120/80">
+                            <span class="unit">mmHg</span>
+                        </div>
+                        <div class="vital-checkbox">
+                            <label>E.C.G.:</label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="ecg" value="si">
+                                <span>SI</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="ecg" value="no" checked>
+                                <span>NO</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="vitals-row">
+                        <div class="vital-field">
+                            <label>F.R.</label>
+                            <input type="number" id="frequenza_respiratoria_atti_min" name="frequenza_respiratoria_atti_min" min="0">
+                            <span class="unit">atti/min.</span>
+                        </div>
+                        <div class="vital-field">
+                            <label>SatO2</label>
+                            <input type="number" id="sato2" name="sato2" step="0.1" min="0" max="100">
+                            <span class="unit">%</span>
+                        </div>
+                        <div class="vital-field wide">
+                            <label>altro:</label>
+                            <input type="text" id="altro_parametri_vitali" name="altro_parametri_vitali">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- MODELLO DI PERCEZIONE E DI GESTIONE DELLA SALUTE -->
+                <div class="form-section">
+                    <div class="section-title">MODELLO DI PERCEZIONE E DI GESTIONE DELLA SALUTE</div>
+                    
+                    <!-- Consumo Tabacco -->
+                    <div class="health-row">
+                        <div class="health-label">Consumo Tabacco</div>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="consumo_tabacco" value="no" checked>
+                            <span>NO</span>
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" id="consumo_tabacco_si" name="consumo_tabacco" value="si">
+                            <span>SI</span>
+                        </label>
+                        <div class="health-field">
+                            <label>Quantità/die N° sigarette</label>
+                            <input type="number" id="quantita_tabacco_die_numero_sigarette" name="quantita_tabacco_die_numero_sigarette" min="0">
+                        </div>
+                        <div class="health-field">
+                            <label>Interrotto consumo</label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="interrotto_consumo_tabacco" value="no" checked>
+                                <span>NO</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" id="interrotto_tabacco_si" name="interrotto_consumo_tabacco" value="si">
+                                <span>SI</span>
+                            </label>
+                        </div>
+                        <div class="health-field">
+                            <label>da</label>
+                            <input type="date" id="data_interruzione_tabacco" name="data_interruzione_tabacco">
+                        </div>
+                    </div>
+
+                    <!-- Consumo Alcolici -->
+                    <div class="health-row">
+                        <div class="health-label">Consumo Alcolici</div>
+                        <label class="checkbox-inline">
+                            <input type="radio" name="consumo_alcolici" value="no" checked>
+                            <span>NO</span>
+                        </label>
+                        <label class="checkbox-inline">
+                            <input type="radio" id="consumo_alcolici_si" name="consumo_alcolici" value="si">
+                            <span>SI</span>
+                        </label>
+                        <div class="health-field">
+                            <label>Quantità/die CL</label>
+                            <input type="number" id="quantita_alcolici_die_cl" name="quantita_alcolici_die_cl" min="0">
+                        </div>
+                        <div class="health-field">
+                            <label>Interrotto consumo</label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="interrotto_consumo_alcolici" value="no" checked>
+                                <span>NO</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" id="interrotto_alcolici_si" name="interrotto_consumo_alcolici" value="si">
+                                <span>SI</span>
+                            </label>
+                        </div>
+                        <div class="health-field">
+                            <label>da</label>
+                            <input type="date" id="data_interruzione_alcolici" name="data_interruzione_alcolici">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ALLERGIE RIFERITE -->
+                <div class="form-section">
+                    <div class="section-title">ALLERGIE RIFERITE</div>
+                    <div class="allergie-row">
+                        <div class="allergie-field">
+                            <label>Farmaci:</label>
+                            <input type="text" id="allergie_farmaci" name="allergie_farmaci">
+                        </div>
+                        <div class="allergie-field">
+                            <label>Alimenti:</label>
+                            <input type="text" id="allergie_alimenti" name="allergie_alimenti">
+                        </div>
+                        <div class="allergie-field">
+                            <label>Altro:</label>
+                            <input type="text" id="altro_allergie" name="altro_allergie">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ATTIVITÀ FISICHE E PATOLOGIE -->
+                <div class="form-section">
+                    <div class="activity-row">
+                        <div class="activity-field">
+                            <label>Attività fisiche-sportive</label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="attivita_fisiche_sportive" value="no" checked>
+                                <span>NO</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="attivita_fisiche_sportive" value="si">
+                                <span>SI</span>
+                            </label>
+                        </div>
+                        <div class="activity-field">
+                            <label>Patologie croniche</label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="patologie_croniche" value="no" checked>
+                                <span>NO</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" id="patologie_croniche_si" name="patologie_croniche" value="si">
+                                <span>SI</span>
+                            </label>
+                        </div>
+                        <div class="activity-field wide">
+                            <label>quali:</label>
+                            <input type="text" id="quali_patologie_croniche" name="quali_patologie_croniche">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ANAMNESI ED ESAME OBIETTIVO -->
+                <div class="form-section">
+                    <div class="section-title">ANAMNESI ED ESAME OBIETTIVO</div>
+
+                    <!-- COMUNICAZIONE TABLE -->
+                    <div class="comunicazione-table">
+                        <div class="table-header">
+                            <div class="col">COMUNICAZIONE</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-col">
+                                <div class="col-title">STATO DI COSCIENZA</div>
+                                <label><input type="checkbox" name="stato_coscienza" value="vigile-collaborante"> vigile-collaborante</label>
+                                <label><input type="checkbox" name="stato_coscienza" value="soporoso"> soporoso</label>
+                                <label><input type="checkbox" name="stato_coscienza" value="comatoso"> comatoso</label>
+                                <label><input type="checkbox" name="stato_coscienza" value="orientato"> orientato</label>
+                                <label><input type="checkbox" name="stato_coscienza" value="disorientato"> disorientato</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">COMUNICAZIONE</div>
+                                <label><input type="checkbox" name="comunicazione" value="regolare"> regolare</label>
+                                <label><input type="checkbox" name="comunicazione" value="disfonia"> disfonia</label>
+                                <label><input type="checkbox" name="comunicazione" value="disartria"> disartria</label>
+                                <label><input type="checkbox" name="comunicazione" value="afasia"> afasia</label>
+                                <label><input type="checkbox" name="comunicazione" value="tracheostomia"> tracheostomia</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">UDITO</div>
+                                <label><input type="checkbox" name="udito" value="normoudente"> normoudente</label>
+                                <label><input type="checkbox" name="udito" value="ipoacusia"> ipoacusia</label>
+                                <label><input type="checkbox" id="udito_sordita" name="udito" value="sordità"> sordità</label>
+                                <div class="inline-field" id="sordita_lato_field" style="display: none;">
+                                    <label><input type="radio" name="sordita_lato" value="dx"> dx</label>
+                                    <label><input type="radio" name="sordita_lato" value="sn"> sn</label>
+                                </div>
+                                <div class="protesi-field">
+                                    <strong>PROTESI:</strong>
+                                    <label><input type="checkbox" id="protesi_udito" name="protesi_udito"> SI</label>
+                                    <div class="inline-field" id="protesi_udito_lato_field" style="display: none;">
+                                        <label><input type="radio" name="protesi_udito_lato" value="dx"> dx</label>
+                                        <label><input type="radio" name="protesi_udito_lato" value="sn"> sn</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">VISTA</div>
+                                <label><input type="checkbox" name="vista" value="normovedente"> normovedente</label>
+                                <label><input type="checkbox" name="vista" value="riduzione visus"> riduzione visus</label>
+                                <label><input type="checkbox" name="vista" value="non vedente"> non vedente</label>
+                                <div class="protesi-field">
+                                    <strong>PROTESI:</strong>
+                                    <label><input type="checkbox" name="protesi_vista" value="occhiali"> Occhiali</label>
+                                    <label><input type="checkbox" name="protesi_vista" value="lenti a contatto"> Lenti a c.</label>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">CONDIZIONI PSICHICHE</div>
+                                <label><input type="checkbox" name="condizioni_psichiche" value="tranquillo"> tranquillo</label>
+                                <label><input type="checkbox" name="condizioni_psichiche" value="irrequieto/ansioso"> irrequieto/ansioso</label>
+                                <label><input type="checkbox" name="condizioni_psichiche" value="agitaz. psicomotoria"> agitaz. psicomotoria</label>
+                                <label><input type="checkbox" name="condizioni_psichiche" value="apatia/disinteresse"> apatia/disinteresse</label>
+                                <label><input type="checkbox" name="condizioni_psichiche" value="deficit cognitivo"> deficit cognitivo</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RESPIRAZIONE TABLE -->
+                    <div class="respirazione-table">
+                        <div class="table-header">
+                            <div class="col">RESPIRAZIONE</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-col">
+                                <div class="col-title">TIPOLOGIA</div>
+                                <label><input type="radio" id="tipologia_eupnea" name="tipologia_respirazione" value="eupnea"> eupnea</label>
+                                <label><input type="radio" id="tipologia_dispnea" name="tipologia_respirazione" value="dispnea"> dispnea</label>
+                                <div id="dispnea_tipo_field" style="display: none; margin-left: 20px;">
+                                    <label><input type="checkbox" name="dispnea_tipo" value="da sforzo"> da sforzo</label>
+                                    <label><input type="checkbox" name="dispnea_tipo" value="a riposo"> a riposo</label>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">PRESENZA DI TOSSE</div>
+                                <label><input type="radio" name="presenza_di_tosse" value="no" checked> NO</label>
+                                <label><input type="radio" name="presenza_di_tosse" value="si"> SI</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">TRATTAMENTO O2</div>
+                                <label><input type="radio" name="trattamento_o2" value="no" checked> NO</label>
+                                <label><input type="radio" name="trattamento_o2" value="si"> SI</label>
+                                <div class="inline-field">
+                                    <label>Ossigenoterapia l/min.</label>
+                                    <input type="number" id="ossigenoterapia_l_min" name="ossigenoterapia_l_min" step="0.1" min="0">
+                                </div>
+                                <div class="inline-field">
+                                    <label>Aspirazioni secrezioni:</label>
+                                    <label><input type="radio" name="aspirazioni_secrezioni" value="si"> Si</label>
+                                    <label><input type="radio" name="aspirazioni_secrezioni" value="no" checked> No</label>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">ALLERGIE</div>
+                                <label><input type="checkbox" name="allergie_respirazione" value="bpco"> BPCO</label>
+                                <label><input type="checkbox" name="allergie_respirazione" value="asma"> asma</label>
+                                <label><input type="checkbox" name="allergie_respirazione" value="pollini"> Pollini</label>
+                                <label><input type="checkbox" name="allergie_respirazione" value="epiteli animali"> Epiteli anim.</label>
+                                <label><input type="checkbox" name="allergie_respirazione" value="acari"> Acari</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">PROTESI - PRESIDI</div>
+                                <label><input type="checkbox" name="presidi_respirazione" value="cpap"> CPAP</label>
+                                <label><input type="checkbox" name="presidi_respirazione" value="respiratore"> respiratore</label>
+                                <label><input type="checkbox" name="presidi_respirazione" value="ventilatore"> ventilatore</label>
+                                <label><input type="checkbox" name="presidi_respirazione" value="cannula guedel"> cannula Guedel</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CIRCOLAZIONE E TESSUTI CUTANEI TABLE -->
+                    <div class="circolazione-table">
+                        <div class="table-header">
+                            <div class="col">CIRCOLAZIONE E TESSUTI CUTANEI</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-col">
+                                <div class="col-title">PRESIDI PROTESI</div>
+                                <label><input type="checkbox" name="presidi_protesi" value="pace maker"> pace maker</label>
+                                <label><input type="checkbox" name="presidi_protesi" value="prot. valvolari"> prot. valvolari</label>
+                                <label><input type="checkbox" name="presidi_protesi" value="sistema port"> sistema port.</label>
+                                <label><input type="checkbox" name="presidi_protesi" value="c.v.c."> C.V.C.</label>
+                                <label><input type="checkbox" name="presidi_protesi" value="altro"> altro</label>
+                                <input type="text" id="altro_presidi_protesi" name="altro_presidi_protesi" placeholder="specificare">
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">CUTE/MUCOSE</div>
+                                <label><input type="checkbox" name="cute_mucose" value="normocromica"> normocromica</label>
+                                <label><input type="checkbox" name="cute_mucose" value="pallida"> pallida</label>
+                                <label><input type="checkbox" name="cute_mucose" value="cianotica"> cianotica</label>
+                                <label><input type="checkbox" name="cute_mucose" value="itterica"> itterica</label>
+                                <label><input type="checkbox" name="cute_mucose" value="disidratata"> disidratata</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">INTEGRITA' CUTANEA</div>
+                                <label><input type="checkbox" name="integrita_cutanea" value="ferite chirurgiche"> Ferite chirurgiche</label>
+                                <label><input type="checkbox" name="integrita_cutanea" value="ulcere distrofiche"> ulcere distrofiche</label>
+                                <label><input type="checkbox" name="integrita_cutanea" value="lividi"> lividi</label>
+                                <label><input type="checkbox" name="integrita_cutanea" value="edemi"> edemi</label>
+                                <div class="inline-field">
+                                    <label>Presenza lesioni da decubito: sede</label>
+                                    <input type="text" id="presenza_lesioni_da_decubito_sede" name="presenza_lesioni_da_decubito_sede">
+                                </div>
+                                <div class="inline-field">
+                                    <label>stadio:</label>
+                                    <label><input type="radio" name="stadio_lesioni_da_decubito" value="1°"> 1°</label>
+                                    <label><input type="radio" name="stadio_lesioni_da_decubito" value="2°"> 2°</label>
+                                    <label><input type="radio" name="stadio_lesioni_da_decubito" value="3°"> 3°</label>
+                                    <label><input type="radio" name="stadio_lesioni_da_decubito" value="4°"> 4°</label>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">RISCHIO LESIONI</div>
+                                <div>(scala BRADEN)</div>
+                                <label><input type="radio" name="rischio_lesioni_scala_braden" value="basso"> > 20 Basso</label>
+                                <label><input type="radio" name="rischio_lesioni_scala_braden" value="medio"> 17-20 Medio</label>
+                                <label><input type="radio" name="rischio_lesioni_scala_braden" value="elevato"> 14-16 Elevato</label>
+                                <label><input type="radio" name="rischio_lesioni_scala_braden" value="molto elevato"> &lt; 13 Molto Elevato</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STATO TABLE -->
+                    <div class="stato-table">
+                        <div class="table-header">
+                            <div class="col">STATO</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-col">
+                                <div class="col-title">MUSCOLO-SCHELETRICO</div>
+                                <div class="inline-field">
+                                    <label>Escursione articolare:</label>
+                                    <label><input type="radio" id="escursione_articolare_completa" name="escursione_articolare" value="completa"> completa</label>
+                                    <label><input type="radio" id="escursione_articolare_altro" name="escursione_articolare" value="altro"> altro:</label>
+                                    <input type="text" id="altro_escursione_articolare" name="altro_escursione_articolare" style="display: none;">
+                                </div>
+                                <div class="inline-field">
+                                    <label>Presa delle mani:</label>
+                                    <label><input type="radio" name="presa_mani" value="normale"> normale</label>
+                                    <label><input type="radio" id="presa_mani_debolezza" name="presa_mani" value="debolezza"> debolezza</label>
+                                    <span id="debolezza_mani_lato_field" style="display: none;">
+                                        (<label><input type="radio" name="debolezza_mani_lato" value="dx"> dx</label>
+                                        <label><input type="radio" name="debolezza_mani_lato" value="sn"> sn</label>)
+                                    </span>
+                                    <label><input type="radio" id="presa_mani_paralisi" name="presa_mani" value="paralisi"> paralisi</label>
+                                    <span id="paralisi_mani_lato_field" style="display: none;">
+                                        (<label><input type="radio" name="paralisi_mani_lato" value="dx"> dx</label>
+                                        <label><input type="radio" name="paralisi_mani_lato" value="sn"> sn</label>)
+                                    </span>
+                                </div>
+                                <div class="inline-field">
+                                    <label>Presa arti inferiori:</label>
+                                    <label><input type="radio" name="presa_arti_inferiori" value="normale"> normale</label>
+                                    <label><input type="radio" id="presa_arti_debolezza" name="presa_arti_inferiori" value="debolezza"> debolezza</label>
+                                    <span id="debolezza_arti_inferiori_lato_field" style="display: none;">
+                                        (<label><input type="radio" name="debolezza_arti_inferiori_lato" value="dx"> dx</label>
+                                        <label><input type="radio" name="debolezza_arti_inferiori_lato" value="sn"> sn</label>)
+                                    </span>
+                                    <label><input type="radio" id="presa_arti_paralisi" name="presa_arti_inferiori" value="paralisi"> paralisi</label>
+                                    <span id="paralisi_arti_inferiori_lato_field" style="display: none;">
+                                        (<label><input type="radio" name="paralisi_arti_inferiori_lato" value="dx"> dx</label>
+                                        <label><input type="radio" name="paralisi_arti_inferiori_lato" value="sn"> sn</label>)
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">PSICO-COMPORTAMENTALE</div>
+                                <label><input type="checkbox" name="depressione"> depressione</label>
+                                <div class="inline-field">
+                                    <label><input type="checkbox" id="ansia_check" name="ansia_check"> ansia:</label>
+                                    <label><input type="radio" name="ansia" value="lieve"> lieve</label>
+                                    <label><input type="radio" name="ansia" value="moderata"> mod.</label>
+                                    <label><input type="radio" name="ansia" value="grave"> grave</label>
+                                </div>
+                                <label><input type="checkbox" name="agitazione"> agitazione</label>
+                                <div class="inline-field">
+                                    <strong>RIPOSO - SONNO</strong>
+                                    <label><input type="checkbox" name="riposo_sonno" value="regolare"> regolare</label>
+                                    <label><input type="checkbox" name="riposo_sonno" value="irregolare"> irregolare</label>
+                                    <label><input type="checkbox" name="riposo_sonno" value="insonnia"> insonnia</label>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">DOLORE</div>
+                                <div>(Scala NRS)</div>
+                                <label><input type="checkbox" id="tipo_dolore_acuto" name="tipo_dolore" value="acuto"> Acuto (sede</label>
+                                <input type="text" id="sede_dolore_acuto" name="sede_dolore_acuto" style="display: none;">)
+                                <label><input type="checkbox" id="tipo_dolore_cronico" name="tipo_dolore" value="cronico"> Cronico (sede</label>
+                                <input type="text" id="sede_dolore_cronico" name="sede_dolore_cronico" style="display: none;">)
+                                <label><input type="checkbox" name="caratteristiche_dolore" value="intermittente"> intermittente</label>
+                                <label><input type="checkbox" name="caratteristiche_dolore" value="ingravescente"> ingravescente</label>
+                                <label><input type="checkbox" name="caratteristiche_dolore" value="colico"> colico</label>
+                                <div class="pain-scale">
+                                    minore 0 1 2 3 4 5 6 7 8 9 10 massimo
+                                </div>
+                                <div class="inline-field">
+                                    <strong>terapia antidolorifica:</strong>
+                                    <label><input type="checkbox" name="terapia_antidolorifica" value="analgesici"> analgesici</label>
+                                    <label><input type="checkbox" name="terapia_antidolorifica" value="antipiretici"> antipiretici</label>
+                                    <label><input type="checkbox" name="terapia_antidolorifica" value="antinfiammatori"> antinfiammatori</label>
+                                    <label><input type="checkbox" name="terapia_antidolorifica" value="oppioidi"> oppioidi</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MOVIMENTO-IGIENE TABLE -->
+                    <div class="movimento-table">
+                        <div class="table-header">
+                            <div class="col">MOVIMENTO-IGIENE</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-col">
+                                <div class="col-title">MOVIMENTO</div>
+                                <label><input type="radio" name="autonomia_movimento" value="autonomo"> autonomo</label>
+                                <label><input type="radio" name="autonomia_movimento" value="con assistenza"> con assistenza</label>
+                                <label><input type="radio" name="autonomia_movimento" value="non autonomo"> non autonomo</label>
+                                <div class="inline-field">
+                                    <strong>Rischio cadute (Conley):</strong>
+                                    <label><input type="radio" name="rischio_cadute_conley" value="rischio minimo"> rischio minimo</label>
+                                    <label><input type="radio" name="rischio_cadute_conley" value="aumento del rischio"> aumento del rischio</label>
+                                    <label><input type="radio" name="rischio_cadute_conley" value="rischio alto"> rischio alto</label>
+                                </div>
+                                <div class="inline-field">
+                                    <strong>ausili/presidi:</strong>
+                                    <label><input type="checkbox" name="ausili_presidi_movimento" value="deambulatore/carrozzina"> deambulatore/carroz.</label>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">POSTURA</div>
+                                <label><input type="radio" name="autonomia_postura" value="autonomo"> autonomo</label>
+                                <label><input type="radio" name="autonomia_postura" value="postura obbligata"> postura obbligata:</label>
+                                <div class="inline-field" style="margin-left: 20px;">
+                                    (<label><input type="checkbox" name="postura_obbligata_causa" value="paralisi"> paralisi</label>
+                                    <label><input type="checkbox" name="postura_obbligata_causa" value="paresi"> paresi</label>
+                                    <label><input type="checkbox" name="postura_obbligata_causa" value="allettato"> allettato</label>)
+                                </div>
+                                <div class="inline-field">
+                                    <strong>AUSILI/PRESIDI:</strong>
+                                    <label><input type="checkbox" name="ausili_presidi_postura" value="sponde per letto"> sponde per letto</label>
+                                    <label><input type="checkbox" name="ausili_presidi_postura" value="materasso antidecubito"> Materasso antidecubito</label>
+                                    <label><input type="checkbox" name="ausili_presidi_postura" value="altro"> altro</label>
+                                    <input type="text" id="altro_ausili_presidi_postura" name="altro_ausili_presidi_postura">
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">IGIENE</div>
+                                <label><input type="radio" name="lavarsi" value="si lava da solo"> si lava da solo</label>
+                                <label><input type="radio" name="lavarsi" value="si lava con aiuto"> si lava con aiuto</label>
+                                <label><input type="radio" name="lavarsi" value="totale dipendenza"> totale dipendenza</label>
+                                <div class="inline-field">
+                                    <strong>VESTIRSI</strong>
+                                    <label><input type="radio" name="vestirsi" value="si veste da solo"> si veste da solo</label>
+                                    <label><input type="radio" name="vestirsi" value="si veste con aiuto"> si veste con aiuto</label>
+                                    <label><input type="radio" name="vestirsi" value="totale dipendenza"> totale dipendenza</label>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">USO WC</div>
+                                <label><input type="radio" name="autonomia_wc" value="autonomo"> autonomo</label>
+                                <label><input type="radio" name="autonomia_wc" value="con uso di ausili"> con uso di ausili</label>
+                                <label><input type="radio" name="autonomia_wc" value="con assistenza"> con assistenza</label>
+                                <label><input type="radio" name="autonomia_wc" value="totale dipendenza"> totale dipendenza</label>
+                                <div class="inline-field">
+                                    <label>altro</label>
+                                    <input type="text" id="altro_uso_wc" name="altro_uso_wc">
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">BAGNO/DOCCIA</div>
+                                <label><input type="radio" name="autonomia_doccia" value="autonomo"> autonomo</label>
+                                <label><input type="radio" name="autonomia_doccia" value="con uso di ausili"> con uso di ausili</label>
+                                <label><input type="radio" name="autonomia_doccia" value="con assistenza"> con assistenza</label>
+                                <label><input type="radio" name="autonomia_doccia" value="totale dipendenza"> totale dipendenza</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGE 2 SECTIONS -->
+
+                <!-- ELIMINAZIONE INTESTINALE -->
+                <div class="form-section page-break">
+                    <div class="section-title">ELIMINAZIONE INTESTINALE</div>
+                    <div class="eliminazione-table">
+                        <div class="table-row">
+                            <div class="table-col">
+                                <div class="col-title">GRADO/AUTONOMIA</div>
+                                <label><input type="radio" name="grado_autonomia_intestinale" value="alvo regolare"> alvo regolare</label>
+                                <label><input type="radio" name="grado_autonomia_intestinale" value="incontinente"> incontinente</label>
+                                <label><input type="radio" name="grado_autonomia_intestinale" value="diarrea"> diarrea</label>
+                                <label><input type="radio" name="grado_autonomia_intestinale" value="stipsi"> stipsi</label>
+                                <label><input type="radio" name="grado_autonomia_intestinale" value="utilizzo lassativi"> utilizzo lassativi</label>
+                                <label><input type="radio" name="grado_autonomia_intestinale" value="clisteri evacuativi"> clisteri evacuativi</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">FREQUENZA/CONSISTENZA</div>
+                                <div class="inline-field">
+                                    <label>• Frequenza evacuazioni n°</label>
+                                    <input type="number" id="frequenza_evacuazioni_n" name="frequenza_evacuazioni_n" min="0">
+                                    <span>/die</span>
+                                </div>
+                                <div class="inline-field">
+                                    <label>• Data ultima evacuazione</label>
+                                    <input type="text" id="data_utlima_evacuazione" name="data_utlima_evacuazione" placeholder="gg/mm/aaaa">
+                                </div>
+                                <div class="inline-field">
+                                    <label>• Consistenza:</label>
+                                    <label><input type="radio" name="consistenza" value="asciutte-disidratate"> asciutte-disidratate</label>
+                                    <label><input type="radio" name="consistenza" value="soffici"> soffici</label>
+                                    <label><input type="radio" name="consistenza" value="semi liquide"> semi liquide</label>
+                                    <label><input type="radio" name="consistenza" value="liquide"> liquide</label>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">COLORE</div>
+                                <label><input type="radio" name="colore_intestinale" value="normocromiche"> normocromiche</label>
+                                <label><input type="radio" name="colore_intestinale" value="con tracce di sangue"> con tracce di sangue</label>
+                                <label><input type="radio" name="colore_intestinale" value="con tracce di muco"> con tracce di muco</label>
+                                <label><input type="radio" name="colore_intestinale" value="melena"> melena</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">PRESIDI</div>
+                                <label><input type="radio" name="presidi_intestinale" value="sedia comoda"> sedia comoda</label>
+                                <label><input type="radio" name="presidi_intestinale" value="padella"> padella</label>
+                                <label><input type="radio" name="presidi_intestinale" value="pannolone"> pannolone</label>
+                                <label><input type="radio" name="presidi_intestinale" value="colostomia/ileostomia"> colostomia/ileostomia</label>
+                                <label><input type="radio" name="presidi_intestinale" value="enterostomia"> enterostomia</label>
+                                <label><input type="radio" name="presidi_intestinale" value="drenaggio"> drenaggio</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ELIMINAZIONE VESCICALE URINARIA -->
+                <div class="form-section">
+                    <div class="section-title">ELIMINAZIONE VESCICALE URINARIA</div>
+                    <div class="eliminazione-table">
+                        <div class="table-row">
+                            <div class="table-col">
+                                <div class="col-title">GRADO/AUTONOMIA</div>
+                                <label><input type="radio" name="grado_autonomia_urinaria" value="autonomo"> autonomo</label>
+                                <label><input type="radio" name="grado_autonomia_urinaria" value="regolare"> regolare</label>
+                                <label><input type="radio" id="grado_autonomia_urinaria_incontinente" name="grado_autonomia_urinaria" value="incontinente"> incontinente:</label>
+                                <div id="incontinente_tipo_field" style="display: none; margin-left: 20px;">
+                                    (<label><input type="radio" name="incontinente_tipo" value="totale"> totale</label>
+                                    <label><input type="radio" name="incontinente_tipo" value="parziale"> parziale</label>)
+                                </div>
+                                <div class="inline-field">
+                                    <label>• Minzione:</label>
+                                    <label><input type="radio" name="minzione" value="normale"> normale</label>
+                                    <label><input type="radio" name="minzione" value="disuria"> disuria</label>
+                                    <label><input type="radio" name="minzione" value="nicturia"> nicturia</label>
+                                    <label><input type="radio" name="minzione" value="impellente"> impellente</label>
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">FREQUENZA/QUANTITA'</div>
+                                <div class="inline-field">
+                                    <label>• Frequenza</label>
+                                    <input type="number" id="frequenza_die" name="frequenza_die" min="0">
+                                    <span>/die</span>
+                                </div>
+                                <div class="inline-field">
+                                    <label>• Diuresi ml/24ore</label>
+                                    <input type="number" id="diuresi_ml_24ore" name="diuresi_ml_24ore" min="0">
+                                    <div>(0,5-1ml*kgx24h)</div>
+                                </div>
+                                <label><input type="radio" name="diuresi_regolarita" value="regolare"> regolare</label>
+                                <label><input type="radio" name="diuresi_regolarita" value="anuria"> anuria</label>
+                                <label><input type="radio" name="diuresi_regolarita" value="oliguria"> oliguria</label>
+                                <label><input type="radio" name="diuresi_regolarita" value="poliuria"> poliuria</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">CARATTERISTICHE</div>
+                                <label><input type="radio" name="caratteristiche_urinarie" value="limpide"> limpide</label>
+                                <label><input type="radio" name="caratteristiche_urinarie" value="ematuria"> ematuria</label>
+                                <label><input type="radio" name="caratteristiche_urinarie" value="piuria"> piuria</label>
+                                <label><input type="radio" name="caratteristiche_urinarie" value="con sedimento"> con sedimento</label>
+                                <label><input type="radio" name="caratteristiche_urinarie" value="ipercromiche"> ipercromiche</label>
+                                <label><input type="radio" name="caratteristiche_urinarie" value="torride"> torride</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">PRESIDI</div>
+                                <label><input type="radio" name="presidi_urinaria" value="sedia comoda"> sedia comoda</label>
+                                <label><input type="radio" name="presidi_urinaria" value="pappagallo"> pappagallo</label>
+                                <label><input type="radio" name="presidi_urinaria" value="pannolone"> Pannolone</label>
+                                <label><input type="radio" name="presidi_urinaria" value="catetere"> catetere</label>
+                                <label><input type="radio" name="presidi_urinaria" value="condom"> condom</label>
+                                <label><input type="radio" name="presidi_urinaria" value="stomia"> stomia</label>
+                                <div class="inline-field">
+                                    <span>(Tipo</span>
+                                    <input type="text" id="stomia_tipo" name="stomia_tipo">
+                                    <span>)</span>
+                                </div>
+                                <label><input type="radio" name="presidi_urinaria" value="drenaggio"> drenaggio</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">INFEZIONI URINARIE</div>
+                                <label><input type="radio" name="infezioni_urinarie" value="no" checked> NO</label>
+                                <label><input type="radio" name="infezioni_urinarie" value="si"> SI:</label>
+                                <div class="inline-field">
+                                    <label>se SI specificare segni e sintomi:</label>
+                                    <textarea id="se_si_specificare_segni_e_sintomi" name="se_si_specificare_segni_e_sintomi" rows="3"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ALIMENTAZIONE E IDRATAZIONE -->
+                <div class="form-section">
+                    <div class="section-title">ALIMENTAZIONE E IDRATAZIONE</div>
+                    <div class="alimentazione-table">
+                        <div class="table-row">
+                            <div class="table-col">
+                                <div class="col-title">AUTONOMIA</div>
+                                <label><input type="radio" name="autonomia_alimentazione" value="totale"> totale</label>
+                                <label><input type="radio" name="autonomia_alimentazione" value="difficoltà masticazione"> difficoltà masticaz.</label>
+                                <label><input type="radio" name="autonomia_alimentazione" value="parziale con aiuto"> parziale con aiuto</label>
+                                <label><input type="radio" name="autonomia_alimentazione" value="totale dipendente"> tot. dipendente</label>
+                                <div class="inline-field">
+                                    <strong>DEGLUTIZIONE</strong>
+                                    <label><input type="radio" name="deglutizione" value="normale"> normale</label>
+                                    <label><input type="radio" name="deglutizione" value="disfagia a solidi"> disfagia a solidi</label>
+                                    <label><input type="radio" name="deglutizione" value="disfagia a liquidi"> disfagia a liquidi</label>
+                                </div>
+                                <div class="inline-field">
+                                    <strong>PROTESI:</strong>
+                                    <label><input type="checkbox" name="protesi_alimentazione" value="superiore"> superiore</label>
+                                    <label><input type="checkbox" name="protesi_alimentazione" value="inferiore"> infer.</label>
+                                    <label><input type="checkbox" name="protesi_alimentazione" value="fissa"> fissa</label>
+                                    <label><input type="checkbox" name="protesi_alimentazione" value="mobile"> mobile</label>
+                                </div>
+                                <div class="inline-field">
+                                    <strong>PRESIDI:</strong>
+                                    <label><input type="checkbox" name="presidi_alimentazione" value="sng"> SNG</label>
+                                    <label><input type="checkbox" name="presidi_alimentazione" value="peg/peg-j"> PEG/PEG-J</label>
+                                    <label><input type="checkbox" name="presidi_alimentazione" value="npt"> NPT</label>
+                                    <label><input type="checkbox" name="presidi_alimentazione" value="altro"> altro</label>
+                                    <input type="text" id="altro_presidi_alimentazione" name="altro_presidi_alimentazione">
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">DIETA</div>
+                                <label><input type="radio" name="dieta" value="dieta comune"> dieta comune</label>
+                                <label><input type="radio" name="dieta" value="celiachia"> celiachia</label>
+                                <label><input type="radio" name="dieta" value="dieta speciale"> dieta speciale</label>
+                                <input type="text" id="dieta_speciale_specifica" name="dieta_speciale_specifica">
+                                <label><input type="checkbox" name="dieta_restrizioni"> Restrizione dietetiche</label>
+                                <input type="text" id="restrizioni_dietetiche" name="restrizioni_dietetiche">
+                                <label><input type="checkbox" name="dieta_intolleranze"> Intolleranze</label>
+                                <input type="text" id="intolleranze" name="intolleranze">
+                                <label><input type="checkbox" name="dieta_allergie"> Allergie</label>
+                                <input type="text" id="allergie_alimentazione" name="allergie_alimentazione">
+                                <div class="inline-field">
+                                    <strong>CAVO ORALE</strong>
+                                    <label><input type="radio" name="cavo_orale" value="normale"> normale</label>
+                                    <label><input type="radio" name="cavo_orale" value="arrossamenti"> arrossamenti</label>
+                                    <label><input type="radio" name="cavo_orale" value="lesioni"> lesioni</label>
+                                    <label><input type="radio" name="cavo_orale" value="altro"> altro</label>
+                                    <input type="text" id="altro_cavo_orale" name="altro_cavo_orale">
+                                </div>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">STATO NUTRIZIONALE</div>
+                                <div>(scala MNA)</div>
+                                <label><input type="radio" name="stato_nutrizionale_scala_mna" value="buono-normale"> buono-normale</label>
+                                <label><input type="radio" name="stato_nutrizionale_scala_mna" value="rischio malnutrizione"> rischio malnutrizione</label>
+                                <label><input type="radio" name="stato_nutrizionale_scala_mna" value="malnutrito"> malnutrito</label>
+                                <div class="inline-field">
+                                    <label>Variazioni peso ultimi</label>
+                                    <input type="number" id="variazioni_peso_ultimi_mesi" name="variazioni_peso_ultimi_mesi" min="0" placeholder="n°">
+                                    <span>mesi Kg di</span>
+                                    <select id="tipo_variazione_peso" name="tipo_variazione_peso">
+                                        <option value="">--</option>
+                                        <option value="aumento">aumento</option>
+                                        <option value="perdita">perdita</option>
+                                    </select>
+                                    <span>peso.</span>
+                                </div>
+                                <div class="inline-field">
+                                    <strong>OBESITA'</strong>
+                                    <label>Peso Kg</label>
+                                    <input type="number" id="peso_kg_alimentazione" name="peso_kg_alimentazione" step="0.1" min="0">
+                                    <span>x Altezza Mt</span>
+                                    <input type="number" id="altezza_mt_alimentazione" name="altezza_mt_alimentazione" step="0.01" min="0">
+                                    <span>= IMC:</span>
+                                    <input type="number" id="imc" name="imc" step="0.1" min="0">
+                                </div>
+                                <label><input type="radio" name="grado_obesita" value="normale (18,5-25)"> NORMALE (18,5-25)</label>
+                                <label><input type="radio" name="grado_obesita" value="1° grado (25-30)"> 1° GRADO (25-30)</label>
+                                <label><input type="radio" name="grado_obesita" value="2° grado (30-40)"> 2° GRADO (30-40)</label>
+                                <label><input type="radio" name="grado_obesita" value="3° grado (>40)"> 3° GRADO (&gt;40)</label>
+                            </div>
+                            <div class="table-col">
+                                <div class="col-title">PRESENZA DI</div>
+                                <label><input type="checkbox" name="presenza_di" value="inappetenza"> inappetenza</label>
+                                <label><input type="checkbox" name="presenza_di" value="polifagia"> polifagia</label>
+                                <label><input type="checkbox" name="presenza_di" value="disfagia"> disfagia</label>
+                                <label><input type="checkbox" name="presenza_di" value="nausea"> nausea</label>
+                                <label><input type="checkbox" name="presenza_di" value="conato"> conato</label>
+                                <label><input type="checkbox" name="presenza_di" value="vomito"> vomito</label>
+                                <label><input type="checkbox" name="presenza_di" value="stomatite"> stomatite</label>
+                                <label><input type="checkbox" name="presenza_di" value="cachessia"> cachessia</label>
+                                <div class="inline-field">
+                                    <strong>ADDOME</strong>
+                                    <label><input type="checkbox" name="addome" value="peristalsi"> peristalsi</label>
+                                    <label><input type="checkbox" name="addome" value="timpanico"> timpanico</label>
+                                    <label><input type="checkbox" name="addome" value="trattabile"> trattabile</label>
+                                    <label><input type="checkbox" name="addome" value="dolente"> dolente</label>
+                                </div>
+                            </div>
+                            <div class="table-col hydration-col">
+                                <div class="col-title">IDRATAZIONE</div>
+                                <div class="hydration-scale">
+                                    <div class="scale-item level-1">tra 1 e 3</div>
+                                    <div class="scale-item level-2">idratato</div>
+                                    <div class="scale-item level-3">da 4 a 6</div>
+                                    <div class="scale-item level-4">disidratato</div>
+                                    <div class="scale-item level-5">da 7 a 8</div>
+                                    <div class="scale-item level-6">gravemente Disidratato</div>
+                                </div>
+                                <div class="inline-field">
+                                    <strong>IDRATAZIONE</strong>
+                                    <label><input type="radio" name="idratazione_autonomia" value="spontanea"> spontanea</label>
+                                    <label><input type="radio" name="idratazione_autonomia" value="con aiuto"> con aiuto</label>
+                                    <label><input type="radio" name="idratazione_autonomia" value="dipendente"> dipendente</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TERAPIE -->
+                <div class="form-section">
+                    <div class="terapie-row">
+                        <div class="terapie-field">
+                            <label>TAO:</label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="tao" value="si">
+                                <span>SI</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="tao" value="no" checked>
+                                <span>NO</span>
+                            </label>
+                        </div>
+                        <div class="terapie-field">
+                            <label>Ossigenoterapia:</label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="ossigenoterapia" value="si">
+                                <span>SI</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="ossigenoterapia" value="no" checked>
+                                <span>NO</span>
+                            </label>
+                        </div>
+                        <div class="terapie-field">
+                            <label>Farmaci H:</label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="farmaci_h" value="si">
+                                <span>SI</span>
+                            </label>
+                            <label class="checkbox-inline">
+                                <input type="radio" name="farmaci_h" value="no" checked>
+                                <span>NO</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DIAGNOSI INFERMIERISTICA -->
+                <div class="form-section">
+                    <div class="section-title">DIAGNOSI INFERMIERISTICA</div>
+                    <div class="diagnosi-field">
+                        <label>Patologia prevalente:</label>
+                        <textarea id="patologia_prevalente" name="patologia_prevalente" rows="2"></textarea>
+                    </div>
+                    <div class="diagnosi-field">
+                        <label>Patologia secondaria 1:</label>
+                        <textarea id="patologia_secondaria_1" name="patologia_secondaria_1" rows="2"></textarea>
+                    </div>
+                    <div class="diagnosi-field">
+                        <label>Patologia secondaria 2:</label>
+                        <textarea id="patologia_secondaria_2" name="patologia_secondaria_2" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <!-- VALUTAZIONE BISOGNI INFERMIERISTICI -->
+                <div class="form-section">
+                    <div class="section-title">VALUTAZIONE BISOGNI INFERMIERISTICI (interventi e prestazioni per la cura della salute)</div>
+                    <div class="valutazione-field">
+                        <textarea id="valutazione_bisogni_infermieristici" name="valutazione_bisogni_infermieristici" rows="4"></textarea>
+                    </div>
+                    <div class="cadenza-field">
+                        <label>Cadenza Monitoraggio clinico parametri vitali:</label>
+                        <textarea id="cadenza_monitoraggio_clinico_parametri_vitali" name="cadenza_monitoraggio_clinico_parametri_vitali" rows="2"></textarea>
+                    </div>
+                    <div class="cadenza-field">
+                        <label>Patologie da monitorare:</label>
+                        <textarea id="patologie_da_monitorare" name="patologie_da_monitorare" rows="2"></textarea>
+                    </div>
+                </div>
+
+                <!-- VALUTAZIONE DEL RISCHIO -->
+                <div class="form-section">
+                    <div class="section-title">VALUTAZIONE DEL RISCHIO</div>
+                    <table class="rischio-table">
+                        <thead>
+                            <tr>
+                                <th>VALUTAZIONE DEL RISCHIO</th>
+                                <th colspan="4">GRADO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>• Rischio cadute (scala di Conley)</td>
+                                <td><label><input type="radio" name="rischio_cadute_scala_di_conley" value="assente"> Assente</label></td>
+                                <td><label><input type="radio" name="rischio_cadute_scala_di_conley" value="basso"> Basso</label></td>
+                                <td><label><input type="radio" name="rischio_cadute_scala_di_conley" value="medio"> Medio</label></td>
+                                <td><label><input type="radio" name="rischio_cadute_scala_di_conley" value="alto"> Alto</label></td>
+                            </tr>
+                            <tr>
+                                <td>• Rischio infezioni (ICA)</td>
+                                <td><label><input type="radio" name="rischio_infezioni_ica" value="assente"> Assente</label></td>
+                                <td><label><input type="radio" name="rischio_infezioni_ica" value="basso"> Basso</label></td>
+                                <td><label><input type="radio" name="rischio_infezioni_ica" value="medio"> Medio</label></td>
+                                <td><label><input type="radio" name="rischio_infezioni_ica" value="alto"> Alto</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- SCALE UTILIZZATE -->
+                <div class="form-section">
+                    <div class="section-title">SCALE UTILIZZATE</div>
+                    <div class="scale-field">
+                        <textarea id="scale_utilizzate" name="scale_utilizzate" rows="2" placeholder="Es. Scala Braden, Scala MNA, Scala Conley..."></textarea>
+                    </div>
+                </div>
+
+                <!-- FIRMA -->
+                <div class="form-section">
+                    <div class="firma-row">
+                        <div class="firma-field">
+                            <label>DATA</label>
+                            <input type="date" id="data" name="data" required>
+                        </div>
+                        <div class="firma-field">
+                            <label>Infermiere compilatore</label>
+                            <input type="text" id="infermiere_compilatore" name="infermiere_compilatore" required readonly>
+                        </div>
+                        <div class="firma-field">
+                            <label>FIRMA</label>
+                            <input type="text" id="firma" name="firma" required placeholder="Inserisci firma">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NOTE -->
+                <div class="form-section note-section">
+                    <div class="note-text">
+                        NOTA: numerare progressivamente ogni modulo e archiviare i moduli cronologicamente in un unico plico per ogni singolo anno.
+                    </div>
+                    <div class="note-text">
+                        <strong>STAMPARE Fronte/Retro</strong>
+                    </div>
+                </div>
+
+                <div class="show-in-view">
+                    <div class="audit-info">
+                        <h3>📊 Informazioni Modulo</h3>
+                        <div class="audit-row">
+                            <span class="audit-label">ID Modulo:</span>
+                            <span class="audit-value" id="audit_id"></span>
+                        </div>
+                        <div class="audit-row">
+                            <span class="audit-label">Codice Modulo:</span>
+                            <span class="audit-value" id="audit_module_code"></span>
+                        </div>
+                        <div class="audit-row">
+                            <span class="audit-label">Versione Schema:</span>
+                            <span class="audit-value" id="audit_version"></span>
+                        </div>
+                        <div class="audit-row">
+                            <span class="audit-label">Creato il:</span>
+                            <span class="audit-value" id="audit_created_at"></span>
+                        </div>
+                        <div class="audit-row">
+                            <span class="audit-label">Creato da:</span>
+                            <span class="audit-value" id="audit_created_by"></span>
+                        </div>
+                        <div class="audit-row">
+                            <span class="audit-label">Ultimo aggiornamento:</span>
+                            <span class="audit-value" id="audit_updated_at"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottoni finali -->
+                <div class="hide-in-view" style="display: flex; gap: 16px; justify-content: flex-end; margin-top: 32px;">
+                    <button type="button" class="btn btn-secondary"
+                        onclick="if(confirm('Sei sicuro di voler annullare? Tutti i dati inseriti andranno persi.')) { goBack(); }">
+                        Annulla
+                    </button>
+                    <button type="submit" class="btn btn-success" id="submitBtn">
+                        <span>💾 Salva Valutazione</span>
+                        <span class="spinner" style="display: none;"></span>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+    <script src="/static/moduli/valutazione_infermieristica/script.js"></script>
+</body>
+
+</html>

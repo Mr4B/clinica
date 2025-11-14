@@ -378,7 +378,7 @@ function renderModulesList(entries, dossierId) {
     container.innerHTML = entries.map(entry => `
         <div class="module-item">
             <div class="module-info">
-                <span class="module-code">${entry.module_code} v${entry.module_version}</span>
+                <span class="module-code">${entry.module_code} </span>
                 <span class="module-date">${formatDateTime(entry.occurred_at)}</span>
             </div>
             <button class="btn-icon" onclick="viewModule('${entry.id}')" title="Visualizza">
@@ -390,7 +390,7 @@ function renderModulesList(entries, dossierId) {
 
 // Placeholder per visualizzazione modulo (implementeremo dopo)
 function viewModule(moduleId) {
-    alert(`Visualizzazione modulo ${moduleId} - Da implementare`);
+    window.location.href = `moduli/valutazione_infermieristica?view=${moduleId}`;
 }
 
 // Conferma eliminazione

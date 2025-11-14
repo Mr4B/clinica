@@ -223,13 +223,21 @@ async function viewModule(moduleId) {
             : '<span class="status-badge status-discharged">❌ Disattivo</span>';
         document.getElementById('detailUpdated').textContent = module.updated_at ? formatDate(module.updated_at) : '-';
         
-        // Link per registrare modulo (da implementare)
+        // Link per registrare modulo
         const registerBtn = document.getElementById('registerModuleBtn');
-        registerBtn.onclick = () => {
-            alert(`Registrazione modulo ${module.code} - Da implementare nella prossima fase`);
-            // Qui andrà il link alla pagina di compilazione del modulo
-            // window.location.href = `/moduli/compila?code=${module.code}`;
-        };
+        
+        // ✅ AGGIORNATO: link al modulo reale
+        if (module.code === 'ROG26/1.4') {
+            registerBtn.onclick = () => {
+                window.location.href = '/moduli/valutazione_infermieristica';
+            };
+            registerBtn.textContent = '📝 Compila Valutazione Infermieristica';
+        } else {
+            registerBtn.onclick = () => {
+                alert(`Modulo ${module.code} - Implementazione in arrivo`);
+            };
+            registerBtn.textContent = '📝 Registra Modulo (Da implementare)';
+        }
         
         document.getElementById('detailModal').classList.add('show');
         

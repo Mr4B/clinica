@@ -18,7 +18,7 @@ class MetadatiModulo(BaseModel):
     """Metadati comuni: intestazione del modulo con inziali e dossier"""
     inizNome: str = Field(max_length=200)
     inizCognome: str = Field(max_length=200)
-    dossier: int
+    dossier: str
     struttura: Literal["R3", "R3D"] = Field(
         description="Tipo struttura: R3 o R3D"
     )

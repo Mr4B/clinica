@@ -1,13 +1,13 @@
 from __future__ import annotations
 import uuid
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, Dict, Any
 from sqlmodel import SQLModel, Field, Relationship, Column, JSON, Index, Integer, UUID, ForeignKey, String, DateTime, Text
 from datetime import datetime, timezone, date
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.dialects.postgresql import UUID as PGUUID
 from app.services.encryption import field_encryption
 from pydantic import BaseModel, field_validator
-
+from app.models import ModuleEntry
 
 # ################################
 # Gestione del catalogo dei moduli
@@ -179,12 +179,23 @@ class EntryResponse(BaseModel):
     module_code: str
     schema_version: int
     occurred_at: datetime
-    data: dict
+    data: Dict[str, Any]
     created_at: datetime
     created_by_user_id: Optional[uuid.UUID]
-    updated_at: Optional[datetime]
-    updated_by_user_id: Optional[uuid.UUID]
     deleted_at: Optional[datetime]
+    deleted_by_user_id: Optional[uuid.UUID]
+    
+    @classmethod
+    def from_orm(cls, entry: ModuleEntry):
+        return cls(
+            id=entry.id,
+            dossier_id=entry.dossier_id,
+            module_code=entry.module_code,
+            schema_version=entry.schema_version,
+            data=entry.get_data(),  # ← Usa il metodo
+            occurred_at=entry.occurred_at,
+            created_at=entry.created_at
+        )
     
     model_config = {"from_attributes": True} 
 

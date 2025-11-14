@@ -181,15 +181,24 @@ def create_entry(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail=f"Data validation failed: {str(e)}"
         )
+        
+    validated_dict = validated_data.model_dump() if validated_data else {}
+    # print(f"DEBUG validated_dict: {validated_dict}")
     
     entry = ModuleEntry(
         dossier_id=entry_data.dossier_id,
         module_code=entry_data.module_code,
         schema_version=version,
         occurred_at=entry_data.occurred_at or datetime.now(timezone.utc),
-        data=validated_data.model_dump(),  # ← Cripta automaticamente con hybrid_property
         created_by_user_id=current_user.id
     )
+    
+    # ✅ USA IL METODO set_data() invece di assegnazione diretta
+    entry.set_data(validated_dict)
+    
+    # print(f"DEBUG data_encrypted: {entry.data_encrypted[:100] if entry.data_encrypted else None}")
+    # if entry.data_encrypted is None:
+    #     raise ValueError("data_encrypted is None after set_data()!")
     
     session.add(entry)
     session.commit()

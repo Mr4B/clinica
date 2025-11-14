@@ -51,3 +51,13 @@ async def serve_page(nome_pagina: str):
         )
     
     return FileResponse(file_path)
+
+@router.get("/moduli/valutazione_infermieristica")
+async def serve_valutazione_infermieristica():
+    """Serve il modulo di valutazione infermieristica"""
+    file_path = Path(STATIC_DIR, "moduli/valutazione_infermieristica/index.html")
+    
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Modulo non trovato")
+    
+    return FileResponse(file_path)

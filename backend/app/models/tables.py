@@ -1,5 +1,5 @@
 import uuid
-from typing import Optional, List
+from typing import Optional, Dict, Any, List
 from datetime import datetime, timezone, date
 from sqlmodel import SQLModel, Field, Relationship, Column, JSON, Text, String, Integer, Index
 from enum import Enum
@@ -236,7 +236,10 @@ class ModuleEntry(SQLModel, table=True):
     dossier_id: uuid.UUID = Field(foreign_key="dossiers.id")
     module_code: str = Field(max_length=50, index=True)
     schema_version: int
+    
+    # ✅ Campo che memorizza i dati criptati
     data_encrypted: str = Field(sa_column=Column("data", Text, nullable=False))
+    
     occurred_at: datetime
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     created_by_user_id: Optional[uuid.UUID] = Field(default=None, foreign_key="user.id")
@@ -251,9 +254,9 @@ class ModuleEntry(SQLModel, table=True):
         Index('idx_module_dossier', 'dossier_id', 'module_code', 'occurred_at'),
     )
     
-    @hybrid_property
-    def data(self) -> dict:
-        """Getter: decripta automaticamente"""
+    # ✅ METODO per ottenere i dati decriptati
+    def get_data(self) -> Dict[str, Any]:
+        """Decripta e ritorna i dati come dizionario"""
         if self.data_encrypted:
             try:
                 return field_encryption.decrypt_dict(self.data_encrypted)
@@ -262,16 +265,29 @@ class ModuleEntry(SQLModel, table=True):
                 return {}
         return {}
     
-    @data.setter
-    def data(self, value: dict):
-        """Setter: cripta automaticamente"""
-        if value is not None:
-            self.data_encrypted = field_encryption.encrypt_dict(value)
+    # ✅ METODO per impostare i dati criptati
+    def set_data(self, value: Dict[str, Any]) -> None:
+        """Cripta e salva i dati"""
+        if value is None or (isinstance(value, dict) and len(value) == 0):
+            # Cripta un dict vuoto invece di None
+            self.data_encrypted = field_encryption.encrypt_dict({})
         else:
-            self.data_encrypted = None
+            encrypted = field_encryption.encrypt_dict(value)
+            if encrypted is None:
+                print(f"WARNING: encrypt_dict returned None for value")
+                self.data_encrypted = field_encryption.encrypt_dict({})
+            else:
+                self.data_encrypted = encrypted
+    
+    # ✅ PROPRIETÀ READ-ONLY per compatibilità
+    @property
+    def data(self) -> Dict[str, Any]:
+        """Proprietà read-only per leggere i dati decriptati"""
+        return self.get_data()
     
     def __repr__(self):
         return f"<ModuleEntry {self.module_code} v{self.schema_version}>"
+
     
 
 class AuditLog(SQLModel, table=True):
